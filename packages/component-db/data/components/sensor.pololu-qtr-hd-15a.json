@@ -7,11 +7,11 @@
   "manufacturer": "Pololu",
   "typicalPriceUsd": 20,
   "dimensionsMm": {
-    "x": 10,
-    "y": 64,
-    "z": 3
+    "x": 20,
+    "y": 61,
+    "z": 2.5
   },
-  "massG": 2.5,
+  "massG": 3.5,
   "model": {
     "kind": "procedural",
     "generator": "ir_sensor_array",
@@ -34,12 +34,12 @@
     },
     {
       "id": "CTRL_ODD",
-      "label": "Odd emitter control",
+      "label": "CTRL ODD (odd emitters; dimming)",
       "functions": ["enable", "digital"]
     },
     {
       "id": "CTRL_EVEN",
-      "label": "Even emitter control",
+      "label": "CTRL EVEN (even emitters; dimming)",
       "functions": ["enable", "digital"]
     },
     {
@@ -143,13 +143,13 @@
     "channels": 15,
     "channelPitchMm": 4,
     "optimalHeightMm": {
-      "min": 1,
-      "max": 5
+      "min": 5,
+      "max": 50
     },
-    "maxCurrentmA": 150
+    "maxCurrentmA": 250
   },
-  "specStatus": "needs-review",
-  "notes": "High-density array used on fast competition robots. Needs 15 ADC inputs or an external ADC/multiplexer. Dimensions approximate.",
+  "specStatus": "reviewed",
+  "notes": "Constant-current emitters with 32 dimming levels. Needs 15 ADC inputs or an external ADC/multiplexer.  Optimal 5 mm; maximum 50 mm. Reviewed 2026-11-23 against Pololu #4215 specs (dimensions, mass, pins, electrical).",
   "license": "CC-BY-SA-4.0",
-  "sources": ["https://www.pololu.com/category/123/pololu-qtr-reflectance-sensors"]
+  "sources": ["https://www.pololu.com/product/4215"]
 }

@@ -97,15 +97,12 @@
     "channelPitchMm": 9.525,
     "optimalHeightMm": {
       "min": 3,
-      "max": 6
+      "max": 9.5
     },
     "maxCurrentmA": 100
   },
-  "specStatus": "needs-review",
-  "notes": "Pull LEDON low to turn the emitters off (saves power, lets you measure ambient light). RC outputs are read by timing the capacitor discharge.",
+  "specStatus": "reviewed",
+  "notes": "Pull LEDON low to turn the emitters off (saves power, lets you measure ambient light). RC outputs are read by timing the capacitor discharge. Optimal 3 mm; maximum recommended 9.5 mm. Reviewed 2026-11-23 against Pololu #961 and the QTR user's guide (0J12) (dimensions, mass, pins, electrical).",
   "license": "CC-BY-SA-4.0",
-  "sources": [
-    "https://www.pololu.com/product/961",
-    "https://www.pololu.com/category/123/pololu-qtr-reflectance-sensors"
-  ]
+  "sources": ["https://www.pololu.com/product/961", "https://www.pololu.com/docs/0J12"]
 }

@@ -15,7 +15,10 @@
   "model": {
     "kind": "procedural",
     "generator": "gearmotor_n20",
-    "params": {}
+    "params": {
+      "gearboxLengthMm": 9,
+      "shaftLengthMm": 9
+    }
   },
   "pins": [
     {
@@ -32,14 +35,17 @@
   "electrical": {
     "kind": "motor",
     "ratedVoltageV": 6,
-    "noLoadRpm": 3000,
+    "noLoadRpm": 3100,
     "noLoadCurrentA": 0.1,
     "stallCurrentA": 1.6,
-    "stallTorqueKgCm": 0.3,
-    "gearRatio": 10
+    "stallTorqueKgCm": 0.22,
+    "gearRatio": 9.96
   },
-  "specStatus": "needs-review",
-  "notes": "HP = high-power brushes. Torque above about 2 kg·cm can damage the gearbox; very high ratios are gearbox-limited.",
+  "specStatus": "reviewed",
+  "notes": "Speed typical ±20%; no-load current ±50%. Stall figures are extrapolated: stalling can damage the motor or gearbox. Reviewed 2026-11-23 against Pololu's 6V HP micro metal gearmotor listings (dimensions, mass, pins, electrical).",
   "license": "CC-BY-SA-4.0",
-  "sources": ["https://www.pololu.com/category/60/micro-metal-gearmotors"]
+  "sources": [
+    "https://www.pololu.com/category/173/6v-high-power-hp-micro-metal-gearmotors",
+    "https://www.pololu.com/product/2211"
+  ]
 }

@@ -8,10 +8,10 @@
   "typicalPriceUsd": 6,
   "dimensionsMm": {
     "x": 12.7,
-    "y": 15.2,
-    "z": 4
+    "y": 17.8,
+    "z": 3.6
   },
-  "massG": 1.5,
+  "massG": 1.0,
   "model": {
     "kind": "procedural",
     "generator": "pcb_board",
@@ -24,7 +24,7 @@
   "pins": [
     {
       "id": "VIN",
-      "label": "VIN",
+      "label": "VIN (5.1–36 V)",
       "functions": ["power_in"]
     },
     {
@@ -39,26 +39,31 @@
       "voltageDomainV": 5
     },
     {
-      "id": "EN",
-      "label": "Enable",
+      "id": "SHDN",
+      "label": "Shutdown (enable)",
       "functions": ["enable"]
+    },
+    {
+      "id": "PG",
+      "label": "Power good",
+      "functions": ["digital"]
     }
   ],
   "electrical": {
     "kind": "regulator",
     "topology": "buck",
     "inputVoltage": {
-      "min": 6,
+      "min": 5.1,
       "max": 36
     },
     "outputVoltage": {
       "min": 5,
       "max": 5
     },
-    "maxOutputCurrentA": 1,
-    "efficiencyPct": 90
+    "maxOutputCurrentA": 1
   },
-  "specStatus": "needs-review",
+  "specStatus": "reviewed",
   "license": "CC-BY-SA-4.0",
-  "sources": ["https://www.digikey.com/en/products/result?keywords=Pololu+D24V10F5"]
+  "sources": ["https://www.pololu.com/product/2831"],
+  "notes": "Minimum input depends on load (dropout). Reviewed 2026-11-23 against Pololu #2831 specs (dimensions, mass, pins, electrical)."
 }

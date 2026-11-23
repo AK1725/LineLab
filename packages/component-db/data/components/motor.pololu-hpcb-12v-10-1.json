@@ -11,11 +11,14 @@
     "y": 12,
     "z": 10
   },
-  "massG": 10,
+  "massG": 9.5,
   "model": {
     "kind": "procedural",
     "generator": "gearmotor_n20",
-    "params": {}
+    "params": {
+      "gearboxLengthMm": 9,
+      "shaftLengthMm": 9
+    }
   },
   "pins": [
     {
@@ -33,13 +36,16 @@
     "kind": "motor",
     "ratedVoltageV": 12,
     "noLoadRpm": 3400,
-    "noLoadCurrentA": 0.06,
+    "noLoadCurrentA": 0.08,
     "stallCurrentA": 0.75,
-    "stallTorqueKgCm": 0.2,
-    "gearRatio": 10
+    "stallTorqueKgCm": 0.17,
+    "gearRatio": 9.96
   },
-  "specStatus": "needs-review",
-  "notes": "Carbon-brush 12 V version: long life, common on fast competition robots running 2S–3S.",
+  "specStatus": "reviewed",
+  "notes": "Carbon brushes: long life, popular on fast competition robots. Stall figures are extrapolated. Reviewed 2026-11-23 against Pololu's 12V HPCB micro metal gearmotor listings (dimensions, mass, pins, electrical).",
   "license": "CC-BY-SA-4.0",
-  "sources": ["https://www.pololu.com/category/60/micro-metal-gearmotors"]
+  "sources": [
+    "https://www.pololu.com/category/200/12v-high-power-carbon-brush-hpcb-micro-metal-gearmotors",
+    "https://www.pololu.com/product/3048"
+  ]
 }

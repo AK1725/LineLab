@@ -7,11 +7,11 @@
   "manufacturer": "Pololu",
   "typicalPriceUsd": 12,
   "dimensionsMm": {
-    "x": 10,
-    "y": 66,
-    "z": 3
+    "x": 20,
+    "y": 61,
+    "z": 2.5
   },
-  "massG": 2,
+  "massG": 3.1,
   "model": {
     "kind": "procedural",
     "generator": "ir_sensor_array",
@@ -33,8 +33,13 @@
       "functions": ["gnd"]
     },
     {
-      "id": "CTRL",
-      "label": "Emitter control (dimming)",
+      "id": "CTRL_ODD",
+      "label": "CTRL ODD (odd emitters; dimming)",
+      "functions": ["enable", "digital"]
+    },
+    {
+      "id": "CTRL_EVEN",
+      "label": "CTRL EVEN (even emitters; dimming)",
       "functions": ["enable", "digital"]
     },
     {
@@ -96,13 +101,13 @@
     "channels": 8,
     "channelPitchMm": 8,
     "optimalHeightMm": {
-      "min": 1,
-      "max": 5
+      "min": 5,
+      "max": 40
     },
-    "maxCurrentmA": 90
+    "maxCurrentmA": 125
   },
-  "specStatus": "needs-review",
-  "notes": "Newer QTR generation with dimmable emitters. Dimensions approximate: check the product page.",
+  "specStatus": "reviewed",
+  "notes": "Constant-current emitters with 32 dimming levels.  Optimal 5 mm; maximum 40 mm. Reviewed 2026-11-23 against Pololu #4248 specs (dimensions, mass, pins, electrical).",
   "license": "CC-BY-SA-4.0",
-  "sources": ["https://www.pololu.com/category/123/pololu-qtr-reflectance-sensors"]
+  "sources": ["https://www.pololu.com/product/4248"]
 }

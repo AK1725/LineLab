@@ -8,10 +8,10 @@
   "typicalPriceUsd": 5,
   "dimensionsMm": {
     "x": 10.2,
-    "y": 15.2,
+    "y": 17.8,
     "z": 3
   },
-  "massG": 0.7,
+  "massG": 0.5,
   "model": {
     "kind": "procedural",
     "generator": "pcb_board",
@@ -22,9 +22,14 @@
   },
   "pins": [
     {
-      "id": "VM",
-      "label": "VM (motor 0–11 V)",
+      "id": "VIN",
+      "label": "VIN (reverse-protected motor supply, 0–11 V)",
       "functions": ["power_in"]
+    },
+    {
+      "id": "VMM",
+      "label": "VMM (reverse-protected motor supply out)",
+      "functions": ["power_out"]
     },
     {
       "id": "VCC",
@@ -98,7 +103,11 @@
     "voltageDropV": 0.4,
     "maxPwmFrequencyKHz": 250
   },
-  "specStatus": "needs-review",
+  "specStatus": "reviewed",
   "license": "CC-BY-SA-4.0",
-  "sources": ["https://www.pololu.com/product/2135", "https://www.ti.com/product/DRV8835"]
+  "sources": [
+    "https://www.pololu.com/product/2135",
+    "https://www.ti.com/lit/ds/symlink/drv8835.pdf"
+  ],
+  "notes": "The chip runs from 0–11 V, but Pololu recommends at least 1.5 V because the reverse-protection MOSFET degrades below a few volts. Reviewed 2026-11-23 against Pololu #2135 specs and TI DRV8835 datasheet (dimensions, mass, pins, electrical)."
 }

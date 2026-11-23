@@ -49,13 +49,13 @@
     "channels": 1,
     "channelPitchMm": 0,
     "optimalHeightMm": {
-      "min": 1,
-      "max": 8
+      "min": 0.2,
+      "max": 15
     },
     "maxCurrentmA": 25
   },
   "specStatus": "needs-review",
-  "notes": "Generic module sold by many vendors; dimensions and values vary by seller. Many boards also expose an analog output (A0). The threshold trimpot sets the digital switching point. TCRT5000 response peaks at about 2.5 mm.",
+  "notes": "Generic module sold by many vendors; dimensions and values vary by seller. Many boards also expose an analog output (A0). The threshold trimpot sets the digital switching point. TCRT5000 datasheet: peak at 2.5 mm, useful 0.2–15 mm (>20 % of peak signal); aim for 2–4 mm.",
   "license": "CC-BY-SA-4.0",
-  "sources": ["https://www.vishay.com/en/product/83760/"]
+  "sources": ["https://www.vishay.com/docs/83760/tcrt5000.pdf"]
 }

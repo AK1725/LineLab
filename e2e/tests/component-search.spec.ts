@@ -41,7 +41,13 @@ test.describe("component search", () => {
     await expect(page.getByTestId("result-count")).toContainText("close spellings");
   });
 
-  test("opens a component page with specs, pins and a review warning", async ({ page }) => {
+  test("unreviewed parts show a warning", async ({ page }) => {
+    await page.goto("/components/driver.l298n-module");
+    await expect(page.getByTestId("needs-review")).toBeVisible();
+    await expect(page.getByTestId("reviewed")).toHaveCount(0);
+  });
+
+  test("opens a component page with specs, pins and its review status", async ({ page }) => {
     await page.goto("/components?q=tb6612");
     await firstResult(page).getByRole("link").click();
     await expect(page).toHaveURL(/\/components\/driver\.tb6612fng$/);
@@ -50,7 +56,8 @@ test.describe("component search", () => {
     );
     await expect(page.getByRole("definition").filter({ hasText: "4.5–13.5 V" })).toBeVisible();
     await expect(page.getByRole("cell", { name: "STBY", exact: true })).toBeVisible();
-    await expect(page.getByTestId("needs-review")).toBeVisible();
+    await expect(page.getByRole("cell", { name: "VMOT", exact: true })).toBeVisible();
+    await expect(page.getByTestId("reviewed")).toBeVisible();
   });
 
   test("unknown component ids are a 404", async ({ page }) => {

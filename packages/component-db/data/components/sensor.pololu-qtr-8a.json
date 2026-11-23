@@ -101,11 +101,8 @@
     },
     "maxCurrentmA": 100
   },
-  "specStatus": "needs-review",
-  "notes": "Pull LEDON low to turn the emitters off (saves power, lets you measure ambient light).",
+  "specStatus": "reviewed",
+  "notes": "Pull LEDON low to turn the emitters off (saves power, lets you measure ambient light). Optimal 3 mm; maximum recommended 6 mm. Reviewed 2026-11-23 against Pololu #960 and the QTR user's guide (0J12) (dimensions, mass, pins, electrical).",
   "license": "CC-BY-SA-4.0",
-  "sources": [
-    "https://www.pololu.com/product/960",
-    "https://www.pololu.com/category/123/pololu-qtr-reflectance-sensors"
-  ]
+  "sources": ["https://www.pololu.com/product/960", "https://www.pololu.com/docs/0J12"]
 }

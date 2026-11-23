@@ -90,11 +90,10 @@
     },
     "continuousCurrentPerChannelA": 1.2,
     "peakCurrentPerChannelA": 2,
-    "voltageDropV": 0.4,
-    "maxPwmFrequencyKHz": 50
+    "voltageDropV": 0.4
   },
   "specStatus": "needs-review",
   "notes": "Generic module sold by many vendors; dimensions and values vary by seller.",
   "license": "CC-BY-SA-4.0",
-  "sources": ["https://www.ti.com/product/DRV8833"]
+  "sources": ["https://www.ti.com/lit/ds/symlink/drv8833.pdf"]
 }

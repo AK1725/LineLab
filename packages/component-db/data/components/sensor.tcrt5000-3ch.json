@@ -62,13 +62,13 @@
     "channels": 3,
     "channelPitchMm": 13,
     "optimalHeightMm": {
-      "min": 1,
-      "max": 8
+      "min": 0.2,
+      "max": 15
     },
     "maxCurrentmA": 60
   },
   "specStatus": "needs-review",
-  "notes": "Generic module sold by many vendors; dimensions and values vary by seller.",
+  "notes": "Generic module sold by many vendors; dimensions and values vary by seller. TCRT5000 datasheet: peak at 2.5 mm, useful 0.2–15 mm (>20 % of peak signal); aim for 2–4 mm.",
   "license": "CC-BY-SA-4.0",
-  "sources": ["https://www.vishay.com/en/product/83760/"]
+  "sources": ["https://www.vishay.com/docs/83760/tcrt5000.pdf"]
 }

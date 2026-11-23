@@ -5,13 +5,13 @@
   "aliases": ["tb6612", "tb6612fng"],
   "category": "motor_driver",
   "manufacturer": "Pololu (Toshiba TB6612FNG)",
-  "typicalPriceUsd": 5,
+  "typicalPriceUsd": 4.95,
   "dimensionsMm": {
     "x": 20.3,
     "y": 15.2,
     "z": 3
   },
-  "massG": 1.6,
+  "massG": 1.5,
   "model": {
     "kind": "procedural",
     "generator": "pcb_board",
@@ -22,8 +22,8 @@
   },
   "pins": [
     {
-      "id": "VM",
-      "label": "VM (motor 4.5–13.5 V)",
+      "id": "VMOT",
+      "label": "VMOT (motor 4.5–13.5 V)",
       "functions": ["power_in"]
     },
     {
@@ -103,13 +103,13 @@
       "min": 4.5,
       "max": 13.5
     },
-    "continuousCurrentPerChannelA": 1.2,
-    "peakCurrentPerChannelA": 3.2,
+    "continuousCurrentPerChannelA": 1,
+    "peakCurrentPerChannelA": 3,
     "voltageDropV": 0.5,
     "maxPwmFrequencyKHz": 100
   },
-  "specStatus": "needs-review",
-  "notes": "MOSFET bridge with low voltage drop: the usual choice for N20-motor line followers. STBY must be HIGH or the motors never move.",
+  "specStatus": "reviewed",
+  "notes": "MOSFET bridge with low voltage drop: the usual choice for N20-motor line followers. STBY must be HIGH or the motors never move. Reviewed 2026-11-23 against Pololu #713 specs (dimensions, mass, pins, electrical).",
   "license": "CC-BY-SA-4.0",
   "sources": ["https://www.pololu.com/product/713"]
 }

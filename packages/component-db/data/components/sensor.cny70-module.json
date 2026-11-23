@@ -50,13 +50,13 @@
     "channels": 1,
     "channelPitchMm": 0,
     "optimalHeightMm": {
-      "min": 0.3,
-      "max": 3
+      "min": 0,
+      "max": 5
     },
     "maxCurrentmA": 50
   },
   "specStatus": "needs-review",
-  "notes": "Generic module sold by many vendors; dimensions and values vary by seller. CNY70 must be very close to the surface (peak below 1 mm).",
+  "notes": "Generic module sold by many vendors. CNY70 datasheet: peak below 0.5 mm, useful 0–5 mm: mount it almost touching the track.",
   "license": "CC-BY-SA-4.0",
-  "sources": ["https://www.vishay.com/en/product/83751/"]
+  "sources": ["https://www.vishay.com/docs/83751/cny70.pdf"]
 }

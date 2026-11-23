@@ -11,7 +11,7 @@
     "y": 30,
     "z": 25
   },
-  "massG": 25,
+  "massG": 30,
   "model": {
     "kind": "procedural",
     "generator": "ball_caster",
@@ -25,5 +25,6 @@
   },
   "specStatus": "needs-review",
   "license": "CC-BY-SA-4.0",
-  "sources": ["https://www.digikey.com/en/products/result?keywords=Pololu+ball+caster+3%2F4"]
+  "sources": ["https://www.pololu.com/product/955"],
+  "notes": "Mass (without screws/spacers) and ball size checked against Pololu #955 on 2026-11-23; housing dimensions not yet checked."
 }

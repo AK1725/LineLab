@@ -11,7 +11,7 @@
     "y": 20.3,
     "z": 3
   },
-  "massG": 1,
+  "massG": 1.0,
   "model": {
     "kind": "procedural",
     "generator": "pcb_board",
@@ -25,6 +25,11 @@
       "id": "VIN",
       "label": "VIN (motor 2.7–10.8 V)",
       "functions": ["power_in"]
+    },
+    {
+      "id": "VMM",
+      "label": "VMM (reverse-protected motor supply out)",
+      "functions": ["power_out"]
     },
     {
       "id": "GND",
@@ -95,11 +100,13 @@
     },
     "continuousCurrentPerChannelA": 1.2,
     "peakCurrentPerChannelA": 2,
-    "voltageDropV": 0.4,
-    "maxPwmFrequencyKHz": 50
+    "voltageDropV": 0.4
   },
-  "specStatus": "needs-review",
-  "notes": "No separate logic supply. Speed is controlled by PWM on the IN pins (no PWM pin).",
+  "specStatus": "reviewed",
+  "notes": "No separate logic supply. Speed is controlled by PWM on the IN pins (no PWM pin). Silkscreen labels: SLP = nSLEEP, FLT = nFAULT. Reviewed 2026-11-23 against Pololu #2130 specs and TI DRV8833 datasheet (dimensions, mass, pins, electrical).",
   "license": "CC-BY-SA-4.0",
-  "sources": ["https://www.pololu.com/product/2130", "https://www.ti.com/product/DRV8833"]
+  "sources": [
+    "https://www.pololu.com/product/2130",
+    "https://www.ti.com/lit/ds/symlink/drv8833.pdf"
+  ]
 }

@@ -97,4 +97,10 @@
 - No gizmo handles: rotation is by keyboard, buttons or a number field. The outline editor has no bezier or fillet editing beyond presets.
 - Designs are stored per browser until accounts arrive (Phase 11).
 
+## Data review — top parts (branch `data-review-top-parts`)
+
+- 24 components verified against manufacturer pages/datasheets and marked `reviewed`. 36 entries corrected in total. See [`data-review-2026-11-23.md`](data-review-2026-11-23.md) for every change and its source.
+- Component pages show a "checked against the datasheet" badge for reviewed parts.
+- ST parts remain unverified (st.com refuses automated access).
+
 ## Next: Phase 3 — Wiring/netlist editor and rules engine

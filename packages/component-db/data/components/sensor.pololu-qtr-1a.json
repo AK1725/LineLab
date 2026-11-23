@@ -9,9 +9,9 @@
   "dimensionsMm": {
     "x": 7.6,
     "y": 12.7,
-    "z": 3
+    "z": 2.5
   },
-  "massG": 0.3,
+  "massG": 0.2,
   "model": {
     "kind": "procedural",
     "generator": "ir_sensor_array",
@@ -54,7 +54,8 @@
     },
     "maxCurrentmA": 17
   },
-  "specStatus": "needs-review",
+  "specStatus": "reviewed",
   "license": "CC-BY-SA-4.0",
-  "sources": ["https://www.pololu.com/product/958"]
+  "sources": ["https://www.pololu.com/product/958"],
+  "notes": "Discontinued by Pololu. Optimal 3 mm; maximum recommended 6 mm. Reviewed 2026-11-23 against Pololu #958 (dimensions, mass, pins, electrical)."
 }

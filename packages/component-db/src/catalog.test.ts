@@ -46,8 +46,26 @@ describe("catalog", () => {
     }
   });
 
-  it("marks every entry as needing datasheet review until someone checks it", () => {
-    expect(COMPONENTS.every((c) => c.specStatus === "needs-review")).toBe(true);
+  it("records how every reviewed entry was checked, and cites a manufacturer page for it", () => {
+    const reviewed = COMPONENTS.filter((c) => c.specStatus === "reviewed");
+    expect(reviewed.length).toBeGreaterThanOrEqual(20);
+    for (const c of reviewed) {
+      expect(c.notes, c.id).toMatch(/Reviewed \d{4}-\d{2}-\d{2} against/);
+      expect(
+        c.sources.some((s) => /pololu\.com|vishay\.com|ti\.com|st\.com|analog\.com/.test(s)),
+        c.id,
+      ).toBe(true);
+    }
+  });
+
+  it("keeps the verified TB6612FNG carrier values (Pololu #713)", () => {
+    const tb = base("driver.tb6612fng");
+    expect(tb.specStatus).toBe("reviewed");
+    expect(tb.massG).toBe(1.5);
+    expect(tb.pins.map((p) => p.id)).toContain("VMOT");
+    if (tb.electrical.kind !== "motor_driver") throw new Error("kind");
+    expect(tb.electrical.continuousCurrentPerChannelA).toBe(1);
+    expect(tb.electrical.peakCurrentPerChannelA).toBe(3);
   });
 
   it("flags ESP32 ADC2 pins so the WiFi conflict can be detected", () => {

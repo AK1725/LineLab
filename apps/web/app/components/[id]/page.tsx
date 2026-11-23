@@ -49,6 +49,14 @@ export default async function ComponentPage({ params }: Props) {
         {categoryLabel(c.category)}
         {c.manufacturer ? ` · ${c.manufacturer}` : ""}
       </p>
+      {c.specStatus === "reviewed" && (
+        <p
+          data-testid="reviewed"
+          className="mt-3 inline-block rounded-md border border-accent/40 bg-accent/10 px-3 py-1.5 text-sm"
+        >
+          Specs checked against the manufacturer&apos;s datasheet. See the notes below for details.
+        </p>
+      )}
       {c.specStatus === "needs-review" && (
         <p
           data-testid="needs-review"

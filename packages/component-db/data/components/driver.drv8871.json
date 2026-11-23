@@ -70,7 +70,10 @@
     "maxPwmFrequencyKHz": 200
   },
   "specStatus": "needs-review",
-  "notes": "Single channel: a differential robot needs two. Minimum 6.5 V motor supply.",
+  "notes": "Single channel: a differential robot needs two. Minimum 6.5 V motor supply. Chip values (6.5–45 V, 3.6 A peak, 200 kHz PWM, 565 mΩ) checked against the TI datasheet on 2026-11-23; the Adafruit board's size and mass are not yet checked.",
   "license": "CC-BY-SA-4.0",
-  "sources": ["https://www.adafruit.com/product/3190", "https://www.ti.com/product/DRV8871"]
+  "sources": [
+    "https://www.adafruit.com/product/3190",
+    "https://www.ti.com/lit/ds/symlink/drv8871.pdf"
+  ]
 }

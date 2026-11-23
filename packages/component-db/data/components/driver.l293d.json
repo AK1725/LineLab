@@ -9,7 +9,7 @@
   "typicalPriceUsd": 2,
   "dimensionsMm": {
     "x": 19.8,
-    "y": 6.4,
+    "y": 6.35,
     "z": 5
   },
   "massG": 1,
@@ -100,11 +100,10 @@
     },
     "continuousCurrentPerChannelA": 0.6,
     "peakCurrentPerChannelA": 1.2,
-    "voltageDropV": 2.6,
-    "maxPwmFrequencyKHz": 5
+    "voltageDropV": 2.6
   },
   "specStatus": "needs-review",
-  "notes": "Built-in flyback diodes. Large voltage drop and only 0.6 A: fine for TT motors, weak for N20 at stall.",
+  "notes": "Built-in flyback diodes. Drop ≈ 2.6 V typical at 0.6 A (VOH VCC2−1.4 V + VOL 1.2 V). Electrical values checked against the TI datasheet on 2026-11-23; package height and mass not yet checked.",
   "license": "CC-BY-SA-4.0",
   "sources": ["https://www.ti.com/product/L293D"]
 }

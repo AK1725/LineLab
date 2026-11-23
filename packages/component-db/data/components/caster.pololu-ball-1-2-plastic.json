@@ -26,5 +26,6 @@
   },
   "specStatus": "needs-review",
   "license": "CC-BY-SA-4.0",
-  "sources": ["https://www.digikey.com/en/products/result?keywords=Pololu+ball+caster+1%2F2"]
+  "sources": ["https://www.pololu.com/product/952"],
+  "notes": "Mass (without screws/spacers) and ball size checked against Pololu #952 on 2026-11-23; housing dimensions not yet checked."
 }

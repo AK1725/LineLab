@@ -11,7 +11,7 @@
     "y": 13,
     "z": 11
   },
-  "massG": 2,
+  "massG": 4,
   "model": {
     "kind": "procedural",
     "generator": "ball_caster",
@@ -24,7 +24,7 @@
     "kind": "generic"
   },
   "specStatus": "needs-review",
-  "notes": "Height adjustable with spacers. Price is per caster.",
+  "notes": "Mass (without screws/spacers) and ball size checked against Pololu #951 on 2026-11-23; housing dimensions not yet checked.",
   "license": "CC-BY-SA-4.0",
-  "sources": ["https://www.digikey.com/en/products/result?keywords=Pololu+ball+caster+3%2F8"]
+  "sources": ["https://www.pololu.com/product/951"]
 }

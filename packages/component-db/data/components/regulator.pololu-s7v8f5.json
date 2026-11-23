@@ -7,11 +7,11 @@
   "manufacturer": "Pololu",
   "typicalPriceUsd": 6,
   "dimensionsMm": {
-    "x": 12.7,
-    "y": 17.8,
-    "z": 4
+    "x": 11.4,
+    "y": 16.5,
+    "z": 2.5
   },
-  "massG": 1.5,
+  "massG": 0.6,
   "model": {
     "kind": "procedural",
     "generator": "pcb_board",
@@ -55,11 +55,10 @@
       "min": 5,
       "max": 5
     },
-    "maxOutputCurrentA": 1,
-    "efficiencyPct": 90
+    "maxOutputCurrentA": 1
   },
-  "specStatus": "needs-review",
-  "notes": "Keeps 5 V while a 2S pack sags. Available current depends on input voltage.",
+  "specStatus": "reviewed",
+  "notes": "Keeps 5 V while a 2S pack sags. Available output current depends on input voltage. Reviewed 2026-11-23 against Pololu #2123 specs (dimensions, mass, pins, electrical).",
   "license": "CC-BY-SA-4.0",
-  "sources": ["https://www.digikey.com/en/products/result?keywords=Pololu+S7V8F5"]
+  "sources": ["https://www.pololu.com/product/2123"]
 }

@@ -11,7 +11,7 @@
     "y": 8,
     "z": 60
   },
-  "massG": 5,
+  "massG": 11.3,
   "model": {
     "kind": "procedural",
     "generator": "wheel",
@@ -24,11 +24,10 @@
   "electrical": {
     "kind": "wheel",
     "diameterMm": 60,
-    "widthMm": 8,
-    "frictionCoefficient": 0.9
+    "widthMm": 8
   },
-  "specStatus": "needs-review",
-  "notes": "Fits micro metal gearmotor D-shafts (3 mm). Price is per pair.",
+  "specStatus": "reviewed",
+  "notes": "Fits micro metal gearmotor 3 mm D-shafts. Mass is per wheel including tyre; price is per pair. Reviewed 2026-11-23 against Pololu #1420 specs (dimensions, mass, pins, electrical).",
   "license": "CC-BY-SA-4.0",
-  "sources": ["https://www.digikey.com/en/products/result?keywords=Pololu+wheel+60x8mm"]
+  "sources": ["https://www.pololu.com/product/1420"]
 }
