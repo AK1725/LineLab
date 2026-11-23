@@ -141,6 +141,10 @@
         "additionalProperties": false
       }
     },
+    "mountHoleDiameterMm": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
     "wheelMounts": {
       "minItems": 2,
       "type": "array",

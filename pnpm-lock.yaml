@@ -57,6 +57,9 @@ importers:
       '@linelab/component-db':
         specifier: workspace:*
         version: link:../../packages/component-db
+      '@linelab/design-core':
+        specifier: workspace:*
+        version: link:../../packages/design-core
       '@linelab/schema':
         specifier: workspace:*
         version: link:../../packages/schema
@@ -69,6 +72,9 @@ importers:
       '@react-three/fiber':
         specifier: 9.8.2
         version: 9.8.2(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(three@0.187.0)
+      idb-keyval:
+        specifier: 6.3.0
+        version: 6.3.0
       next:
         specifier: 16.4.6
         version: 16.4.6(@babel/core@7.29.13)(@playwright/test@1.63.0)(@types/node@22.20.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
@@ -81,6 +87,9 @@ importers:
       three:
         specifier: 0.187.0
         version: 0.187.0
+      zustand:
+        specifier: 5.1.0
+        version: 5.1.0(@types/react@19.3.0)(react@19.3.1)(use-sync-external-store@1.7.0(react@19.3.1))
     devDependencies:
       '@tailwindcss/postcss':
         specifier: 4.3.5
@@ -103,6 +112,9 @@ importers:
 
   e2e:
     devDependencies:
+      '@linelab/schema':
+        specifier: workspace:*
+        version: link:../packages/schema
       '@playwright/test':
         specifier: 1.63.0
         version: 1.63.0
@@ -128,6 +140,22 @@ importers:
         specifier: 0.187.0
         version: 0.187.0
       three:
+        specifier: 0.187.0
+        version: 0.187.0
+
+  packages/design-core:
+    dependencies:
+      '@linelab/schema':
+        specifier: workspace:*
+        version: link:../schema
+      three:
+        specifier: 0.187.0
+        version: 0.187.0
+    devDependencies:
+      '@linelab/component-db':
+        specifier: workspace:*
+        version: link:../component-db
+      '@types/three':
         specifier: 0.187.0
         version: 0.187.0
 
@@ -1902,6 +1930,9 @@ packages:
 
   hls.js@1.7.4:
     resolution: {integrity: sha512-3GlxGdPvT2YHvQYOt+yOzT/DEior/qJVNIylHA77kgeoBTdQQqi70GwefNEUmHQeNGyjC8U62+bruqW/Tpm+tg==}
+
+  idb-keyval@6.3.0:
+    resolution: {integrity: sha512-um+2dgAWmYsu615EXpWVwSmapJhON0G43t3Ka/EVaohzPQXSMqKEqeDK/oIW3Ow+BXaF2PvSc+oBTFp793A5Ow==}
 
   ieee754@1.2.1:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
@@ -4754,6 +4785,8 @@ snapshots:
       hermes-estree: 0.25.1
 
   hls.js@1.7.4: {}
+
+  idb-keyval@6.3.0: {}
 
   ieee754@1.2.1: {}
 

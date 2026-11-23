@@ -9,3 +9,4 @@ pnpm-lock.yaml
 **/next-env.d.ts
 packages/schema/json-schema
 apps/vision
+**/src/generated

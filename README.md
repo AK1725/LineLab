@@ -4,7 +4,7 @@
 
 You put together a virtual twin of your real robot from a database of real components, run **your actual firmware** on an emulated microcontroller on a virtual track, and see exactly where and why it fails. An AI debugging agent then proposes a fix that is verified in simulation before you ever see it.
 
-> **Status: Phase 1 of 11 done.** A searchable database of 124 line-follower components with pinouts, specs and 3D models is live in the web app. The editor, simulator and debugger come next. See the [roadmap](#roadmap).
+> **Status: Phases 0–2 of 11 done.** Search 124 real components, then assemble a robot in 3D on a chassis template or your own chassis, with live mass, centre of gravity, collisions and sensor geometry. Wiring checks, simulation and the AI debugger come next. See the [roadmap](#roadmap).
 
 ---
 
@@ -49,6 +49,7 @@ apps/vision         Python FastAPI: track images, robot photos
 apps/compiler       sandboxed firmware compiler (Phase 6)
 packages/schema     Zod schemas + generated JSON Schema: the single source of truth for data
 packages/component-db  open component & chassis database + validator
+packages/design-core   editor logic: mass/CoG, collisions, snapping, undo/redo, DXF/SVG/STL
 packages/rules-engine, sim-core, firmware-runtime, agent, three-models, ui, lfr-hal, telemetry-lib
 tracks/             built-in tracks (JSON)
 e2e/                Playwright tests
@@ -61,8 +62,8 @@ docs/               blueprint, build plan, progress log, ADRs
 | ----- | ----------------------------------------------------------------------- | ------ |
 | 0     | Monorepo, CI, schemas, infrastructure                                   | ✅     |
 | 1     | Component database (124 parts), search, procedural 3D models            | ✅     |
-| 2     | 3D assembly editor, chassis templates, custom chassis                   | ⏳     |
-| 3     | Wiring/netlist editor and live rules engine                             |        |
+| 2     | 3D assembly editor, chassis templates, custom chassis                   | ✅     |
+| 3     | Wiring/netlist editor and live rules engine                             | ⏳     |
 | 4     | Tracks: library, editor, image-to-track                                 |        |
 | 5     | Deterministic physics simulation and run viewer                         |        |
 | 6     | Run real firmware (AVR / RP2040 emulation, HAL shim)                    |        |

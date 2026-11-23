@@ -11,6 +11,10 @@ export const Placement = z
     position: Vec3,
     rotation: Quat,
     deck: z.number().int().nonnegative(),
+    /** Which face of the deck the part is fixed to. Line sensors and motors usually hang underneath. */
+    mount: z.enum(["top", "bottom"]).default("top"),
+    /** Spacer between the deck face and the part (mm): raises a top part, lowers a bottom one. */
+    standoffMm: NonNegativeNumber.default(0),
   })
   .strict();
 export type Placement = z.infer<typeof Placement>;

@@ -4,6 +4,8 @@ import { GENERATORS, type Generator } from "./generators.js";
 
 export { GENERATORS, type Generator } from "./generators.js";
 export { COLORS, PALETTE_ORDER, paletteColor, type Dims } from "./kit.js";
+export { buildChassisModel } from "./chassis.js";
+export { mergeByMaterial } from "./merge.js";
 
 type ModelSource = Pick<Component, "id" | "dimensionsMm" | "model">;
 

@@ -50,6 +50,8 @@ export const Chassis = z
     densityGcm3: PositiveNumber,
     decks: z.array(Deck).min(1),
     mountPoints: z.array(Vec2),
+    /** Diameter of the holes at `mountPoints` (default M3 clearance, 3.2 mm). */
+    mountHoleDiameterMm: PositiveNumber.optional(),
     wheelMounts: z.array(WheelMount).min(2),
     casterMounts: z.array(Vec2),
   })

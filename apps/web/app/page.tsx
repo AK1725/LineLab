@@ -3,7 +3,7 @@ import Link from "next/link";
 const phases = [
   ["0", "Foundation: monorepo, CI, schemas", true],
   ["1", "Component database, search, procedural 3D models", true],
-  ["2", "3D assembly and chassis designer", false],
+  ["2", "3D assembly and chassis designer", true],
   ["3", "Wiring and live rules engine", false],
   ["4", "Tracks: library, editor, image import", false],
   ["5", "Deterministic simulation and run viewer", false],
@@ -28,10 +28,16 @@ export default function Home() {
       </p>
       <p className="mt-6">
         <Link
-          href="/components"
+          href="/build"
           className="inline-block rounded-lg bg-accent px-4 py-2 font-medium text-white dark:text-black"
         >
-          Browse the component database
+          Build a robot
+        </Link>{" "}
+        <Link
+          href="/components"
+          className="ml-2 inline-block rounded-lg border border-border px-4 py-2 font-medium"
+        >
+          Browse components
         </Link>
       </p>
 

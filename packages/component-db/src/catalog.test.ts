@@ -1,6 +1,6 @@
 import { Category, Component } from "@linelab/schema";
 import { describe, expect, it } from "vitest";
-import { CATEGORY_INFO, COMPONENTS, getComponent } from "./index.js";
+import { CATEGORY_INFO, CHASSIS, COMPONENTS, getChassis, getComponent } from "./index.js";
 import { checkCatalog, checkComponent } from "./validate/index.js";
 
 const base = (id: string): Component => {
@@ -60,6 +60,24 @@ describe("catalog", () => {
         .map((p) => p.id)
         .sort(),
     ).toEqual(["GPIO34", "GPIO35", "GPIO36", "GPIO39"]);
+  });
+});
+
+describe("chassis templates", () => {
+  it("ships the six archetypes from the blueprint", () => {
+    expect(CHASSIS.map((c) => c.id).sort()).toEqual([
+      "chassis.4wd-robust",
+      "chassis.downforce-racer",
+      "chassis.long-nose-t",
+      "chassis.maze-compact",
+      "chassis.pcb-racer",
+      "chassis.starter-2wd",
+    ]);
+    expect(getChassis("chassis.pcb-racer")?.material).toBe("fr4");
+  });
+
+  it("describes archetypes, never a specific team's robot", () => {
+    for (const c of CHASSIS) expect(c.inspiredBy, c.id).toBeTruthy();
   });
 });
 

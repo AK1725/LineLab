@@ -53,4 +53,48 @@
 - Teensy 4.0 bottom pads (24–39) are not listed. Pololu QTR-MD/HD dimensions are approximate.
 - Models are intentionally simple (boxes and cylinders). glTF models are rejected by validation until a later phase.
 
-## Next: Phase 2 — 3D assembly editor and chassis
+## Phase 2 — 3D assembly editor and chassis ✅ (branch `phase-2-assembly`)
+
+**Done**
+
+- **New package `packages/design-core`** (ADR 0004): mass and CoG, oriented-box collisions, snapping, measurements, undo/redo with drag coalescing, smart default placement, outline presets, hole grids, and DXF/SVG/STL import and export.
+- **6 chassis templates** (`data/chassis/`): starter 2WD (acrylic, TT), PCB racer (FR4 T-shape), long-nose T-frame (carbon), downforce racer (fan cutout), 4WD robust (two decks) and compact maze solver (octagon). Deck heights are derived from wheel and motor sizes. Each is labelled with the archetype it is inspired by.
+- Schema: Placement `mount` (top/bottom) and `standoffMm` (spacers), Chassis `mountHoleDiameterMm`.
+- `three-models`: `buildChassisModel` (every deck, cutouts and holes) and `mergeByMaterial` (one mesh per material).
+- **Web editor** at `/build` → `/build/edit?id=…`:
+  - parts search with smart "Add"
+  - 3D, top and side cameras
+  - drag to move with snapping (grid, wheel/caster mounts, mounting holes, deck edges)
+  - shift-click multi-select
+  - rotate, nudge, duplicate and delete, with keyboard shortcuts
+  - undo/redo
+  - collision outlines
+  - overlays for CoG, track width, look-ahead and sensor height
+  - inspector with position, rotation, deck, mount side and spacer
+  - mass/CoG panel and collision list
+- **Custom chassis designer**: presets, a draggable SVG outline editor (insert/delete points), material, thickness, deck height, wheel and caster mounts, hole grid, live plate mass and CoG, and SVG/DXF/STL import.
+- **Persistence**: autosave to IndexedDB, a saved-designs list, JSON export/import, and DXF (laser) and STL (3D print) chassis export.
+
+**Verified locally**
+
+- `pnpm verify` green: 163 unit tests (design-core 47, schema 38, three-models 38, component-db 34, api 4, vision 2).
+- Hand-calculated CoG fixture: 50 g at (10, 2, 23.2) mm, matched to 1e-9.
+- Undo/redo: three seeded runs of 150 random commands each, checked at every step back and forward.
+- A clean (collision-free) robot auto-assembles on all six templates.
+- `pnpm test:e2e`: 144/144, including:
+  - **a full 2WD robot built from a template in about 8 s** (limit: 3 min), checked collision-free, with a schema-valid JSON export, and it survives a reload
+  - mouse drag snaps to the grid and is a single undo step
+  - keyboard shortcuts
+  - custom chassis with DXF/STL download
+  - template switching re-seats parts
+  - JSON import
+  - render budget with 60 parts
+
+**Deferred / known issues**
+
+- **60 fps is not measured on a real GPU.** This container and CI use SwiftShader (CPU), where fps follows pixel count. The test enforces the GPU budget instead: 60 parts = 193 draw calls, about 18k triangles, about 1 ms CPU per frame. To do: run `pnpm test:e2e -g "rendering budget"` on a machine with a GPU and record real fps.
+- STL import uses the convex hull (notches are lost). SVG `transform` attributes are ignored. Both are stated in the UI and in code.
+- No gizmo handles: rotation is by keyboard, buttons or a number field. The outline editor has no bezier or fillet editing beyond presets.
+- Designs are stored per browser until accounts arrive (Phase 11).
+
+## Next: Phase 3 — Wiring/netlist editor and rules engine

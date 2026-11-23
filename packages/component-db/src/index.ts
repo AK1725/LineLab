@@ -2,10 +2,10 @@
  * Browser-safe entry point: the catalog, search and category metadata.
  * Node-only validation lives in `@linelab/component-db/validate`.
  */
-import type { Component } from "@linelab/schema";
-import { COMPONENTS } from "./generated/catalog.js";
+import type { Chassis, Component } from "@linelab/schema";
+import { CHASSIS, COMPONENTS } from "./generated/catalog.js";
 
-export { COMPONENTS };
+export { CHASSIS, COMPONENTS };
 export { CATEGORY_INFO, categoryLabel, categoryOrder } from "./categories.js";
 export {
   createSearchIndex,
@@ -19,4 +19,10 @@ const byId = new Map(COMPONENTS.map((c) => [c.id, c]));
 
 export function getComponent(id: string): Component | undefined {
   return byId.get(id);
+}
+
+const chassisById = new Map(CHASSIS.map((c) => [c.id, c]));
+
+export function getChassis(id: string): Chassis | undefined {
+  return chassisById.get(id);
 }

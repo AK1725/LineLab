@@ -20,6 +20,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <Link href="/" className="font-semibold tracking-tight">
               LineLab
             </Link>
+            <Link href="/build" className="text-sm text-muted hover:text-fg">
+              Build
+            </Link>
             <Link href="/components" className="text-sm text-muted hover:text-fg">
               Components
             </Link>
