@@ -1,0 +1,11 @@
+pnpm-lock.yaml
+**/dist
+**/.next
+**/.turbo
+**/coverage
+**/playwright-report
+**/test-results
+**/.venv
+**/next-env.d.ts
+packages/schema/json-schema
+apps/vision

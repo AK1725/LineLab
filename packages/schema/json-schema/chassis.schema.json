@@ -1,0 +1,221 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(\\.[a-z0-9][a-z0-9_-]*)+$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "inspiredBy": {
+      "type": "string"
+    },
+    "outline": {
+      "minItems": 3,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "x",
+          "y"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "cutouts": {
+      "type": "array",
+      "items": {
+        "minItems": 3,
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "x",
+            "y"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "thicknessMm": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "material": {
+      "type": "string",
+      "enum": [
+        "acrylic",
+        "fr4",
+        "pla",
+        "petg",
+        "carbon_fiber",
+        "aluminium",
+        "plywood"
+      ]
+    },
+    "densityGcm3": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "decks": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "index": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "heightMm": {
+            "type": "number",
+            "minimum": 0
+          },
+          "outline": {
+            "minItems": 3,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "x": {
+                  "type": "number"
+                },
+                "y": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "x",
+                "y"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "index",
+          "heightMm"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "mountPoints": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "x",
+          "y"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "wheelMounts": {
+      "minItems": 2,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "side": {
+            "type": "string",
+            "enum": [
+              "left",
+              "right"
+            ]
+          },
+          "position": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "x",
+              "y"
+            ],
+            "additionalProperties": false
+          },
+          "axleHeightMm": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          }
+        },
+        "required": [
+          "side",
+          "position",
+          "axleHeightMm"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "casterMounts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "x",
+          "y"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "outline",
+    "thicknessMm",
+    "material",
+    "densityGcm3",
+    "decks",
+    "mountPoints",
+    "wheelMounts",
+    "casterMounts"
+  ],
+  "additionalProperties": false,
+  "$id": "https://linelab.dev/schema/chassis.schema.json",
+  "title": "LineLab chassis"
+}

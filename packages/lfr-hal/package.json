@@ -1,0 +1,7 @@
+{
+  "name": "@linelab/lfr-hal",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Mock Arduino core (C/C++ headers + JS bindings) so ESP32/STM32/Teensy sketches can run against sim-core.",
+  "license": "Apache-2.0"
+}

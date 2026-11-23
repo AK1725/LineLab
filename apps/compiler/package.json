@@ -1,0 +1,23 @@
+{
+  "name": "@linelab/compiler",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Sandboxed firmware compile service (arduino-cli / PlatformIO / emscripten).",
+  "license": "Apache-2.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --max-warnings 0",
+    "test": "vitest run --passWithNoTests"
+  }
+}

@@ -1,0 +1,454 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(\\.[a-z0-9][a-z0-9_-]*)+$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "description": {
+      "type": "string"
+    },
+    "difficulty": {
+      "type": "string",
+      "enum": [
+        "easy",
+        "medium",
+        "hard",
+        "expert"
+      ]
+    },
+    "units": {
+      "type": "string",
+      "const": "mm"
+    },
+    "surface": {
+      "type": "object",
+      "properties": {
+        "lineColor": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "backgroundColor": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "lineReflectance": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "backgroundReflectance": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      },
+      "required": [
+        "lineColor",
+        "backgroundColor",
+        "lineReflectance",
+        "backgroundReflectance"
+      ],
+      "additionalProperties": false
+    },
+    "lineWidthMm": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "segments": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "line"
+              },
+              "from": {
+                "type": "object",
+                "properties": {
+                  "x": {
+                    "type": "number"
+                  },
+                  "y": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "x",
+                  "y"
+                ],
+                "additionalProperties": false
+              },
+              "to": {
+                "type": "object",
+                "properties": {
+                  "x": {
+                    "type": "number"
+                  },
+                  "y": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "x",
+                  "y"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "type",
+              "from",
+              "to"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "arc"
+              },
+              "center": {
+                "type": "object",
+                "properties": {
+                  "x": {
+                    "type": "number"
+                  },
+                  "y": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "x",
+                  "y"
+                ],
+                "additionalProperties": false
+              },
+              "radiusMm": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "startAngleRad": {
+                "type": "number"
+              },
+              "sweepRad": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "type",
+              "center",
+              "radiusMm",
+              "startAngleRad",
+              "sweepRad"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "bezier"
+              },
+              "p0": {
+                "type": "object",
+                "properties": {
+                  "x": {
+                    "type": "number"
+                  },
+                  "y": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "x",
+                  "y"
+                ],
+                "additionalProperties": false
+              },
+              "p1": {
+                "type": "object",
+                "properties": {
+                  "x": {
+                    "type": "number"
+                  },
+                  "y": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "x",
+                  "y"
+                ],
+                "additionalProperties": false
+              },
+              "p2": {
+                "type": "object",
+                "properties": {
+                  "x": {
+                    "type": "number"
+                  },
+                  "y": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "x",
+                  "y"
+                ],
+                "additionalProperties": false
+              },
+              "p3": {
+                "type": "object",
+                "properties": {
+                  "x": {
+                    "type": "number"
+                  },
+                  "y": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "x",
+                  "y"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "type",
+              "p0",
+              "p1",
+              "p2",
+              "p3"
+            ],
+            "additionalProperties": false
+          }
+        ]
+      }
+    },
+    "features": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "crossing"
+              },
+              "position": {
+                "type": "object",
+                "properties": {
+                  "x": {
+                    "type": "number"
+                  },
+                  "y": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "x",
+                  "y"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "type",
+              "position"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "gap"
+              },
+              "startS": {
+                "type": "number",
+                "minimum": 0
+              },
+              "endS": {
+                "type": "number",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "type",
+              "startS",
+              "endS"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "inversion"
+              },
+              "startS": {
+                "type": "number",
+                "minimum": 0
+              },
+              "endS": {
+                "type": "number",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "type",
+              "startS",
+              "endS"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "checkpoint"
+              },
+              "position": {
+                "type": "object",
+                "properties": {
+                  "x": {
+                    "type": "number"
+                  },
+                  "y": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "x",
+                  "y"
+                ],
+                "additionalProperties": false
+              },
+              "index": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              }
+            },
+            "required": [
+              "type",
+              "position",
+              "index"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "junction"
+              },
+              "position": {
+                "type": "object",
+                "properties": {
+                  "x": {
+                    "type": "number"
+                  },
+                  "y": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "x",
+                  "y"
+                ],
+                "additionalProperties": false
+              },
+              "branches": {
+                "type": "integer",
+                "minimum": 3,
+                "maximum": 9007199254740991
+              }
+            },
+            "required": [
+              "type",
+              "position",
+              "branches"
+            ],
+            "additionalProperties": false
+          }
+        ]
+      }
+    },
+    "start": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        },
+        "headingRad": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y",
+        "headingRad"
+      ],
+      "additionalProperties": false
+    },
+    "finish": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        },
+        "headingRad": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y",
+        "headingRad"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "units",
+    "surface",
+    "lineWidthMm",
+    "segments",
+    "features",
+    "start"
+  ],
+  "additionalProperties": false,
+  "$id": "https://linelab.dev/schema/track.schema.json",
+  "title": "LineLab track"
+}

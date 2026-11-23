@@ -1,0 +1,772 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(\\.[a-z0-9][a-z0-9_-]*)+$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "aliases": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "mcu",
+        "line_sensor",
+        "sensor",
+        "motor_driver",
+        "motor",
+        "wheel",
+        "caster",
+        "battery",
+        "regulator",
+        "communication",
+        "display",
+        "input",
+        "indicator",
+        "fan",
+        "esc",
+        "mechanical",
+        "misc"
+      ]
+    },
+    "manufacturer": {
+      "type": "string",
+      "minLength": 1
+    },
+    "datasheetUrl": {
+      "type": "string",
+      "format": "uri"
+    },
+    "typicalPriceUsd": {
+      "type": "number",
+      "minimum": 0
+    },
+    "dimensionsMm": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "y": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "z": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      },
+      "required": [
+        "x",
+        "y",
+        "z"
+      ],
+      "additionalProperties": false
+    },
+    "massG": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "mountingHoles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          },
+          "d": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          }
+        },
+        "required": [
+          "x",
+          "y",
+          "d"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "originMm": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y"
+      ],
+      "additionalProperties": false
+    },
+    "model": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "procedural"
+            },
+            "generator": {
+              "type": "string",
+              "minLength": 1
+            },
+            "params": {
+              "type": "object",
+              "propertyNames": {
+                "type": "string"
+              },
+              "additionalProperties": {
+                "type": "number"
+              }
+            }
+          },
+          "required": [
+            "kind",
+            "generator",
+            "params"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "gltf"
+            },
+            "url": {
+              "type": "string",
+              "format": "uri"
+            },
+            "license": {
+              "type": "string",
+              "minLength": 1
+            },
+            "attribution": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "kind",
+            "url",
+            "license",
+            "attribution"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "pins": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 32,
+            "pattern": "^[A-Za-z0-9_+.-]+$"
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "functions": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "power_in",
+                "power_out",
+                "gnd",
+                "digital",
+                "analog",
+                "pwm",
+                "i2c_sda",
+                "i2c_scl",
+                "spi_mosi",
+                "spi_miso",
+                "spi_sck",
+                "spi_cs",
+                "uart_tx",
+                "uart_rx",
+                "motor_out",
+                "enable",
+                "reset",
+                "nc"
+              ]
+            }
+          },
+          "arduinoPin": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              {
+                "type": "string",
+                "minLength": 1
+              }
+            ]
+          },
+          "voltageDomainV": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "maxCurrentmA": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "fiveVoltTolerant": {
+            "type": "boolean"
+          },
+          "notes": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "label",
+          "functions"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "electrical": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "mcu"
+            },
+            "arch": {
+              "type": "string",
+              "enum": [
+                "avr",
+                "megaavr",
+                "rp2040",
+                "esp32",
+                "esp32s3",
+                "esp32c3",
+                "stm32f1",
+                "stm32f4",
+                "samd21",
+                "imxrt1062"
+              ]
+            },
+            "logicVoltageV": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "inputVoltage": {
+              "type": "object",
+              "properties": {
+                "min": {
+                  "type": "number"
+                },
+                "max": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "min",
+                "max"
+              ],
+              "additionalProperties": false
+            },
+            "clockMHz": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "flashKB": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "sramKB": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "adcBits": {
+              "type": "integer",
+              "minimum": 8,
+              "maximum": 16
+            },
+            "fiveVoltTolerantIO": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "kind",
+            "arch",
+            "logicVoltageV",
+            "inputVoltage",
+            "clockMHz",
+            "flashKB",
+            "sramKB",
+            "adcBits",
+            "fiveVoltTolerantIO"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "line_sensor"
+            },
+            "supplyVoltage": {
+              "type": "object",
+              "properties": {
+                "min": {
+                  "type": "number"
+                },
+                "max": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "min",
+                "max"
+              ],
+              "additionalProperties": false
+            },
+            "outputType": {
+              "type": "string",
+              "enum": [
+                "analog",
+                "digital",
+                "rc"
+              ]
+            },
+            "channels": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            },
+            "channelPitchMm": {
+              "type": "number",
+              "minimum": 0
+            },
+            "optimalHeightMm": {
+              "type": "object",
+              "properties": {
+                "min": {
+                  "type": "number"
+                },
+                "max": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "min",
+                "max"
+              ],
+              "additionalProperties": false
+            },
+            "maxCurrentmA": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
+          },
+          "required": [
+            "kind",
+            "supplyVoltage",
+            "outputType",
+            "channels",
+            "channelPitchMm",
+            "optimalHeightMm",
+            "maxCurrentmA"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "motor_driver"
+            },
+            "channels": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            },
+            "logicVoltage": {
+              "type": "object",
+              "properties": {
+                "min": {
+                  "type": "number"
+                },
+                "max": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "min",
+                "max"
+              ],
+              "additionalProperties": false
+            },
+            "motorVoltage": {
+              "type": "object",
+              "properties": {
+                "min": {
+                  "type": "number"
+                },
+                "max": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "min",
+                "max"
+              ],
+              "additionalProperties": false
+            },
+            "continuousCurrentPerChannelA": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "peakCurrentPerChannelA": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "voltageDropV": {
+              "type": "number",
+              "minimum": 0
+            },
+            "maxPwmFrequencyKHz": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
+          },
+          "required": [
+            "kind",
+            "channels",
+            "logicVoltage",
+            "motorVoltage",
+            "continuousCurrentPerChannelA",
+            "peakCurrentPerChannelA",
+            "voltageDropV"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "motor"
+            },
+            "ratedVoltageV": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "noLoadRpm": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "noLoadCurrentA": {
+              "type": "number",
+              "minimum": 0
+            },
+            "stallCurrentA": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "stallTorqueKgCm": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "gearRatio": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
+          },
+          "required": [
+            "kind",
+            "ratedVoltageV",
+            "noLoadRpm",
+            "noLoadCurrentA",
+            "stallCurrentA",
+            "stallTorqueKgCm",
+            "gearRatio"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "battery"
+            },
+            "chemistry": {
+              "type": "string",
+              "enum": [
+                "lipo",
+                "li-ion",
+                "lifepo4",
+                "nimh",
+                "alkaline"
+              ]
+            },
+            "cellsInSeries": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            },
+            "nominalVoltageV": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "fullVoltageV": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "cutoffVoltageV": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "capacitymAh": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "maxContinuousDischargeA": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "internalResistanceMilliohm": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
+          },
+          "required": [
+            "kind",
+            "chemistry",
+            "cellsInSeries",
+            "nominalVoltageV",
+            "fullVoltageV",
+            "cutoffVoltageV",
+            "capacitymAh",
+            "maxContinuousDischargeA",
+            "internalResistanceMilliohm"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "regulator"
+            },
+            "topology": {
+              "type": "string",
+              "enum": [
+                "linear",
+                "buck",
+                "boost",
+                "buck-boost"
+              ]
+            },
+            "inputVoltage": {
+              "type": "object",
+              "properties": {
+                "min": {
+                  "type": "number"
+                },
+                "max": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "min",
+                "max"
+              ],
+              "additionalProperties": false
+            },
+            "outputVoltage": {
+              "type": "object",
+              "properties": {
+                "min": {
+                  "type": "number"
+                },
+                "max": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "min",
+                "max"
+              ],
+              "additionalProperties": false
+            },
+            "maxOutputCurrentA": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "dropoutV": {
+              "type": "number",
+              "minimum": 0
+            },
+            "efficiencyPct": {
+              "type": "number",
+              "minimum": 1,
+              "maximum": 100
+            }
+          },
+          "required": [
+            "kind",
+            "topology",
+            "inputVoltage",
+            "outputVoltage",
+            "maxOutputCurrentA"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "wheel"
+            },
+            "diameterMm": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "widthMm": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "frictionCoefficient": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
+          },
+          "required": [
+            "kind",
+            "diameterMm",
+            "widthMm"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "generic"
+            },
+            "supplyVoltage": {
+              "type": "object",
+              "properties": {
+                "min": {
+                  "type": "number"
+                },
+                "max": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "min",
+                "max"
+              ],
+              "additionalProperties": false
+            },
+            "maxCurrentmA": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
+          },
+          "required": [
+            "kind"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "simModel": {
+      "type": "object",
+      "properties": {
+        "model": {
+          "type": "string",
+          "minLength": 1
+        },
+        "params": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "number"
+          }
+        }
+      },
+      "required": [
+        "model",
+        "params"
+      ],
+      "additionalProperties": false
+    },
+    "license": {
+      "type": "string",
+      "const": "CC-BY-SA-4.0"
+    },
+    "sources": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uri"
+      }
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "aliases",
+    "category",
+    "dimensionsMm",
+    "massG",
+    "model",
+    "pins",
+    "electrical",
+    "license",
+    "sources"
+  ],
+  "additionalProperties": false,
+  "$id": "https://linelab.dev/schema/component.schema.json",
+  "title": "LineLab component"
+}

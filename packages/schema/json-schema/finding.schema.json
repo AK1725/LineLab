@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z]+\\.[a-z0-9-]+$"
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "error",
+        "warning",
+        "tip"
+      ]
+    },
+    "message": {
+      "type": "string",
+      "minLength": 1
+    },
+    "explanation": {
+      "type": "string",
+      "minLength": 1
+    },
+    "affected": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "placement",
+              "pin",
+              "net",
+              "chassis",
+              "firmware"
+            ]
+          },
+          "ref": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "kind",
+          "ref"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "fix": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operations": {
+          "minItems": 1,
+          "type": "array",
+          "items": {}
+        }
+      },
+      "required": [
+        "label",
+        "operations"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "id",
+    "severity",
+    "message",
+    "explanation",
+    "affected"
+  ],
+  "additionalProperties": false,
+  "$id": "https://linelab.dev/schema/finding.schema.json",
+  "title": "LineLab finding"
+}

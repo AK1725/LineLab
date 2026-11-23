@@ -1,0 +1,36 @@
+{
+  "id": "driver.tb6612fng-test",
+  "name": "TB6612FNG dual motor driver (test fixture)",
+  "aliases": ["tb6612", "tb6612fng"],
+  "category": "motor_driver",
+  "manufacturer": "Toshiba",
+  "dimensionsMm": { "x": 20.3, "y": 15.2, "z": 3 },
+  "massG": 1.6,
+  "model": {
+    "kind": "procedural",
+    "generator": "pcb_board",
+    "params": { "x": 20.3, "y": 15.2, "headerRows": 2 }
+  },
+  "pins": [
+    { "id": "VM", "label": "Motor supply", "functions": ["power_in"] },
+    { "id": "VCC", "label": "Logic supply", "functions": ["power_in"] },
+    { "id": "GND", "label": "Ground", "functions": ["gnd"] },
+    { "id": "AO1", "label": "Motor A out 1", "functions": ["motor_out"] },
+    { "id": "AO2", "label": "Motor A out 2", "functions": ["motor_out"] },
+    { "id": "PWMA", "label": "Motor A PWM", "functions": ["pwm", "digital"] },
+    { "id": "AIN1", "label": "Motor A dir 1", "functions": ["digital"] },
+    { "id": "AIN2", "label": "Motor A dir 2", "functions": ["digital"] },
+    { "id": "STBY", "label": "Standby (active low)", "functions": ["enable"] }
+  ],
+  "electrical": {
+    "kind": "motor_driver",
+    "channels": 2,
+    "logicVoltage": { "min": 2.7, "max": 5.5 },
+    "motorVoltage": { "min": 4.5, "max": 13.5 },
+    "continuousCurrentPerChannelA": 1.2,
+    "peakCurrentPerChannelA": 3.2,
+    "voltageDropV": 0.5
+  },
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.pololu.com/product/713"]
+}

@@ -1,0 +1,7 @@
+{
+  "id": "elec.missing-common-ground",
+  "severity": "error",
+  "message": "Motor driver ground is not connected to the microcontroller ground.",
+  "explanation": "Logic signals are measured relative to ground. Without a shared ground the driver sees random voltages on PWMA/AIN1/AIN2.",
+  "affected": [{ "kind": "placement", "ref": "drv1" }]
+}

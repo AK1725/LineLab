@@ -1,0 +1,41 @@
+{
+  "id": "design-1",
+  "name": "Minimal design (test fixture)",
+  "version": 1,
+  "chassis": { "kind": "template", "chassisId": "chassis.starter-2wd-test" },
+  "placements": [
+    {
+      "instanceId": "mcu1",
+      "componentId": "mcu.arduino-nano",
+      "position": { "x": 0, "y": 0, "z": 23 },
+      "rotation": { "x": 0, "y": 0, "z": 0, "w": 1 },
+      "deck": 0
+    },
+    {
+      "instanceId": "drv1",
+      "componentId": "driver.tb6612fng",
+      "position": { "x": -30, "y": 0, "z": 23 },
+      "rotation": { "x": 0, "y": 0, "z": 0, "w": 1 },
+      "deck": 0
+    }
+  ],
+  "netlist": [
+    {
+      "id": "gnd",
+      "name": "GND",
+      "connections": [
+        { "instanceId": "mcu1", "pinId": "GND" },
+        { "instanceId": "drv1", "pinId": "GND" }
+      ]
+    },
+    {
+      "id": "pwma",
+      "name": "PWMA",
+      "connections": [
+        { "instanceId": "mcu1", "pinId": "D5" },
+        { "instanceId": "drv1", "pinId": "PWMA" }
+      ]
+    }
+  ],
+  "firmware": { "fileId": "fw-1", "board": "arduino:avr:nano", "language": "arduino-cpp" }
+}

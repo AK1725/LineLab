@@ -1,0 +1,21 @@
+{
+  "id": "chassis.starter-2wd-test",
+  "name": "Starter 2WD (test fixture)",
+  "inspiredBy": "Common acrylic beginner kits",
+  "outline": [
+    { "x": -60, "y": -50 },
+    { "x": 80, "y": -50 },
+    { "x": 80, "y": 50 },
+    { "x": -60, "y": 50 }
+  ],
+  "thicknessMm": 3,
+  "material": "acrylic",
+  "densityGcm3": 1.18,
+  "decks": [{ "index": 0, "heightMm": 20 }],
+  "mountPoints": [{ "x": 0, "y": 0 }],
+  "wheelMounts": [
+    { "side": "left", "position": { "x": 0, "y": 55 }, "axleHeightMm": 16 },
+    { "side": "right", "position": { "x": 0, "y": -55 }, "axleHeightMm": 16 }
+  ],
+  "casterMounts": [{ "x": -50, "y": 0 }]
+}

@@ -1,0 +1,500 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "integer",
+      "exclusiveMinimum": 0,
+      "maximum": 9007199254740991
+    },
+    "chassis": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "template"
+            },
+            "chassisId": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(\\.[a-z0-9][a-z0-9_-]*)+$"
+            }
+          },
+          "required": [
+            "kind",
+            "chassisId"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "custom"
+            },
+            "chassis": {
+              "type": "object",
+              "properties": {
+                "$schema": {
+                  "type": "string"
+                },
+                "id": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(\\.[a-z0-9][a-z0-9_-]*)+$"
+                },
+                "name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "inspiredBy": {
+                  "type": "string"
+                },
+                "outline": {
+                  "minItems": 3,
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "x": {
+                        "type": "number"
+                      },
+                      "y": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "x",
+                      "y"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "cutouts": {
+                  "type": "array",
+                  "items": {
+                    "minItems": 3,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "x": {
+                          "type": "number"
+                        },
+                        "y": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "x",
+                        "y"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "thicknessMm": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                },
+                "material": {
+                  "type": "string",
+                  "enum": [
+                    "acrylic",
+                    "fr4",
+                    "pla",
+                    "petg",
+                    "carbon_fiber",
+                    "aluminium",
+                    "plywood"
+                  ]
+                },
+                "densityGcm3": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                },
+                "decks": {
+                  "minItems": 1,
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "index": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "heightMm": {
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "outline": {
+                        "minItems": 3,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "x": {
+                              "type": "number"
+                            },
+                            "y": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "x",
+                            "y"
+                          ],
+                          "additionalProperties": false
+                        }
+                      }
+                    },
+                    "required": [
+                      "index",
+                      "heightMm"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "mountPoints": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "x": {
+                        "type": "number"
+                      },
+                      "y": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "x",
+                      "y"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "wheelMounts": {
+                  "minItems": 2,
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "side": {
+                        "type": "string",
+                        "enum": [
+                          "left",
+                          "right"
+                        ]
+                      },
+                      "position": {
+                        "type": "object",
+                        "properties": {
+                          "x": {
+                            "type": "number"
+                          },
+                          "y": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "x",
+                          "y"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "axleHeightMm": {
+                        "type": "number",
+                        "exclusiveMinimum": 0
+                      }
+                    },
+                    "required": [
+                      "side",
+                      "position",
+                      "axleHeightMm"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "casterMounts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "x": {
+                        "type": "number"
+                      },
+                      "y": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "x",
+                      "y"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "id",
+                "name",
+                "outline",
+                "thicknessMm",
+                "material",
+                "densityGcm3",
+                "decks",
+                "mountPoints",
+                "wheelMounts",
+                "casterMounts"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "kind",
+            "chassis"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "placements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "instanceId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+          },
+          "componentId": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(\\.[a-z0-9][a-z0-9_-]*)+$"
+          },
+          "position": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              },
+              "z": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "x",
+              "y",
+              "z"
+            ],
+            "additionalProperties": false
+          },
+          "rotation": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              },
+              "z": {
+                "type": "number"
+              },
+              "w": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "x",
+              "y",
+              "z",
+              "w"
+            ],
+            "additionalProperties": false
+          },
+          "deck": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "instanceId",
+          "componentId",
+          "position",
+          "rotation",
+          "deck"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "netlist": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "connections": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "instanceId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+                },
+                "pinId": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "instanceId",
+                "pinId"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "connections"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "firmware": {
+      "type": "object",
+      "properties": {
+        "fileId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+        },
+        "board": {
+          "type": "string",
+          "enum": [
+            "arduino:avr:uno",
+            "arduino:avr:nano",
+            "arduino:avr:mega",
+            "arduino:avr:leonardo",
+            "arduino:avr:pro",
+            "arduino:megaavr:nona4809",
+            "rp2040:rp2040:rpipico",
+            "esp32:esp32:esp32",
+            "esp32:esp32:esp32s3",
+            "esp32:esp32:esp32c3",
+            "stm32:stm32:bluepill_f103c8",
+            "stm32:stm32:blackpill_f411ce",
+            "teensy:avr:teensy40"
+          ]
+        },
+        "language": {
+          "type": "string",
+          "enum": [
+            "arduino-cpp",
+            "micropython"
+          ]
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "fileId",
+        "board",
+        "language"
+      ],
+      "additionalProperties": false
+    },
+    "calibration": {
+      "type": "object",
+      "properties": {
+        "frictionMu": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "motorKtScaleLeft": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "motorKtScaleRight": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "driverDropV": {
+          "type": "number",
+          "minimum": 0
+        },
+        "sensorGain": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "sensorOffset": {
+          "type": "number"
+        },
+        "sensorNoiseStd": {
+          "type": "number",
+          "minimum": 0
+        },
+        "latencyMs": {
+          "type": "number",
+          "minimum": 0
+        },
+        "calibratedAt": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "version",
+    "chassis",
+    "placements",
+    "netlist"
+  ],
+  "additionalProperties": false,
+  "$id": "https://linelab.dev/schema/design.schema.json",
+  "title": "LineLab design"
+}

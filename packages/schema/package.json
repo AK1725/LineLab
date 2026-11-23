@@ -1,0 +1,29 @@
+{
+  "name": "@linelab/schema",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Zod schemas (and generated JSON Schema) for every LineLab document: components, chassis, designs, tracks, run traces, findings.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./json-schema/*": "./json-schema/*"
+  },
+  "files": [
+    "dist",
+    "json-schema"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --max-warnings 0",
+    "test": "vitest run",
+    "schema:generate": "tsx scripts/export-json-schema.ts"
+  },
+  "dependencies": {
+    "zod": "4.6.7"
+  }
+}

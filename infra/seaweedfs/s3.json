@@ -1,0 +1,9 @@
+{
+  "identities": [
+    {
+      "name": "linelab-dev",
+      "credentials": [{ "accessKey": "linelab", "secretKey": "linelab-dev-secret" }],
+      "actions": ["Admin", "Read", "Write", "List", "Tagging"]
+    }
+  ]
+}

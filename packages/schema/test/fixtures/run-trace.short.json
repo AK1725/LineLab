@@ -1,0 +1,35 @@
+{
+  "runId": "run-1",
+  "seed": 42,
+  "designHash": "abc123",
+  "trackId": "track.oval-test",
+  "dtMs": 1,
+  "frames": [
+    {
+      "tMs": 0,
+      "pose": { "x": 100, "y": 0, "headingRad": 0 },
+      "velocity": { "v": 0, "omega": 0 },
+      "sensors": [900, 120, 900],
+      "pwm": { "left": 0, "right": 0 },
+      "batteryV": 7.9
+    },
+    {
+      "tMs": 1,
+      "pose": { "x": 100.2, "y": 0, "headingRad": 0 },
+      "velocity": { "v": 200, "omega": 0 },
+      "sensors": [905, 118, 897],
+      "pwm": { "left": 0.4, "right": 0.4 },
+      "batteryV": 7.85
+    }
+  ],
+  "events": [
+    {
+      "tMs": 1,
+      "type": "checkpoint",
+      "severity": "info",
+      "data": { "index": 0 },
+      "sourceLoc": { "file": "main.ino", "line": 42 }
+    }
+  ],
+  "metrics": { "completionPct": 0.1, "meanLateralErrorMm": 0.5, "maxLateralErrorMm": 1.2 }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "@linelab/firmware-runtime",
+  "version": "0.0.0",
+  "private": true,
+  "description": "avr8js / rp2040js adapters and HAL-shim bindings that connect firmware to sim-core.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --max-warnings 0",
+    "test": "vitest run --passWithNoTests"
+  }
+}

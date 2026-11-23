@@ -1,0 +1,29 @@
+{
+  "name": "@linelab/component-db",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Open component and chassis database (JSON, CC-BY-SA-4.0) plus its validator.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "data"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --max-warnings 0",
+    "test": "vitest run",
+    "db:validate": "tsx scripts/validate.ts"
+  },
+  "dependencies": {
+    "@linelab/schema": "workspace:*",
+    "zod": "4.6.7"
+  }
+}
