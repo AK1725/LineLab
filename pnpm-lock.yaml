@@ -60,6 +60,9 @@ importers:
       '@linelab/design-core':
         specifier: workspace:*
         version: link:../../packages/design-core
+      '@linelab/rules-engine':
+        specifier: workspace:*
+        version: link:../../packages/rules-engine
       '@linelab/schema':
         specifier: workspace:*
         version: link:../../packages/schema
@@ -163,7 +166,18 @@ importers:
 
   packages/lfr-hal: {}
 
-  packages/rules-engine: {}
+  packages/rules-engine:
+    dependencies:
+      '@linelab/design-core':
+        specifier: workspace:*
+        version: link:../design-core
+      '@linelab/schema':
+        specifier: workspace:*
+        version: link:../schema
+    devDependencies:
+      '@linelab/component-db':
+        specifier: workspace:*
+        version: link:../component-db
 
   packages/schema:
     dependencies:

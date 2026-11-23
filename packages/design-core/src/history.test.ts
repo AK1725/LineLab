@@ -156,7 +156,7 @@ describe("applyCommand", () => {
     );
   });
 
-  it("removing a part drops its pins from nets and deletes emptied nets", () => {
+  it("removing a part drops its pins from nets and deletes nets left with fewer than two pins", () => {
     const d: Design = {
       ...empty,
       placements: [placement("a"), placement("b")],
@@ -173,8 +173,48 @@ describe("applyCommand", () => {
       ],
     };
     const out = applyCommand(d, { type: "remove", ids: ["a"] });
-    expect(out.netlist).toEqual([
-      { id: "n1", name: "GND", connections: [{ instanceId: "b", pinId: "GND" }] },
-    ]);
+    expect(out.netlist).toEqual([]);
+  });
+});
+
+describe("netlist commands", () => {
+  const d0: Design = { ...empty, placements: [placement("a"), placement("b"), placement("c")] };
+  const e = (instanceId: string, pinId: string) => ({ instanceId, pinId });
+
+  it("connect creates, extends and merges nets", () => {
+    let d = applyCommand(d0, { type: "connect", a: e("a", "1"), b: e("b", "1") });
+    expect(d.netlist).toHaveLength(1);
+    d = applyCommand(d, { type: "connect", a: e("b", "1"), b: e("c", "1") });
+    expect(d.netlist[0]?.connections).toHaveLength(3);
+    d = applyCommand(d, { type: "connect", a: e("a", "2"), b: e("b", "2") });
+    expect(d.netlist).toHaveLength(2);
+    d = applyCommand(d, { type: "connect", a: e("c", "1"), b: e("a", "2") });
+    expect(d.netlist).toHaveLength(1);
+    expect(d.netlist[0]?.connections).toHaveLength(5);
+    expect(applyCommand(d, { type: "connect", a: e("a", "1"), b: e("c", "1") })).toEqual(d);
+  });
+
+  it("connect rejects unknown parts", () => {
+    expect(() => applyCommand(d0, { type: "connect", a: e("zz", "1"), b: e("a", "1") })).toThrow(
+      /unknown instance/,
+    );
+  });
+
+  it("disconnect removes a pin and prunes the net", () => {
+    let d = applyCommand(d0, { type: "connect", a: e("a", "1"), b: e("b", "1") });
+    d = applyCommand(d, { type: "disconnect", endpoint: e("b", "1") });
+    expect(d.netlist).toEqual([]);
+  });
+
+  it("rename-net and set-netlist", () => {
+    let d = applyCommand(d0, { type: "connect", a: e("a", "1"), b: e("b", "1") });
+    const id = d.netlist[0]?.id ?? "";
+    d = applyCommand(d, { type: "rename-net", id, name: "GND" });
+    expect(d.netlist[0]?.name).toBe("GND");
+    d = applyCommand(d, {
+      type: "set-netlist",
+      netlist: [{ id: "x", name: "lonely", connections: [e("a", "9")] }],
+    });
+    expect(d.netlist).toEqual([]);
   });
 });

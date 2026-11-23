@@ -70,6 +70,7 @@
     },
     "maxCurrentmA": 4
   },
+  "i2cAddresses": [104, 105],
   "specStatus": "needs-review",
   "notes": "Generic module sold by many vendors; dimensions and values vary by seller. The chip itself is EOL; I2C address 0x68 (0x69 with AD0 high).",
   "license": "CC-BY-SA-4.0",

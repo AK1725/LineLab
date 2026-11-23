@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import ChassisDialog from "./chassis-dialog";
 import Inspector from "./inspector";
 import PartsPanel from "./parts-panel";
+import SchematicView from "./schematic-view";
+import WiringPanel from "./wiring-panel";
 import { loadDesign, saveDesign } from "./persistence";
 import { useEditor } from "./store";
 import Toolbar from "./toolbar";
@@ -82,6 +84,27 @@ function useShortcuts(enabled: boolean) {
   }, [enabled]);
 }
 
+function LeftTabs() {
+  const panel = useEditor((s) => s.leftPanel);
+  return (
+    <div role="tablist" aria-label="Left panel" className="flex border-b border-border">
+      {(["parts", "wiring"] as const).map((p) => (
+        <button
+          key={p}
+          role="tab"
+          aria-selected={panel === p}
+          onClick={() => {
+            useEditor.getState().setLeftPanel(p);
+          }}
+          className={`flex-1 py-2 text-sm ${panel === p ? "border-b-2 border-accent font-medium" : "text-muted hover:text-fg"}`}
+        >
+          {p === "parts" ? "Parts" : "Wiring"}
+        </button>
+      ))}
+    </div>
+  );
+}
+
 export default function Editor() {
   const id = useSearchParams().get("id");
   // Which id finished loading, and whether it existed. Status is derived, never set in an effect.
@@ -92,6 +115,8 @@ export default function Editor() {
   const [saved, setSaved] = useState<{ design: unknown; ok: boolean } | null>(null);
   const [chassisOpen, setChassisOpen] = useState(false);
   const design = useEditor((s) => s.history.present);
+  const leftPanel = useEditor((s) => s.leftPanel);
+  const view = useEditor((s) => s.view);
 
   useEffect(() => {
     window.__linelabEditor = useEditor; // test & debugging hook
@@ -161,11 +186,14 @@ export default function Editor() {
         }}
       />
       <div className="grid min-h-0 flex-1 grid-rows-[minmax(300px,1fr)_auto] lg:grid-cols-[17rem_1fr_19rem] lg:grid-rows-1">
-        <aside className="order-2 max-h-72 min-h-0 border-t border-border lg:order-1 lg:max-h-none lg:border-r lg:border-t-0">
-          <PartsPanel />
+        <aside className="order-2 flex max-h-80 min-h-0 flex-col border-t border-border lg:order-1 lg:max-h-none lg:border-r lg:border-t-0">
+          <LeftTabs />
+          <div className="min-h-0 flex-1">
+            {leftPanel === "parts" ? <PartsPanel /> : <WiringPanel />}
+          </div>
         </aside>
         <div className="order-1 min-h-0 lg:order-2">
-          <Scene />
+          {view === "schematic" ? <SchematicView /> : <Scene />}
         </div>
         <aside className="order-3 min-h-0 overflow-y-auto border-t border-border lg:border-l lg:border-t-0">
           <Inspector />

@@ -36,8 +36,7 @@
     {
       "id": "OUT",
       "label": "Analog out",
-      "functions": ["analog"],
-      "voltageDomainV": 5
+      "functions": ["analog"]
     }
   ],
   "electrical": {

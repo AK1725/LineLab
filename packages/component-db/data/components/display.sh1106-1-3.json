@@ -50,6 +50,7 @@
     },
     "maxCurrentmA": 25
   },
+  "i2cAddresses": [60, 61],
   "specStatus": "needs-review",
   "notes": "Generic module sold by many vendors; dimensions and values vary by seller. Needs an SH1106 driver; SSD1306 code shows garbage.",
   "license": "CC-BY-SA-4.0",

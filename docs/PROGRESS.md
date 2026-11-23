@@ -103,4 +103,28 @@
 - Component pages show a "checked against the datasheet" badge for reviewed parts.
 - ST parts remain unverified (st.com refuses automated access).
 
-## Next: Phase 3 — Wiring/netlist editor and rules engine
+## Phase 3 — Wiring and rules engine ✅ (branch `phase-3-wiring`)
+
+**Done**
+
+- Schema: `DesignCommand` (Zod) is now the single definition of every design change: add/remove/update/set-chassis/rename plus **connect, disconnect, rename-net, set-netlist**. `Finding.fix.operations` is typed with it. Components gained `i2cAddresses`.
+- `design-core`: netlist commands with undo (nets merge on connect, nets with < 2 pins are pruned), **auto-wiring** (`autoWire`), and a **KiCad netlist** exporter.
+- `packages/rules-engine`: a circuit model (net voltages from sources, signal levels per pin) plus **35 electrical** and **15 mechanical** rules, each with a plain-language explanation. One-click fixes for: joining grounds, tying TB6612 STBY high, setting sensor and caster spacers. Runs in about 10 ms per design.
+- Editor: Parts/Wiring tabs, click-two-pins wiring, net list with rename/disconnect, Auto-wire/Clear, colour-coded 3D wires, a Checks panel (severity, explanation, Show, Fix, and each fix is one undo step), a **net-label schematic** view with SVG/PNG/print-to-PDF export, and **KiCad** netlist download.
+- Data fixes found by the new checks: line-sensor outputs no longer claim a fixed 5 V level (they follow their supply; this caused false 5 V-into-3.3 V errors on ESP32), and the Pololu DRV8833 SLP pin is correctly described as pulled high on the board.
+- CI now runs on every pushed branch.
+
+**Verified locally**
+
+- rules-engine: 115 tests. Every rule has a test that triggers it and a test that the clean reference robot doesn't, plus fix-clears-finding tests and a < 50 ms performance test. A mutation check (two rules deliberately broken) made exactly those tests fail.
+- The five acceptance fixtures (`good_nano_tb6612_qtr8`, `bad_no_common_ground`, `bad_esp32_adc2_wifi`, `bad_9v_battery`, `bad_5v_into_pico`) produce exactly their expected findings.
+- e2e: auto-wire → one-click fixes → "No problems found", manual pin-to-pin wiring, schematic + KiCad export, STBY fix and undo.
+
+**Deferred / known issues**
+
+- Pin positions in 3D are approximate: two rows on the part's top face. Real header coordinates aren't in the component data yet.
+- No resistor/capacitor parts yet, so `elec.led-resistor` can only advise.
+- The schematic uses net labels, not routed wires.
+- Firmware ↔ wiring consistency (pin numbers used in code) arrives with static analysis in Phase 7.
+
+## Next: Phase 4 — Tracks

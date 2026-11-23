@@ -55,6 +55,7 @@
     },
     "maxCurrentmA": 4
   },
+  "i2cAddresses": [105, 104],
   "specStatus": "needs-review",
   "notes": "Some breakouts include a 5 V regulator and level shifting; check yours.",
   "license": "CC-BY-SA-4.0",

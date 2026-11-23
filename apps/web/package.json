@@ -16,6 +16,7 @@
   "dependencies": {
     "@linelab/component-db": "workspace:*",
     "@linelab/design-core": "workspace:*",
+    "@linelab/rules-engine": "workspace:*",
     "@linelab/schema": "workspace:*",
     "@linelab/three-models": "workspace:*",
     "@react-three/drei": "10.7.9",

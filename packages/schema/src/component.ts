@@ -267,6 +267,8 @@ export const Component = z
     pins: z.array(Pin),
     electrical: ElectricalSpec,
     simModel: SimModelRef.optional(),
+    /** 7-bit I2C addresses the part can use; the first is the default. */
+    i2cAddresses: z.array(z.number().int().min(0).max(127)).min(1).optional(),
     /**
      * `needs-review` until a contributor has checked every value against the cited datasheet.
      * The UI shows a badge for unreviewed entries.

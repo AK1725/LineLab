@@ -3,6 +3,7 @@
 import { designMassProps, findCollisions, measure, yawOf } from "@linelab/design-core";
 import Link from "next/link";
 import { useMemo, useState, type ReactNode } from "react";
+import Checks from "./checks";
 import { chassisOf, lookup, useDesign, useEditor } from "./store";
 
 const mm = (v: number) => `${v.toFixed(1)} mm`;
@@ -320,7 +321,6 @@ function Analysis() {
       </div>
       <p className="text-xs text-muted">
         Coordinates in mm: X forward, Y left, Z up; origin at the drive-axle centre on the ground.
-        Electrical checks arrive in Phase 3.
       </p>
     </div>
   );
@@ -335,6 +335,7 @@ export default function Inspector() {
         </h2>
         <Selection />
       </section>
+      <Checks />
       <section aria-labelledby="analysis-heading">
         <h2 id="analysis-heading" className="mb-1 text-sm font-semibold">
           Robot

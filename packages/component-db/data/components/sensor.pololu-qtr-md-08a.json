@@ -45,50 +45,42 @@
     {
       "id": "OUT1",
       "label": "Sensor 1 output",
-      "functions": ["analog"],
-      "voltageDomainV": 5
+      "functions": ["analog"]
     },
     {
       "id": "OUT2",
       "label": "Sensor 2 output",
-      "functions": ["analog"],
-      "voltageDomainV": 5
+      "functions": ["analog"]
     },
     {
       "id": "OUT3",
       "label": "Sensor 3 output",
-      "functions": ["analog"],
-      "voltageDomainV": 5
+      "functions": ["analog"]
     },
     {
       "id": "OUT4",
       "label": "Sensor 4 output",
-      "functions": ["analog"],
-      "voltageDomainV": 5
+      "functions": ["analog"]
     },
     {
       "id": "OUT5",
       "label": "Sensor 5 output",
-      "functions": ["analog"],
-      "voltageDomainV": 5
+      "functions": ["analog"]
     },
     {
       "id": "OUT6",
       "label": "Sensor 6 output",
-      "functions": ["analog"],
-      "voltageDomainV": 5
+      "functions": ["analog"]
     },
     {
       "id": "OUT7",
       "label": "Sensor 7 output",
-      "functions": ["analog"],
-      "voltageDomainV": 5
+      "functions": ["analog"]
     },
     {
       "id": "OUT8",
       "label": "Sensor 8 output",
-      "functions": ["analog"],
-      "voltageDomainV": 5
+      "functions": ["analog"]
     }
   ],
   "electrical": {

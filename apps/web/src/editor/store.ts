@@ -2,6 +2,7 @@
 
 import { getChassis, getComponent } from "@linelab/component-db";
 import {
+  autoWire,
   canRedo,
   canUndo,
   createHistory,
@@ -21,10 +22,11 @@ import {
   type History,
   type PlacementPatch,
 } from "@linelab/design-core";
-import type { Chassis, Design, Placement } from "@linelab/schema";
+import type { Chassis, Design, NetEndpoint, Placement } from "@linelab/schema";
 import { create } from "zustand";
 
-export type View = "orbit" | "top" | "side";
+export type View = "orbit" | "top" | "side" | "schematic";
+export type LeftPanel = "parts" | "wiring";
 
 export const lookup = (id: string) => getComponent(id);
 export const chassisOf = (d: Design): Chassis | undefined => resolveChassis(d, getChassis);
@@ -37,6 +39,9 @@ interface EditorState {
   showMeasurements: boolean;
   /** Forces continuous rendering (used to measure frame rate). */
   perfMode: boolean;
+  leftPanel: LeftPanel;
+  /** First pin clicked in the wiring panel, waiting for the second. */
+  pendingPin: NetEndpoint | null;
 
   load: (design: Design) => void;
   exec: (cmd: Command, opts?: { coalesceKey?: string }) => void;
@@ -63,6 +68,15 @@ interface EditorState {
   setView: (v: View) => void;
   toggleMeasurements: () => void;
   setPerfMode: (on: boolean) => void;
+  setLeftPanel: (p: LeftPanel) => void;
+  /** Click a pin: the first click picks it, the second connects the two. */
+  clickPin: (e: NetEndpoint) => void;
+  disconnectPin: (e: NetEndpoint) => void;
+  renameNet: (id: string, name: string) => void;
+  autoWire: () => void;
+  clearWiring: () => void;
+  /** Applies several commands as a single undo step (rules-engine fixes). */
+  applyCommands: (cmds: Command[]) => void;
 }
 
 const EMPTY: Design = {
@@ -102,6 +116,8 @@ export const useEditor = create<EditorState>()((set, get) => {
     view: "orbit",
     showMeasurements: true,
     perfMode: false,
+    leftPanel: "parts",
+    pendingPin: null,
 
     load: (design) => {
       set({ history: createHistory(design), selection: [] });
@@ -287,6 +303,57 @@ export const useEditor = create<EditorState>()((set, get) => {
     },
     setPerfMode: (perfMode) => {
       set({ perfMode });
+    },
+    setLeftPanel: (leftPanel) => {
+      set({ leftPanel, pendingPin: null });
+    },
+    clickPin: (e) => {
+      const pending = get().pendingPin;
+      if (!pending) {
+        set({ pendingPin: e });
+        return;
+      }
+      if (pending.instanceId === e.instanceId && pending.pinId === e.pinId) {
+        set({ pendingPin: null });
+        return;
+      }
+      set((s) => ({
+        history: execute(endGesture(s.history), { type: "connect", a: pending, b: e }),
+        pendingPin: null,
+      }));
+    },
+    disconnectPin: (e) => {
+      set((s) => ({
+        history: execute(endGesture(s.history), { type: "disconnect", endpoint: e }),
+      }));
+    },
+    renameNet: (id, name) => {
+      if (name.trim() === "") return;
+      set((s) => ({
+        history: execute(endGesture(s.history), { type: "rename-net", id, name: name.trim() }),
+      }));
+    },
+    autoWire: () => {
+      const d = present();
+      set((s) => ({
+        history: execute(endGesture(s.history), {
+          type: "set-netlist",
+          netlist: autoWire(d, lookup),
+        }),
+        pendingPin: null,
+      }));
+    },
+    clearWiring: () => {
+      set((s) => ({
+        history: execute(endGesture(s.history), { type: "set-netlist", netlist: [] }),
+        pendingPin: null,
+      }));
+    },
+    applyCommands: (cmds) => {
+      const key = newGestureKey("fix");
+      let h = endGesture(get().history);
+      for (const c of cmds) h = execute(h, c, { coalesceKey: key });
+      set({ history: endGesture(h) });
     },
   };
 });

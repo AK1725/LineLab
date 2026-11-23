@@ -775,6 +775,15 @@
       ],
       "additionalProperties": false
     },
+    "i2cAddresses": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 127
+      }
+    },
     "specStatus": {
       "type": "string",
       "enum": [

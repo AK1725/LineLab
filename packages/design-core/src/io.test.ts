@@ -5,6 +5,7 @@ import { makeCustomChassis } from "./chassis-builder.js";
 import { chassisToDxf, parseDxfOutline } from "./io/dxf.js";
 import { chassisToStl, parseStlOutline, readStlVertices } from "./io/stl.js";
 import { parseSvgOutline } from "./io/svg.js";
+import { designToKicadNetlist, kicadRef } from "./io/kicad.js";
 import { area, bounds } from "./polygon.js";
 
 const racer = getChassis("chassis.pcb-racer");
@@ -201,5 +202,58 @@ describe("makeCustomChassis", () => {
     expect(Chassis.safeParse(c).success).toBe(true);
     expect(c.densityGcm3).toBe(1.85);
     expect(c.mountPoints.length).toBeGreaterThan(20);
+  });
+});
+
+describe("KiCad netlist", () => {
+  it("lists components and nets in KiCad's s-expression format", () => {
+    const design = {
+      id: "d",
+      name: 'Bot "1"',
+      version: 1,
+      chassis: { kind: "template" as const, chassisId: "chassis.pcb-racer" },
+      placements: [
+        {
+          instanceId: "mcu1",
+          componentId: "mcu.arduino-nano",
+          position: { x: 0, y: 0, z: 0 },
+          rotation: { x: 0, y: 0, z: 0, w: 1 },
+          deck: 0,
+          mount: "top" as const,
+          standoffMm: 0,
+        },
+        {
+          instanceId: "motor-driver1",
+          componentId: "driver.tb6612fng",
+          position: { x: 0, y: 0, z: 0 },
+          rotation: { x: 0, y: 0, z: 0, w: 1 },
+          deck: 0,
+          mount: "top" as const,
+          standoffMm: 0,
+        },
+      ],
+      netlist: [
+        {
+          id: "n1",
+          name: "GND",
+          connections: [
+            { instanceId: "mcu1", pinId: "GND" },
+            { instanceId: "motor-driver1", pinId: "GND" },
+          ],
+        },
+      ],
+    };
+    const out = designToKicadNetlist(design, () => undefined, "2026-01-01");
+    expect(kicadRef("motor-driver1")).toBe("MOTOR_DRIVER1");
+    expect(out).toContain('(comp (ref "MCU1")');
+    expect(out).toContain(
+      '(net (code "1") (name "GND") (node (ref "MCU1") (pin "GND")) (node (ref "MOTOR_DRIVER1") (pin "GND")))',
+    );
+    expect(out).toContain('Bot \\"1\\".linelab.json');
+    // Balanced parentheses.
+    let depth = 0;
+    for (const ch of out.replace(/"(?:[^"\\]|\\.)*"/g, ""))
+      depth += ch === "(" ? 1 : ch === ")" ? -1 : 0;
+    expect(depth).toBe(0);
   });
 });

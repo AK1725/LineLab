@@ -1,0 +1,7 @@
+{
+  "good_nano_tb6612_qtr8": [],
+  "bad_no_common_ground": ["elec.missing-common-ground"],
+  "bad_esp32_adc2_wifi": ["elec.esp32-adc2-wifi"],
+  "bad_9v_battery": ["elec.battery-current", "elec.motor-overvoltage", "elec.nine-volt-battery"],
+  "bad_5v_into_pico": ["elec.io-overvoltage", "elec.sensor-unconnected"]
+}

@@ -50,6 +50,7 @@
     },
     "maxCurrentmA": 20
   },
+  "i2cAddresses": [60, 61],
   "specStatus": "needs-review",
   "notes": "Generic module sold by many vendors; dimensions and values vary by seller. Redrawing the whole screen takes about 25 ms over 400 kHz I2C: don't do it inside the control loop.",
   "license": "CC-BY-SA-4.0",

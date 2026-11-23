@@ -1,10 +1,18 @@
 "use client";
 
-import { chassisToDxf, chassisToStl } from "@linelab/design-core";
+import { chassisToDxf, chassisToStl, designToKicadNetlist } from "@linelab/design-core";
 import Link from "next/link";
 import { useState, type ReactNode } from "react";
 import { download, exportDesign, slug } from "./files";
-import { chassisOf, useCanRedo, useCanUndo, useDesign, useEditor, type View } from "./store";
+import {
+  chassisOf,
+  lookup,
+  useCanRedo,
+  useCanUndo,
+  useDesign,
+  useEditor,
+  type View,
+} from "./store";
 
 function Tool({
   children,
@@ -100,6 +108,7 @@ export default function Toolbar({
           ["orbit", "3D"],
           ["top", "Top"],
           ["side", "Side"],
+          ["schematic", "Schematic"],
         ] as [View, string][]
       ).map(([v, l]) => (
         <Tool
@@ -146,6 +155,14 @@ export default function Toolbar({
           }}
         >
           Export JSON
+        </Tool>
+        <Tool
+          label="Download the netlist for KiCad"
+          onClick={() => {
+            download(`${base}.net`, designToKicadNetlist(design, lookup), "text/plain");
+          }}
+        >
+          KiCad
         </Tool>
         {chassis && (
           <>

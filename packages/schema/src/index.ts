@@ -10,6 +10,7 @@ export * from "./board.js";
 export * from "./component.js";
 export * from "./chassis.js";
 export * from "./design.js";
+export * from "./command.js";
 export * from "./track.js";
 export * from "./run.js";
 export * from "./finding.js";

@@ -1,8 +1,9 @@
 name: CI
 
 on:
+  # Every pushed branch (each phase lives on its own branch) and every pull request.
   push:
-    branches: [main]
+    branches: ["**"]
   pull_request:
 
 concurrency:

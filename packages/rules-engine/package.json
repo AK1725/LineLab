@@ -2,7 +2,7 @@
   "name": "@linelab/rules-engine",
   "version": "0.0.0",
   "private": true,
-  "description": "Pure electrical, mechanical and layout rules: (design) => Finding[].",
+  "description": "Electrical, mechanical and layout rules: (design) => Finding[].",
   "license": "Apache-2.0",
   "type": "module",
   "exports": {
@@ -18,6 +18,13 @@
     "build": "tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --max-warnings 0",
-    "test": "vitest run --passWithNoTests"
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@linelab/design-core": "workspace:*",
+    "@linelab/schema": "workspace:*"
+  },
+  "devDependencies": {
+    "@linelab/component-db": "workspace:*"
   }
 }

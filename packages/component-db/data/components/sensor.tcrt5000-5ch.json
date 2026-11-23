@@ -36,32 +36,27 @@
     {
       "id": "OUT1",
       "label": "Sensor 1 output",
-      "functions": ["digital"],
-      "voltageDomainV": 5
+      "functions": ["digital"]
     },
     {
       "id": "OUT2",
       "label": "Sensor 2 output",
-      "functions": ["digital"],
-      "voltageDomainV": 5
+      "functions": ["digital"]
     },
     {
       "id": "OUT3",
       "label": "Sensor 3 output",
-      "functions": ["digital"],
-      "voltageDomainV": 5
+      "functions": ["digital"]
     },
     {
       "id": "OUT4",
       "label": "Sensor 4 output",
-      "functions": ["digital"],
-      "voltageDomainV": 5
+      "functions": ["digital"]
     },
     {
       "id": "OUT5",
       "label": "Sensor 5 output",
-      "functions": ["digital"],
-      "voltageDomainV": 5
+      "functions": ["digital"]
     }
   ],
   "electrical": {

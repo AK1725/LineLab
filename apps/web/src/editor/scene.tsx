@@ -16,6 +16,7 @@ import {
   OrbitControls,
   OrthographicCamera,
   PerspectiveCamera,
+  QuadraticBezierLine,
 } from "@react-three/drei";
 import { Canvas, useFrame, useThree, type ThreeEvent } from "@react-three/fiber";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -31,6 +32,7 @@ import {
   Vector3,
   type BufferGeometry,
 } from "three";
+import { netColor, pinAnchor } from "./nets";
 import { chassisOf, lookup, newGestureKey, useDesign, useEditor, type View } from "./store";
 
 /** One merged template model per component; instances are cheap clones that share geometry. */
@@ -379,6 +381,54 @@ function ProjectHook() {
   return null;
 }
 
+/** Wires: a gentle arc from each net's first pin to every other pin, coloured by net. */
+function Wires() {
+  const design = useDesign();
+  const segments = useMemo(() => {
+    const byId = new Map(design.placements.map((p) => [p.instanceId, p]));
+    const out: {
+      key: string;
+      a: [number, number, number];
+      b: [number, number, number];
+      color: string;
+    }[] = [];
+    for (const n of design.netlist) {
+      const pts = n.connections.flatMap((e) => {
+        const p = byId.get(e.instanceId);
+        const c = p && lookup(p.componentId);
+        return p && c ? [pinAnchor(p, c, e.pinId)] : [];
+      });
+      const first = pts[0];
+      if (!first) continue;
+      pts.slice(1).forEach((b, i) => {
+        out.push({ key: `${n.id}-${i}`, a: first, b, color: netColor(n) });
+      });
+    }
+    return out;
+  }, [design]);
+  return (
+    <group>
+      {segments.map((s) => {
+        const mid: [number, number, number] = [
+          (s.a[0] + s.b[0]) / 2,
+          (s.a[1] + s.b[1]) / 2,
+          Math.max(s.a[2], s.b[2]) + 12,
+        ];
+        return (
+          <QuadraticBezierLine
+            key={s.key}
+            start={s.a}
+            end={s.b}
+            mid={mid}
+            color={s.color}
+            lineWidth={1.6}
+          />
+        );
+      })}
+    </group>
+  );
+}
+
 function SceneContent({ chassis }: { chassis: Chassis }) {
   const design = useDesign();
   const selection = useEditor((s) => s.selection);
@@ -428,6 +478,7 @@ function SceneContent({ chassis }: { chassis: Chassis }) {
         ) : null;
       })}
       {showMeasurements && mounted && <Overlays chassis={chassis} />}
+      <Wires />
       {perf && <FrameCounter />}
       <ProjectHook />
     </>

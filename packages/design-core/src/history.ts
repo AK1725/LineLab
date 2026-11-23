@@ -1,16 +1,54 @@
-import type { Design, Placement } from "@linelab/schema";
+import type { Design, DesignCommand, Net, NetEndpoint, PlacementPatch } from "@linelab/schema";
 
-export type PlacementPatch = Partial<
-  Pick<Placement, "position" | "rotation" | "deck" | "mount" | "standoffMm">
->;
+export type { PlacementPatch };
+/** Every change to a design is one of these (defined as a Zod schema in @linelab/schema). */
+export type Command = DesignCommand;
 
-/** Every change to a design is one of these. Commands are pure data, so they can be logged and replayed. */
-export type Command =
-  | { type: "add"; placements: Placement[] }
-  | { type: "remove"; ids: string[] }
-  | { type: "update"; changes: { id: string; patch: PlacementPatch }[] }
-  | { type: "set-chassis"; chassis: Design["chassis"] }
-  | { type: "rename"; name: string };
+const key = (e: NetEndpoint) => `${e.instanceId}/${e.pinId}`;
+
+/** Drops nets that no longer join at least two pins. */
+const prune = (nets: Net[]) => nets.filter((n) => n.connections.length >= 2);
+
+function nextNetId(nets: readonly Net[]): string {
+  const used = new Set(nets.map((n) => n.id));
+  for (let i = 1; ; i++) if (!used.has(`n${i}`)) return `n${i}`;
+}
+
+/** Pure netlist edit: join pins a and b, creating or merging nets. */
+export function connectPins(
+  netlist: readonly Net[],
+  a: NetEndpoint,
+  b: NetEndpoint,
+  nameHint?: string,
+): Net[] {
+  if (key(a) === key(b)) return [...netlist];
+  const na = netlist.find((n) => n.connections.some((c) => key(c) === key(a)));
+  const nb = netlist.find((n) => n.connections.some((c) => key(c) === key(b)));
+  if (na && nb && na.id === nb.id) return [...netlist];
+  if (!na && !nb) {
+    return [
+      ...netlist,
+      {
+        id: nextNetId(netlist),
+        name: nameHint ?? `${a.instanceId}.${a.pinId}`,
+        connections: [a, b],
+      },
+    ];
+  }
+  if (na && !nb)
+    return netlist.map((n) => (n.id === na.id ? { ...n, connections: [...n.connections, b] } : n));
+  if (!na && nb)
+    return netlist.map((n) => (n.id === nb.id ? { ...n, connections: [...n.connections, a] } : n));
+  // Merge b's net into a's net.
+  const A = na as Net;
+  const B = nb as Net;
+  const named = /^(n\d+|.+\..+)$/.test(A.name) && !/^(n\d+|.+\..+)$/.test(B.name) ? B.name : A.name;
+  return netlist
+    .filter((n) => n.id !== B.id)
+    .map((n) =>
+      n.id === A.id ? { ...n, name: named, connections: [...n.connections, ...B.connections] } : n,
+    );
+}
 
 /** Applies a command and returns a new design; the input is never mutated. */
 export function applyCommand(design: Design, cmd: Command): Design {
@@ -30,9 +68,12 @@ export function applyCommand(design: Design, cmd: Command): Design {
         ...design,
         placements: design.placements.filter((p) => !ids.has(p.instanceId)),
         // Removing a part also removes its pins from every net; nets left empty disappear.
-        netlist: design.netlist
-          .map((n) => ({ ...n, connections: n.connections.filter((c) => !ids.has(c.instanceId)) }))
-          .filter((n) => n.connections.length > 0),
+        netlist: prune(
+          design.netlist.map((n) => ({
+            ...n,
+            connections: n.connections.filter((c) => !ids.has(c.instanceId)),
+          })),
+        ),
       };
     }
     case "update": {
@@ -53,6 +94,32 @@ export function applyCommand(design: Design, cmd: Command): Design {
       return { ...design, chassis: cmd.chassis };
     case "rename":
       return { ...design, name: cmd.name };
+    case "connect": {
+      const ids = new Set(design.placements.map((p) => p.instanceId));
+      for (const e of [cmd.a, cmd.b]) {
+        if (!ids.has(e.instanceId)) throw new Error(`connect: unknown instance "${e.instanceId}"`);
+      }
+      return { ...design, netlist: connectPins(design.netlist, cmd.a, cmd.b) };
+    }
+    case "disconnect":
+      return {
+        ...design,
+        netlist: prune(
+          design.netlist.map((n) => ({
+            ...n,
+            connections: n.connections.filter((c) => key(c) !== key(cmd.endpoint)),
+          })),
+        ),
+      };
+    case "rename-net":
+      if (!design.netlist.some((n) => n.id === cmd.id))
+        throw new Error(`rename-net: unknown net "${cmd.id}"`);
+      return {
+        ...design,
+        netlist: design.netlist.map((n) => (n.id === cmd.id ? { ...n, name: cmd.name } : n)),
+      };
+    case "set-netlist":
+      return { ...design, netlist: prune(cmd.netlist) };
   }
 }
 

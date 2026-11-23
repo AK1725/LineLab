@@ -78,7 +78,7 @@
     },
     {
       "id": "SLP",
-      "label": "Sleep (pull high to run)",
+      "label": "Sleep (nSLEEP; pulled high on the board)",
       "functions": ["enable"]
     },
     {
