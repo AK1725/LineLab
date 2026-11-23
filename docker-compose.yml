@@ -77,9 +77,29 @@ services:
     ports: ["3000:3000"]
     environment:
       VISION_URL: http://vision:8000
-    depends_on: [api, vision]
+      COMPILER_URL: http://compiler:8100
+    networks: [default, sandbox]
+    depends_on: [api, vision, compiler]
 
-  # compiler: added in Phase 6 (sandboxed, network_mode: none).
+  # Firmware compiler: untrusted code, so no internet (internal-only network), 1 GB, 2 CPUs,
+  # read-only root, no capabilities, non-root. Each job also has a 60 s timeout and prlimits.
+  compiler:
+    profiles: [apps]
+    build: { context: ., dockerfile: apps/compiler/Dockerfile }
+    networks: [sandbox]
+    mem_limit: 1g
+    cpus: 2
+    pids_limit: 256
+    read_only: true
+    tmpfs: ["/tmp:rw,size=512m"]
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+
+networks:
+  default: {}
+  # No route to the outside world: only the web app can reach the compiler.
+  sandbox:
+    internal: true
 
 volumes:
   postgres-data:

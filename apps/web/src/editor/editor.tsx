@@ -9,6 +9,10 @@ import Inspector from "./inspector";
 import PartsPanel from "./parts-panel";
 import SchematicView from "./schematic-view";
 
+const CodeView = dynamic(() => import("../firmware/code-view"), {
+  ssr: false,
+  loading: () => <p className="p-6 text-sm text-muted">Loading code editor…</p>,
+});
 const RunView = dynamic(() => import("../sim/run-view"), {
   ssr: false,
   loading: () => <p className="p-6 text-sm text-muted">Loading simulator…</p>,
@@ -190,10 +194,8 @@ export default function Editor() {
           setChassisOpen(true);
         }}
       />
-      {view === "run" ? (
-        <div className="min-h-0 flex-1">
-          <RunView />
-        </div>
+      {view === "run" || view === "code" ? (
+        <div className="min-h-0 flex-1">{view === "run" ? <RunView /> : <CodeView />}</div>
       ) : (
         <div className="grid min-h-0 flex-1 grid-rows-[minmax(300px,1fr)_auto] lg:grid-cols-[17rem_1fr_19rem] lg:grid-rows-1">
           <aside className="order-2 flex max-h-80 min-h-0 flex-col border-t border-border lg:order-1 lg:max-h-none lg:border-r lg:border-t-0">

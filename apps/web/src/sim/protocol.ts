@@ -1,5 +1,5 @@
 import type { MonteCarloRun, Outcome, PackedTrace, ReferencePidOptions } from "@linelab/sim-core";
-import type { Design, RunMetrics, SimEvent, Track } from "@linelab/schema";
+import type { Design, FirmwareArtifact, RunMetrics, SimEvent, Track } from "@linelab/schema";
 
 export interface RunRequest {
   id: number;
@@ -9,6 +9,32 @@ export interface RunRequest {
   seeds: number[];
   pid: Partial<ReferencePidOptions>;
   laps: number;
+  /** Run this firmware instead of the reference PID. */
+  firmware?: FirmwareArtifact;
+}
+
+export interface LoopStats {
+  count: number;
+  meanMs: number;
+  p5Ms: number;
+  medianMs: number;
+  p95Ms: number;
+  maxMs: number;
+}
+
+export interface FirmwareReport {
+  tier: "emulated" | "hal";
+  serial: string;
+  resets: number;
+  loop: LoopStats | undefined;
+  wiringProblems: string[];
+  /** Emulated tier: where CPU time goes, by source line and by file. */
+  hotLines?: { file: string; line: number; share: number }[];
+  hotFiles?: { file: string; share: number }[];
+  /** Emulated tier: the sketch's globals sampled with the trace (one array per name). */
+  watch?: { names: string[]; types: string[]; samples: number[][] };
+  /** Simulated time / wall time. */
+  speed: number;
 }
 
 export interface RunSummary {
@@ -22,10 +48,14 @@ export interface RunSummary {
   recordEveryMs: number;
   /** Sensor channel positions in the chassis frame (mm), for drawing. */
   sensorsMm: { x: number; y: number }[];
+  controller: "reference" | "firmware";
+  firmware?: FirmwareReport;
 }
 
 export type RunResponse =
   | { id: number; kind: "progress"; done: number; total: number }
+  /** Heartbeat during a long run (keeps the watchdog quiet). */
+  | { id: number; kind: "alive"; simMs: number }
   | {
       id: number;
       kind: "result";

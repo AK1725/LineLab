@@ -6,6 +6,9 @@ import { DEFAULT_PID } from "@linelab/sim-core";
 import dynamic from "next/dynamic";
 import { useEffect, useMemo, useState } from "react";
 import { useDesign } from "../editor/store";
+import { TierBadge } from "../firmware/code-view";
+import { boardOf, useFirmware } from "../firmware/store";
+import { FirmwarePanel, WatchPlots } from "./firmware-panel";
 import { listTracks } from "../tracks/storage";
 import { RunPlots } from "./plots";
 import { SPEEDS, traceEndMs, useRun } from "./run-store";
@@ -259,9 +262,13 @@ function Results() {
           ))}
         </ul>
       )}
+      {s.firmware ? (
+        <FirmwarePanel report={s.firmware} />
+      ) : (
+        <p className="text-xs text-muted">Controller: built-in reference PID.</p>
+      )}
       <p className="text-xs text-muted">
-        Controller: built-in reference PID. Running your own firmware arrives in Phase 6. Seed{" "}
-        {s.seed}, trace {s.hash}.
+        Seed {s.seed}, trace {s.hash}.
       </p>
     </section>
   );
@@ -282,7 +289,16 @@ export default function RunView() {
   const progress = useRun((s) => s.progress);
   const error = useRun((s) => s.error);
   const run = useRun((s) => s.current);
+  const artifact = useFirmware((s) => s.artifact);
+  const fwDesign = useFirmware((s) => s.designId);
+  const [controller, setController] = useState<"reference" | "firmware">("reference");
+  const board = boardOf(design);
+  const firmwareReady =
+    artifact !== null && fwDesign === design.id && artifact.board === board?.board;
   usePlayback();
+  useEffect(() => {
+    void useFirmware.getState().load(design);
+  }, [design]);
   useEffect(() => {
     listTracks().then(
       (xs) => {
@@ -298,9 +314,13 @@ export default function RunView() {
     if (!track) return;
     const seeds =
       mc > 1 ? [seed, ...Array.from({ length: mc - 1 }, (_, i) => seed + i + 1)] : [seed];
-    useRun
-      .getState()
-      .start(design, track, seeds, pid, `seed ${seed}, Kp ${pid.kp}, base ${pid.baseDuty}`);
+    if (controller === "firmware" && artifact && firmwareReady) {
+      useRun.getState().start(design, track, seeds, pid, `firmware, seed ${seed}`, artifact);
+    } else {
+      useRun
+        .getState()
+        .start(design, track, seeds, pid, `seed ${seed}, Kp ${pid.kp}, base ${pid.baseDuty}`);
+    }
   };
 
   return (
@@ -361,32 +381,51 @@ export default function RunView() {
               ))}
             </select>
           </label>
-          <span className="flex items-center gap-2" title="Reference PID controller gains">
-            <NumberField
-              label="Base"
-              value={pid.baseDuty}
-              step={0.05}
-              onChange={(v) => {
-                setPid({ ...pid, baseDuty: v });
+          <label className="flex items-center gap-1">
+            <span className="text-muted">Controller</span>
+            <select
+              aria-label="Controller"
+              value={controller}
+              onChange={(e) => {
+                setController(e.target.value as "reference" | "firmware");
               }}
-            />
-            <NumberField
-              label="Kp"
-              value={pid.kp}
-              step={0.1}
-              onChange={(v) => {
-                setPid({ ...pid, kp: v });
-              }}
-            />
-            <NumberField
-              label="Kd"
-              value={pid.kd}
-              step={0.005}
-              onChange={(v) => {
-                setPid({ ...pid, kd: v });
-              }}
-            />
-          </span>
+              className="rounded-md border border-border bg-bg px-1 py-1"
+            >
+              <option value="reference">Reference PID</option>
+              <option value="firmware" disabled={!firmwareReady}>
+                My firmware{firmwareReady ? "" : " (compile it in Code)"}
+              </option>
+            </select>
+          </label>
+          {controller === "firmware" && board && <TierBadge tier={board.tier} />}
+          {controller === "reference" && (
+            <span className="flex items-center gap-2" title="Reference PID controller gains">
+              <NumberField
+                label="Base"
+                value={pid.baseDuty}
+                step={0.05}
+                onChange={(v) => {
+                  setPid({ ...pid, baseDuty: v });
+                }}
+              />
+              <NumberField
+                label="Kp"
+                value={pid.kp}
+                step={0.1}
+                onChange={(v) => {
+                  setPid({ ...pid, kp: v });
+                }}
+              />
+              <NumberField
+                label="Kd"
+                value={pid.kd}
+                step={0.005}
+                onChange={(v) => {
+                  setPid({ ...pid, kd: v });
+                }}
+              />
+            </span>
+          )}
           <button
             type="button"
             data-testid="run-start"
@@ -435,6 +474,13 @@ export default function RunView() {
         {run && (
           <div className="max-h-[40vh] overflow-y-auto border-t border-border p-3">
             <RunPlots trace={run.trace} endMs={Math.max(1, traceEndMs(run))} />
+            {run.summary.firmware?.watch && run.summary.firmware.watch.names.length > 0 && (
+              <WatchPlots
+                watch={run.summary.firmware.watch}
+                recordEveryMs={run.summary.recordEveryMs}
+                endMs={Math.max(1, traceEndMs(run))}
+              />
+            )}
           </div>
         )}
       </div>

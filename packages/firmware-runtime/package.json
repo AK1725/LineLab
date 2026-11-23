@@ -18,6 +18,15 @@
     "build": "tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --max-warnings 0",
-    "test": "vitest run --passWithNoTests"
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@linelab/design-core": "workspace:*",
+    "@linelab/schema": "workspace:*",
+    "@linelab/sim-core": "workspace:*",
+    "avr8js": "0.21.1"
+  },
+  "devDependencies": {
+    "@linelab/component-db": "workspace:*"
   }
 }

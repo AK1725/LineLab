@@ -6,7 +6,7 @@ import {
   type PackedTrace,
   type ReferencePidOptions,
 } from "@linelab/sim-core";
-import type { Design, Track } from "@linelab/schema";
+import type { Design, FirmwareArtifact, Track } from "@linelab/schema";
 import { create } from "zustand";
 import type { RunRequest, RunResponse, RunSummary } from "./protocol";
 
@@ -41,6 +41,7 @@ interface RunState {
     seeds: number[],
     pid: Partial<ReferencePidOptions>,
     label: string,
+    firmware?: FirmwareArtifact,
   ) => void;
   seek: (tMs: number) => void;
   setPlaying: (p: boolean) => void;
@@ -51,6 +52,9 @@ interface RunState {
 
 let worker: Worker | undefined;
 let nextId = 0;
+let watchdog: ReturnType<typeof setTimeout> | undefined;
+/** A worker that hasn't answered for this long is stuck (a HAL sketch looping with no I/O). */
+const WATCHDOG_MS = 60_000;
 
 export const useRun = create<RunState>()((set, get) => ({
   status: "idle",
@@ -63,13 +67,31 @@ export const useRun = create<RunState>()((set, get) => ({
   playing: false,
   speed: 1,
   camera: "top",
-  start: (design, track, seeds, pid, label) => {
+  start: (design, track, seeds, pid, label, firmware) => {
     worker ??= new Worker(new URL("./sim.worker.ts", import.meta.url), { type: "module" });
     const id = ++nextId;
     set({ status: "running", progress: null, error: null, playing: false });
+    const arm = () => {
+      clearTimeout(watchdog);
+      watchdog = setTimeout(() => {
+        worker?.terminate();
+        worker = undefined;
+        set({
+          status: "error",
+          progress: null,
+          error: {
+            message: `The simulation didn't respond for ${WATCHDOG_MS / 1000} s, so it was stopped. A sketch that loops forever without delay(), analogRead() or other I/O never gives the simulator a chance to advance time.`,
+          },
+        });
+      }, WATCHDOG_MS);
+    };
+    arm();
     worker.onmessage = (e: MessageEvent<RunResponse>) => {
       const msg = e.data;
       if (msg.id !== id) return;
+      if (msg.kind === "progress" || msg.kind === "alive") arm();
+      else clearTimeout(watchdog);
+      if (msg.kind === "alive") return;
       if (msg.kind === "progress") set({ progress: { done: msg.done, total: msg.total } });
       else if (msg.kind === "error")
         set({
@@ -96,7 +118,15 @@ export const useRun = create<RunState>()((set, get) => ({
         });
       }
     };
-    const req: RunRequest = { id, design, track, seeds, pid, laps: 1 };
+    const req: RunRequest = {
+      id,
+      design,
+      track,
+      seeds,
+      pid,
+      laps: 1,
+      ...(firmware ? { firmware } : {}),
+    };
     worker.postMessage(req);
   },
   seek: (tMs) => {

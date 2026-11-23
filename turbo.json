@@ -23,6 +23,29 @@
     "dev": {
       "cache": false,
       "persistent": true
+    },
+    "@linelab/web#build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**"],
+      "env": ["NEXT_OUTPUT"],
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/examples/firmware/**"]
+    },
+    "@linelab/web#typecheck": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/examples/firmware/**"]
+    },
+    "@linelab/web#lint": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/examples/firmware/**"]
+    },
+    "@linelab/firmware-runtime#test": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/examples/firmware/**",
+        "$TURBO_ROOT$/tracks/**",
+        "$TURBO_ROOT$/packages/sim-core/fixtures/**"
+      ]
     }
   }
 }

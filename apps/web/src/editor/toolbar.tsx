@@ -109,6 +109,7 @@ export default function Toolbar({
           ["top", "Top"],
           ["side", "Side"],
           ["schematic", "Schematic"],
+          ["code", "Code"],
           ["run", "Run"],
         ] as [View, string][]
       ).map(([v, l]) => (

@@ -267,6 +267,7 @@ export class Simulation {
       this.stride * (Math.ceil(this.durationMs / this.config.recordEveryMs) + 2),
     );
     this.tracker.update(ox, oy);
+    this.record(); // t = 0
   }
 
   /** Robot origin (axle midpoint) pose in mm/rad. */
@@ -541,7 +542,6 @@ export class Simulation {
 
   /** Run to completion. */
   run(): SimResult {
-    if (this.count === 0) this.record();
     while (!this.done) this.step();
     return this.result();
   }

@@ -1,7 +1,8 @@
 /**
- * @linelab/compiler — Sandboxed firmware compile service (arduino-cli / PlatformIO / emscripten).
- *
- * Placeholder workspace created in Phase 0. Implementation lands in Phase 6
- * (see docs/BUILD_PLAN.md). Nothing is exported yet on purpose: no stubs that pretend to work.
+ * @linelab/compiler: the sandboxed firmware compile service (see README.md and ADR 0007).
+ * The server entry point is `server.ts`; these exports let scripts and tests compile directly.
  */
-export {};
+export { compile, tierOf, EMULATED_FQBN, type CompilerConfig } from "./compile.js";
+export { configFromEnv } from "./config.js";
+export { runJob, DEFAULT_LIMITS, type JobLimits, type JobResult } from "./sandbox.js";
+export * from "./parse.js";

@@ -230,4 +230,62 @@ Screenshots: [top view](screenshots/phase-5-run-top.png), [follow camera](screen
 - The ghost is drawn from its own design but only for the same track. Two arbitrary saved runs can't be compared yet (no run storage until the API is used in Phase 8/11).
 - The camera follow is a simple chase camera; no orbit while replaying.
 
-## Next: Phase 6 — Firmware runtime
+## Phase 6 — Firmware runtime ✅ (branch `phase-6-firmware`)
+
+**Done**
+
+- **`apps/compiler`**: sandboxed compile service (`POST /compile`). Decisions are in [ADR 0007](adr/0007-firmware-runtime.md).
+  - AVR boards build with arduino-cli and return the HEX, the DWARF line table, and symbols with variable types from DWARF.
+  - Other boards build with clang → wasm32 against `lfr-hal`.
+  - gcc/clang diagnostics are mapped to sketch lines. Prototypes are generated like the Arduino preprocessor does.
+  - Docker image with the toolchains baked in. It sits on an internal-only network in docker-compose with 1 GB, 2 CPUs, a read-only root, no capabilities and a non-root user. Each job also gets prlimit and a 60 s timeout.
+  - `scripts/sandbox-check.sh` runs in CI.
+- **`packages/lfr-hal`**: a simulated Arduino core for the HAL tier. GPIO, ADC, PWM, ESP32 LEDC (both APIs), time, Serial with printf, String, a libc subset, math through the host, STM32 pin names. Unsupported calls fail at link time with a clear message.
+- **`packages/firmware-runtime`**:
+  - netlist → wiring resolution, covering sensors to MCU pins and MCU pins through 11 motor-driver logic models to wheels, polarity included;
+  - ATmega328P emulation (avr8js): ADC, GPIO, timers with **PWM from registers**, USART, RC sensors;
+  - profiler mapped to source lines and files, typed variable watches, loop-period measurement, brownout = MCU reset;
+  - `HalRunner` for WebAssembly sketches: time advances through HAL calls; brownout restarts the sketch.
+- Examples in `examples/firmware`: `good_pid.ino` (Nano), `blink.ino`, `esp32_pid.ino`. Their artifacts were built by the real compiler and are committed, so tests and the web app can run them without a compiler service.
+- Web:
+  - **Code** tab: Monaco bundled locally with C++ highlighting; board and tier badge; examples; Compile through `/api/compile` (503 with instructions if the compiler isn't running); errors as markers and a clickable list; warnings and log; the sketch is saved per design.
+  - **Run** tab: Controller = Reference PID or My firmware (enabled only when the current source is compiled). Results show the tier badge, serial console, measured loop period, where the CPU spends its time, typed variable plots and wiring problems. A 60 s watchdog stops a HAL sketch that never yields.
+
+**Verified locally**
+
+- firmware-runtime (19 tests):
+  - `good_pid.ino` on an emulated Nano **completes the oval and the figure-8** (loop ≈ 1.48 ms; profile: 50 % in analogRead's busy wait);
+  - **blink toggles every 500 ms within 1 %**;
+  - **`esp32_pid.ino` runs on the HAL and completes the oval**;
+  - wiring resolution, including swapped motor wires (reverses that wheel) and a floating STBY (robot can't drive);
+  - the logic tables of 5 driver types;
+  - typed watches read the right values;
+  - firmware runs are deterministic.
+- compiler: 13 tests. Parsers (diagnostics, line table, nm, DWARF types, sizes, prototypes); job timeout and memory kill; clean environment; request validation; real AVR and HAL compiles with errors mapped to lines (these run where the toolchains are installed).
+- **Sandbox, inside the real container** (internal network, 1 GB, read-only, non-root):
+  - a job's network access fails (`EAI_AGAIN`, no DNS);
+  - a spinning job is killed at its limit;
+  - a 2.5 GB allocation is killed;
+  - arduino:avr and HAL compiles work offline.
+
+  `selfcheck.js` passes all 5 checks. The network probe uses `node:https`: `fetch` can't start under the 1 GB address-space limit (its WebAssembly parser), which would have passed for the wrong reason. Locally the image was built with this environment's proxy CA injected; the committed Dockerfile is unchanged, and CI runs the same script.
+
+- e2e (4 new tests):
+  - the Nano PID sketch runs from the Run tab, with serial, loop period, profile and the `lastError (i32)` watch, and no console errors;
+  - compile errors (mocked compiler) mark the line, and editing invalidates the build;
+  - the ESP32 sketch runs with the "Approximate (HAL)" badge;
+  - the compile proxy returns 503 when the compiler is down.
+
+  Full suite: 159 passed.
+
+Screenshots: [Code tab](screenshots/phase-6-code.png), [firmware run](screenshots/phase-6-firmware-run.png).
+
+**Deferred / known issues**
+
+- **rp2040js emulation** isn't built. RP2040, Mega 2560, 32U4 and Nano Every run on the approximate HAL tier, labelled as such. The compiler image would need the arduino-pico toolchain for RP2040.
+- HAL: no interrupts (encoders), `pulseIn`, `tone` or hardware timers. No line mapping, profiler or variable watch for WebAssembly sketches yet.
+- Brake and coast both apply 0 V (the motor model has no open circuit). Encoder and IMU signals aren't fed to firmware yet.
+- Emulated firmware runs at about 2.8× real time, so a 50-seed Monte Carlo with firmware takes minutes. The ≥ 20× benchmark applies to the reference controller.
+- Library support on the emulated tier is whatever arduino:avr ships. No third-party libraries are installed in the compiler image yet (e.g. QTRSensors).
+
+## Next: Phase 7 — Failure detection, static analysis, run report

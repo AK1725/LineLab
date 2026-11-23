@@ -2,7 +2,7 @@
   "name": "@linelab/compiler",
   "version": "0.0.0",
   "private": true,
-  "description": "Sandboxed firmware compile service (arduino-cli / PlatformIO / emscripten).",
+  "description": "Sandboxed firmware compile service: arduino-cli for AVR boards, clang\u2192wasm32 against @linelab/lfr-hal for the rest.",
   "license": "Apache-2.0",
   "type": "module",
   "exports": {
@@ -18,6 +18,14 @@
     "build": "tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --max-warnings 0",
-    "test": "vitest run --passWithNoTests"
+    "test": "vitest run",
+    "dev": "tsx watch src/server.ts",
+    "start": "node dist/server.js",
+    "examples:build": "tsx scripts/build-examples.ts"
+  },
+  "dependencies": {
+    "@linelab/schema": "workspace:*",
+    "fastify": "5.12.8",
+    "zod": "4.6.7"
   }
 }

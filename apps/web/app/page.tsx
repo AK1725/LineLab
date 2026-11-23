@@ -7,7 +7,7 @@ const phases = [
   ["3", "Wiring and live rules engine", true],
   ["4", "Tracks: library, editor, image import", true],
   ["5", "Deterministic simulation and run viewer", true],
-  ["6", "Run your real firmware (emulated MCU)", false],
+  ["6", "Run your real firmware (emulated MCU)", true],
   ["7", "Failure detection and static analysis", false],
   ["8", "AI debug agent with verified fixes", false],
   ["9", "Real-robot telemetry, flashing, calibration", false],

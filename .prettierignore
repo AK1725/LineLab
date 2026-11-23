@@ -10,3 +10,4 @@ pnpm-lock.yaml
 packages/schema/json-schema
 apps/vision
 **/src/generated
+**/*.generated.ts

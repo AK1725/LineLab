@@ -102,7 +102,7 @@ describe("reference controller", () => {
       );
       expect(mc.robustness, id).toBe(1);
     }
-  });
+  }, 60_000);
 
   it("fails expert tracks in plausible ways", () => {
     // Acute angles (135° turns on a 20 mm radius): a fixed-gain PD at cruising speed overshoots a

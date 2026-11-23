@@ -14,6 +14,7 @@ export * from "./command.js";
 export * from "./track.js";
 export * from "./run.js";
 export * from "./finding.js";
+export * from "./firmware.js";
 export { formatIssues } from "./format.js";
 
 /** Top-level document schemas, exported as JSON Schema files for editors and external tools. */
