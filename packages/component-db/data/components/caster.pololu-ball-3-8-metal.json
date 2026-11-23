@@ -1,0 +1,30 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "caster.pololu-ball-3-8-metal",
+  "name": "Pololu ball caster, 3/8\" metal ball",
+  "aliases": ["ball caster 3/8", "pololu ball caster", "3/8 caster"],
+  "category": "caster",
+  "manufacturer": "Pololu",
+  "typicalPriceUsd": 3,
+  "dimensionsMm": {
+    "x": 21,
+    "y": 13,
+    "z": 11
+  },
+  "massG": 2,
+  "model": {
+    "kind": "procedural",
+    "generator": "ball_caster",
+    "params": {
+      "ballDiameterMm": 9.5
+    }
+  },
+  "pins": [],
+  "electrical": {
+    "kind": "generic"
+  },
+  "specStatus": "needs-review",
+  "notes": "Height adjustable with spacers. Price is per caster.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=Pololu+ball+caster+3%2F8"]
+}

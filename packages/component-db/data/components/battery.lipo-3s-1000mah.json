@@ -1,0 +1,50 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "battery.lipo-3s-1000mah",
+  "name": "LiPo 3S 1000 mAh 25C",
+  "aliases": ["lipo 3s 1000", "3s 1000mah", "3s lipo"],
+  "category": "battery",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 11.0,
+  "dimensionsMm": {
+    "x": 70,
+    "y": 35,
+    "z": 22
+  },
+  "massG": 85,
+  "model": {
+    "kind": "procedural",
+    "generator": "battery_pack",
+    "params": {
+      "color": 4,
+      "labelColor": 2
+    }
+  },
+  "pins": [
+    {
+      "id": "BAT+",
+      "label": "Positive",
+      "functions": ["power_out"]
+    },
+    {
+      "id": "BAT-",
+      "label": "Negative",
+      "functions": ["gnd"]
+    }
+  ],
+  "electrical": {
+    "kind": "battery",
+    "chemistry": "lipo",
+    "cellsInSeries": 3,
+    "nominalVoltageV": 11.100000000000001,
+    "fullVoltageV": 12.600000000000001,
+    "cutoffVoltageV": 9.0,
+    "capacitymAh": 1000,
+    "maxContinuousDischargeA": 25.0,
+    "internalResistanceMilliohm": 50
+  },
+  "specStatus": "needs-review",
+  "notes": "Generic module sold by many vendors; dimensions and values vary by seller. Never discharge below 3.0 V per cell or charge above 4.2 V. Use a balance charger.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=lipo+3S+1000mAh"]
+}

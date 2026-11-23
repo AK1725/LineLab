@@ -1,0 +1,96 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "driver.l9110s-module",
+  "name": "L9110S dual motor driver module",
+  "aliases": ["l9110s", "l9110", "hg7881"],
+  "category": "motor_driver",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 1,
+  "dimensionsMm": {
+    "x": 29,
+    "y": 23,
+    "z": 10
+  },
+  "massG": 3,
+  "model": {
+    "kind": "procedural",
+    "generator": "pcb_board",
+    "params": {
+      "pcbColor": 2,
+      "chipMm": 4,
+      "screwTerminals": 2
+    }
+  },
+  "pins": [
+    {
+      "id": "VCC",
+      "label": "VCC (2.5–12 V)",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "GND",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "A-IA",
+      "label": "A-IA",
+      "functions": ["digital", "pwm"]
+    },
+    {
+      "id": "A-IB",
+      "label": "A-IB",
+      "functions": ["digital", "pwm"]
+    },
+    {
+      "id": "B-IA",
+      "label": "B-IA",
+      "functions": ["digital", "pwm"]
+    },
+    {
+      "id": "B-IB",
+      "label": "B-IB",
+      "functions": ["digital", "pwm"]
+    },
+    {
+      "id": "MA1",
+      "label": "Motor output MA1",
+      "functions": ["motor_out"]
+    },
+    {
+      "id": "MA2",
+      "label": "Motor output MA2",
+      "functions": ["motor_out"]
+    },
+    {
+      "id": "MB1",
+      "label": "Motor output MB1",
+      "functions": ["motor_out"]
+    },
+    {
+      "id": "MB2",
+      "label": "Motor output MB2",
+      "functions": ["motor_out"]
+    }
+  ],
+  "electrical": {
+    "kind": "motor_driver",
+    "channels": 2,
+    "logicVoltage": {
+      "min": 2.5,
+      "max": 12
+    },
+    "motorVoltage": {
+      "min": 2.5,
+      "max": 12
+    },
+    "continuousCurrentPerChannelA": 0.8,
+    "peakCurrentPerChannelA": 1.5,
+    "voltageDropV": 1.0,
+    "maxPwmFrequencyKHz": 20
+  },
+  "specStatus": "needs-review",
+  "notes": "Generic module sold by many vendors; dimensions and values vary by seller.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.lcsc.com/search?q=L9110S"]
+}

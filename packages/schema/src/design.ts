@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { Board } from "./board.js";
 import { Chassis } from "./chassis.js";
 import { DottedId, Ident, Quat, Vec3, PositiveNumber, NonNegativeNumber } from "./primitives.js";
 
@@ -25,23 +26,6 @@ export const Net = z
   })
   .strict();
 export type Net = z.infer<typeof Net>;
-
-export const Board = z.enum([
-  "arduino:avr:uno",
-  "arduino:avr:nano",
-  "arduino:avr:mega",
-  "arduino:avr:leonardo",
-  "arduino:avr:pro",
-  "arduino:megaavr:nona4809",
-  "rp2040:rp2040:rpipico",
-  "esp32:esp32:esp32",
-  "esp32:esp32:esp32s3",
-  "esp32:esp32:esp32c3",
-  "stm32:stm32:bluepill_f103c8",
-  "stm32:stm32:blackpill_f411ce",
-  "teensy:avr:teensy40",
-]);
-export type Board = z.infer<typeof Board>;
 
 export const FirmwareRef = z
   .object({

@@ -1,0 +1,45 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "motor.pololu-hpcb-12v-10-1",
+  "name": "Pololu micro metal gearmotor HPCB 12V 10:1",
+  "aliases": ["hpcb 12v 10:1", "pololu 12v 10:1"],
+  "category": "motor",
+  "manufacturer": "Pololu",
+  "typicalPriceUsd": 24,
+  "dimensionsMm": {
+    "x": 34,
+    "y": 12,
+    "z": 10
+  },
+  "massG": 10,
+  "model": {
+    "kind": "procedural",
+    "generator": "gearmotor_n20",
+    "params": {}
+  },
+  "pins": [
+    {
+      "id": "M+",
+      "label": "Motor terminal +",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "M-",
+      "label": "Motor terminal -",
+      "functions": ["power_in"]
+    }
+  ],
+  "electrical": {
+    "kind": "motor",
+    "ratedVoltageV": 12,
+    "noLoadRpm": 3400,
+    "noLoadCurrentA": 0.06,
+    "stallCurrentA": 0.75,
+    "stallTorqueKgCm": 0.2,
+    "gearRatio": 10
+  },
+  "specStatus": "needs-review",
+  "notes": "Carbon-brush 12 V version: long life, common on fast competition robots running 2S–3S.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.pololu.com/category/60/micro-metal-gearmotors"]
+}

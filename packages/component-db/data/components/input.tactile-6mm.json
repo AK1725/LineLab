@@ -1,0 +1,41 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "input.tactile-6mm",
+  "name": "Tactile push button 6×6 mm",
+  "aliases": ["push button", "tactile switch", "button"],
+  "category": "input",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 0.1,
+  "dimensionsMm": {
+    "x": 6,
+    "y": 6,
+    "z": 5
+  },
+  "massG": 0.3,
+  "model": {
+    "kind": "procedural",
+    "generator": "switch_part",
+    "params": {
+      "kind": 0
+    }
+  },
+  "pins": [
+    {
+      "id": "A",
+      "label": "Terminal A",
+      "functions": ["digital"]
+    },
+    {
+      "id": "B",
+      "label": "Terminal B",
+      "functions": ["digital"]
+    }
+  ],
+  "electrical": {
+    "kind": "generic"
+  },
+  "specStatus": "needs-review",
+  "notes": "Use INPUT_PULLUP and debounce in software.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=6x6mm+tactile+switch"]
+}

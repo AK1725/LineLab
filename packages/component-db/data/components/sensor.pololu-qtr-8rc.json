@@ -1,0 +1,111 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "sensor.pololu-qtr-8rc",
+  "name": "Pololu QTR-8RC reflectance sensor array (RC)",
+  "aliases": ["qtr-8rc", "qtr8rc"],
+  "category": "line_sensor",
+  "manufacturer": "Pololu",
+  "typicalPriceUsd": 10,
+  "dimensionsMm": {
+    "x": 12.7,
+    "y": 74.9,
+    "z": 3.2
+  },
+  "massG": 3.1,
+  "model": {
+    "kind": "procedural",
+    "generator": "ir_sensor_array",
+    "params": {
+      "channels": 8,
+      "pitchMm": 9.525,
+      "pcbColor": 4
+    }
+  },
+  "pins": [
+    {
+      "id": "VCC",
+      "label": "VCC (3.3–5 V)",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "GND",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "LEDON",
+      "label": "IR LED control",
+      "functions": ["enable", "digital"]
+    },
+    {
+      "id": "OUT1",
+      "label": "Sensor 1 output",
+      "functions": ["digital"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "OUT2",
+      "label": "Sensor 2 output",
+      "functions": ["digital"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "OUT3",
+      "label": "Sensor 3 output",
+      "functions": ["digital"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "OUT4",
+      "label": "Sensor 4 output",
+      "functions": ["digital"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "OUT5",
+      "label": "Sensor 5 output",
+      "functions": ["digital"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "OUT6",
+      "label": "Sensor 6 output",
+      "functions": ["digital"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "OUT7",
+      "label": "Sensor 7 output",
+      "functions": ["digital"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "OUT8",
+      "label": "Sensor 8 output",
+      "functions": ["digital"],
+      "voltageDomainV": 5
+    }
+  ],
+  "electrical": {
+    "kind": "line_sensor",
+    "supplyVoltage": {
+      "min": 3.3,
+      "max": 5
+    },
+    "outputType": "rc",
+    "channels": 8,
+    "channelPitchMm": 9.525,
+    "optimalHeightMm": {
+      "min": 3,
+      "max": 6
+    },
+    "maxCurrentmA": 100
+  },
+  "specStatus": "needs-review",
+  "notes": "Pull LEDON low to turn the emitters off (saves power, lets you measure ambient light). RC outputs are read by timing the capacitor discharge.",
+  "license": "CC-BY-SA-4.0",
+  "sources": [
+    "https://www.pololu.com/product/961",
+    "https://www.pololu.com/category/123/pololu-qtr-reflectance-sensors"
+  ]
+}

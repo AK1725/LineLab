@@ -4,7 +4,7 @@
 
 You put together a virtual twin of your real robot from a database of real components, run **your actual firmware** on an emulated microcontroller on a virtual track, and see exactly where and why it fails. An AI debugging agent then proposes a fix that is verified in simulation before you ever see it.
 
-> **Status: Phase 0 of 11 — foundation.** The monorepo, schemas, CI and infrastructure are in place. The editor, simulator and debugger are not built yet. See the [roadmap](#roadmap).
+> **Status: Phase 1 of 11 done.** A searchable database of 124 line-follower components with pinouts, specs and 3D models is live in the web app. The editor, simulator and debugger come next. See the [roadmap](#roadmap).
 
 ---
 
@@ -60,8 +60,8 @@ docs/               blueprint, build plan, progress log, ADRs
 | Phase | Deliverable                                                             | Status |
 | ----- | ----------------------------------------------------------------------- | ------ |
 | 0     | Monorepo, CI, schemas, infrastructure                                   | ✅     |
-| 1     | Component database (120+ parts), search, procedural 3D models           | ⏳     |
-| 2     | 3D assembly editor, chassis templates, custom chassis                   |        |
+| 1     | Component database (124 parts), search, procedural 3D models            | ✅     |
+| 2     | 3D assembly editor, chassis templates, custom chassis                   | ⏳     |
 | 3     | Wiring/netlist editor and live rules engine                             |        |
 | 4     | Tracks: library, editor, image-to-track                                 |        |
 | 5     | Deterministic physics simulation and run viewer                         |        |

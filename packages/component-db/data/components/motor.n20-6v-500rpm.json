@@ -1,0 +1,45 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "motor.n20-6v-500rpm",
+  "name": "N20 6V 500 RPM gearmotor (generic)",
+  "aliases": ["n20 500", "n20 500rpm", "n20 6v 500rpm", "n20 500 rpm"],
+  "category": "motor",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 3,
+  "dimensionsMm": {
+    "x": 34,
+    "y": 12,
+    "z": 10
+  },
+  "massG": 10,
+  "model": {
+    "kind": "procedural",
+    "generator": "gearmotor_n20",
+    "params": {}
+  },
+  "pins": [
+    {
+      "id": "M+",
+      "label": "Motor terminal +",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "M-",
+      "label": "Motor terminal -",
+      "functions": ["power_in"]
+    }
+  ],
+  "electrical": {
+    "kind": "motor",
+    "ratedVoltageV": 6,
+    "noLoadRpm": 500,
+    "noLoadCurrentA": 0.06,
+    "stallCurrentA": 0.8,
+    "stallTorqueKgCm": 0.45,
+    "gearRatio": 30
+  },
+  "specStatus": "needs-review",
+  "notes": "Generic module sold by many vendors; dimensions and values vary by seller. Gear ratio estimated from speed. Left/right motors often differ by 5–10%.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=N20+gear+motor+6V"]
+}

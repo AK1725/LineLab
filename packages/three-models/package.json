@@ -2,7 +2,7 @@
   "name": "@linelab/three-models",
   "version": "0.0.0",
   "private": true,
-  "description": "Procedural three.js geometry generators for components and chassis.",
+  "description": "Procedural three.js models for every component, built from its real dimensions (Z up, mm).",
   "license": "Apache-2.0",
   "type": "module",
   "exports": {
@@ -18,6 +18,14 @@
     "build": "tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --max-warnings 0",
-    "test": "vitest run --passWithNoTests"
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "three": "0.187.0",
+    "zod": "4.6.7",
+    "@linelab/schema": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/three": "0.187.0"
   }
 }

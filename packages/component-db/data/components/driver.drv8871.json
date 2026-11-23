@@ -1,0 +1,76 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "driver.drv8871",
+  "name": "DRV8871 single brushed motor driver (Adafruit)",
+  "aliases": ["drv8871"],
+  "category": "motor_driver",
+  "manufacturer": "Adafruit (TI DRV8871)",
+  "typicalPriceUsd": 8,
+  "dimensionsMm": {
+    "x": 25,
+    "y": 20,
+    "z": 8
+  },
+  "massG": 2,
+  "model": {
+    "kind": "procedural",
+    "generator": "pcb_board",
+    "params": {
+      "pcbColor": 3,
+      "chipMm": 5,
+      "screwTerminals": 2
+    }
+  },
+  "pins": [
+    {
+      "id": "VM",
+      "label": "Motor power (6.5–45 V)",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "GND",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "OUT1",
+      "label": "Motor output OUT1",
+      "functions": ["motor_out"]
+    },
+    {
+      "id": "OUT2",
+      "label": "Motor output OUT2",
+      "functions": ["motor_out"]
+    },
+    {
+      "id": "IN1",
+      "label": "IN1",
+      "functions": ["digital", "pwm"]
+    },
+    {
+      "id": "IN2",
+      "label": "IN2",
+      "functions": ["digital", "pwm"]
+    }
+  ],
+  "electrical": {
+    "kind": "motor_driver",
+    "channels": 1,
+    "logicVoltage": {
+      "min": 1.8,
+      "max": 5.5
+    },
+    "motorVoltage": {
+      "min": 6.5,
+      "max": 45
+    },
+    "continuousCurrentPerChannelA": 2,
+    "peakCurrentPerChannelA": 3.6,
+    "voltageDropV": 0.6,
+    "maxPwmFrequencyKHz": 200
+  },
+  "specStatus": "needs-review",
+  "notes": "Single channel: a differential robot needs two. Minimum 6.5 V motor supply.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.adafruit.com/product/3190", "https://www.ti.com/product/DRV8871"]
+}

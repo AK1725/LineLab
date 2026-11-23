@@ -1,6 +1,8 @@
+import Link from "next/link";
+
 const phases = [
   ["0", "Foundation: monorepo, CI, schemas", true],
-  ["1", "Component database, search, procedural 3D models", false],
+  ["1", "Component database, search, procedural 3D models", true],
   ["2", "3D assembly and chassis designer", false],
   ["3", "Wiring and live rules engine", false],
   ["4", "Tracks: library, editor, image import", false],
@@ -23,6 +25,14 @@ export default function Home() {
       <p className="mt-4 text-lg text-muted">
         Design, wire, simulate and debug line-following robots — run your real firmware on a virtual
         track and see exactly where and why it fails.
+      </p>
+      <p className="mt-6">
+        <Link
+          href="/components"
+          className="inline-block rounded-lg bg-accent px-4 py-2 font-medium text-white dark:text-black"
+        >
+          Browse the component database
+        </Link>
       </p>
 
       <section aria-labelledby="roadmap" className="mt-12">

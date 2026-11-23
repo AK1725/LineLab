@@ -1,0 +1,57 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "display.ssd1306-0-96",
+  "name": "SSD1306 0.96\" 128×64 OLED (I2C)",
+  "aliases": ["ssd1306", "oled", "0.96 oled"],
+  "category": "display",
+  "manufacturer": "Generic (Solomon Systech SSD1306)",
+  "typicalPriceUsd": 3,
+  "dimensionsMm": {
+    "x": 27,
+    "y": 27,
+    "z": 4
+  },
+  "massG": 2,
+  "model": {
+    "kind": "procedural",
+    "generator": "pcb_board",
+    "params": {
+      "pcbColor": 4,
+      "screen": 1
+    }
+  },
+  "pins": [
+    {
+      "id": "VCC",
+      "label": "VCC (3.3–5 V)",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "GND",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "SCL",
+      "label": "I2C SCL",
+      "functions": ["i2c_scl"]
+    },
+    {
+      "id": "SDA",
+      "label": "I2C SDA",
+      "functions": ["i2c_sda"]
+    }
+  ],
+  "electrical": {
+    "kind": "generic",
+    "supplyVoltage": {
+      "min": 3.3,
+      "max": 5
+    },
+    "maxCurrentmA": 20
+  },
+  "specStatus": "needs-review",
+  "notes": "Generic module sold by many vendors; dimensions and values vary by seller. Redrawing the whole screen takes about 25 ms over 400 kHz I2C: don't do it inside the control loop.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.adafruit.com/product/326"]
+}

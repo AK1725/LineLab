@@ -1,0 +1,34 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "wheel.n20-34mm",
+  "name": "N20 rubber wheel 34 mm (D-shaft)",
+  "aliases": ["n20 wheel", "34mm wheel"],
+  "category": "wheel",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 1,
+  "dimensionsMm": {
+    "x": 34,
+    "y": 7,
+    "z": 34
+  },
+  "massG": 3,
+  "model": {
+    "kind": "procedural",
+    "generator": "wheel",
+    "params": {
+      "hubColor": 1,
+      "tireMm": 3
+    }
+  },
+  "pins": [],
+  "electrical": {
+    "kind": "wheel",
+    "diameterMm": 34,
+    "widthMm": 7,
+    "frictionCoefficient": 0.85
+  },
+  "specStatus": "needs-review",
+  "notes": "Generic module sold by many vendors; dimensions and values vary by seller.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=34mm+rubber+wheel+3mm+shaft"]
+}

@@ -1,0 +1,77 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "comm.nrf24l01",
+  "name": "nRF24L01+ 2.4 GHz transceiver",
+  "aliases": ["nrf24l01", "nrf24", "nrf24l01+"],
+  "category": "communication",
+  "manufacturer": "Generic (Nordic nRF24L01+)",
+  "typicalPriceUsd": 1.5,
+  "dimensionsMm": {
+    "x": 29,
+    "y": 15,
+    "z": 4
+  },
+  "massG": 2,
+  "model": {
+    "kind": "procedural",
+    "generator": "pcb_board",
+    "params": {
+      "pcbColor": 2,
+      "chipMm": 4
+    }
+  },
+  "pins": [
+    {
+      "id": "VCC",
+      "label": "VCC (1.9–3.6 V)",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "GND",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "CE",
+      "label": "Chip enable",
+      "functions": ["digital"]
+    },
+    {
+      "id": "CSN",
+      "label": "SPI chip select",
+      "functions": ["spi_cs"]
+    },
+    {
+      "id": "SCK",
+      "label": "SPI clock",
+      "functions": ["spi_sck"]
+    },
+    {
+      "id": "MOSI",
+      "label": "SPI MOSI",
+      "functions": ["spi_mosi"]
+    },
+    {
+      "id": "MISO",
+      "label": "SPI MISO",
+      "functions": ["spi_miso"]
+    },
+    {
+      "id": "IRQ",
+      "label": "Interrupt",
+      "functions": ["digital"]
+    }
+  ],
+  "electrical": {
+    "kind": "generic",
+    "supplyVoltage": {
+      "min": 1.9,
+      "max": 3.6
+    },
+    "maxCurrentmA": 14
+  },
+  "specStatus": "needs-review",
+  "notes": "VCC must be 3.3 V (5 V destroys it); the signal pins tolerate 5 V. Add a 10 µF capacitor across VCC/GND.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.nordicsemi.com/Products/nRF24-series"]
+}

@@ -1,0 +1,115 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "driver.tb6612fng",
+  "name": "TB6612FNG dual motor driver carrier",
+  "aliases": ["tb6612", "tb6612fng"],
+  "category": "motor_driver",
+  "manufacturer": "Pololu (Toshiba TB6612FNG)",
+  "typicalPriceUsd": 5,
+  "dimensionsMm": {
+    "x": 20.3,
+    "y": 15.2,
+    "z": 3
+  },
+  "massG": 1.6,
+  "model": {
+    "kind": "procedural",
+    "generator": "pcb_board",
+    "params": {
+      "pcbColor": 4,
+      "chipMm": 5
+    }
+  },
+  "pins": [
+    {
+      "id": "VM",
+      "label": "VM (motor 4.5–13.5 V)",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "VCC",
+      "label": "VCC (logic 2.7–5.5 V)",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "GND",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "AO1",
+      "label": "Motor output AO1",
+      "functions": ["motor_out"]
+    },
+    {
+      "id": "AO2",
+      "label": "Motor output AO2",
+      "functions": ["motor_out"]
+    },
+    {
+      "id": "BO1",
+      "label": "Motor output BO1",
+      "functions": ["motor_out"]
+    },
+    {
+      "id": "BO2",
+      "label": "Motor output BO2",
+      "functions": ["motor_out"]
+    },
+    {
+      "id": "PWMA",
+      "label": "PWM A",
+      "functions": ["pwm", "digital"]
+    },
+    {
+      "id": "AIN1",
+      "label": "AIN1",
+      "functions": ["digital"]
+    },
+    {
+      "id": "AIN2",
+      "label": "AIN2",
+      "functions": ["digital"]
+    },
+    {
+      "id": "STBY",
+      "label": "Standby (pull high to run)",
+      "functions": ["enable"]
+    },
+    {
+      "id": "BIN1",
+      "label": "BIN1",
+      "functions": ["digital"]
+    },
+    {
+      "id": "BIN2",
+      "label": "BIN2",
+      "functions": ["digital"]
+    },
+    {
+      "id": "PWMB",
+      "label": "PWM B",
+      "functions": ["pwm", "digital"]
+    }
+  ],
+  "electrical": {
+    "kind": "motor_driver",
+    "channels": 2,
+    "logicVoltage": {
+      "min": 2.7,
+      "max": 5.5
+    },
+    "motorVoltage": {
+      "min": 4.5,
+      "max": 13.5
+    },
+    "continuousCurrentPerChannelA": 1.2,
+    "peakCurrentPerChannelA": 3.2,
+    "voltageDropV": 0.5,
+    "maxPwmFrequencyKHz": 100
+  },
+  "specStatus": "needs-review",
+  "notes": "MOSFET bridge with low voltage drop: the usual choice for N20-motor line followers. STBY must be HIGH or the motors never move.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.pololu.com/product/713"]
+}

@@ -1,0 +1,77 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "sensor.mpu6050-gy521",
+  "name": "MPU-6050 6-axis IMU (GY-521 breakout)",
+  "aliases": ["mpu6050", "gy-521", "gy521", "imu"],
+  "category": "sensor",
+  "manufacturer": "Generic (TDK InvenSense MPU-6050)",
+  "typicalPriceUsd": 2,
+  "dimensionsMm": {
+    "x": 21,
+    "y": 16,
+    "z": 3
+  },
+  "massG": 2,
+  "model": {
+    "kind": "procedural",
+    "generator": "pcb_board",
+    "params": {
+      "pcbColor": 4,
+      "chipMm": 4
+    }
+  },
+  "pins": [
+    {
+      "id": "VIN",
+      "label": "VIN (3.3–5 V)",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "GND",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "SCL",
+      "label": "I2C SCL",
+      "functions": ["i2c_scl"]
+    },
+    {
+      "id": "SDA",
+      "label": "I2C SDA",
+      "functions": ["i2c_sda"]
+    },
+    {
+      "id": "XDA",
+      "label": "Aux I2C SDA",
+      "functions": ["i2c_sda"]
+    },
+    {
+      "id": "XCL",
+      "label": "Aux I2C SCL",
+      "functions": ["i2c_scl"]
+    },
+    {
+      "id": "AD0",
+      "label": "Address select",
+      "functions": ["digital"]
+    },
+    {
+      "id": "INT",
+      "label": "Interrupt",
+      "functions": ["digital"]
+    }
+  ],
+  "electrical": {
+    "kind": "generic",
+    "supplyVoltage": {
+      "min": 3.3,
+      "max": 5
+    },
+    "maxCurrentmA": 4
+  },
+  "specStatus": "needs-review",
+  "notes": "Generic module sold by many vendors; dimensions and values vary by seller. The chip itself is EOL; I2C address 0x68 (0x69 with AD0 high).",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://invensense.tdk.com/products/motion-tracking/6-axis/mpu-6050/"]
+}

@@ -1,0 +1,60 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "comm.hc-06",
+  "name": "HC-06 Bluetooth Classic module (slave only)",
+  "aliases": ["hc-06", "hc06"],
+  "category": "communication",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 3,
+  "dimensionsMm": {
+    "x": 37,
+    "y": 16,
+    "z": 6
+  },
+  "massG": 3,
+  "model": {
+    "kind": "procedural",
+    "generator": "pcb_board",
+    "params": {
+      "pcbColor": 4,
+      "rfModuleMm": 27
+    }
+  },
+  "pins": [
+    {
+      "id": "VCC",
+      "label": "VCC (3.6–6 V)",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "GND",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "TXD",
+      "label": "TX (3.3 V)",
+      "functions": ["uart_tx"],
+      "voltageDomainV": 3.3
+    },
+    {
+      "id": "RXD",
+      "label": "RX (3.3 V)",
+      "functions": ["uart_rx"],
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    }
+  ],
+  "electrical": {
+    "kind": "generic",
+    "supplyVoltage": {
+      "min": 3.6,
+      "max": 6
+    },
+    "maxCurrentmA": 40
+  },
+  "specStatus": "needs-review",
+  "notes": "Generic module sold by many vendors; dimensions and values vary by seller.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.lcsc.com/search?q=HC-06+bluetooth"]
+}

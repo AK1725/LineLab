@@ -11,7 +11,7 @@ test("home page shows the product name and roadmap without console errors", asyn
   await expect(page).toHaveTitle("LineLab");
   await expect(page.getByRole("heading", { level: 1, name: "LineLab" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Roadmap" })).toBeVisible();
-  await expect(page.getByRole("listitem")).toHaveCount(12);
+  await expect(page.getByRole("main").getByRole("listitem")).toHaveCount(12);
 
   expect(errors).toEqual([]);
 });

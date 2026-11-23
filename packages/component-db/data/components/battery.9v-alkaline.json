@@ -1,0 +1,50 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "battery.9v-alkaline",
+  "name": "9 V (PP3) alkaline battery",
+  "aliases": ["9v", "9v battery", "pp3"],
+  "category": "battery",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 2,
+  "dimensionsMm": {
+    "x": 48.5,
+    "y": 26.5,
+    "z": 17.5
+  },
+  "massG": 45,
+  "model": {
+    "kind": "procedural",
+    "generator": "battery_pack",
+    "params": {
+      "color": 0,
+      "labelColor": 7
+    }
+  },
+  "pins": [
+    {
+      "id": "BAT+",
+      "label": "Positive",
+      "functions": ["power_out"]
+    },
+    {
+      "id": "BAT-",
+      "label": "Negative",
+      "functions": ["gnd"]
+    }
+  ],
+  "electrical": {
+    "kind": "battery",
+    "chemistry": "alkaline",
+    "cellsInSeries": 6,
+    "nominalVoltageV": 9.0,
+    "fullVoltageV": 9.6,
+    "cutoffVoltageV": 6.0,
+    "capacitymAh": 550,
+    "maxContinuousDischargeA": 0.3,
+    "internalResistanceMilliohm": 1700
+  },
+  "specStatus": "needs-review",
+  "notes": "Poor choice for motors: about 1.7 Ω internal resistance, so the voltage collapses under load and the MCU browns out.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=9V+alkaline+battery"]
+}

@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "indicator.led-5mm-red",
+  "name": "5 mm red LED",
+  "aliases": ["led", "red led", "5mm led"],
+  "category": "indicator",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 0.05,
+  "dimensionsMm": {
+    "x": 5.8,
+    "y": 5.8,
+    "z": 15
+  },
+  "massG": 0.3,
+  "model": {
+    "kind": "procedural",
+    "generator": "led_5mm",
+    "params": {
+      "color": 2
+    }
+  },
+  "pins": [
+    {
+      "id": "A",
+      "label": "Anode",
+      "functions": ["digital"]
+    },
+    {
+      "id": "K",
+      "label": "Cathode",
+      "functions": ["gnd"]
+    }
+  ],
+  "electrical": {
+    "kind": "generic",
+    "supplyVoltage": {
+      "min": 1.8,
+      "max": 2.2
+    },
+    "maxCurrentmA": 20
+  },
+  "specStatus": "needs-review",
+  "notes": "Needs a series resistor (220–330 Ω at 5 V).",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=5mm+red+LED"]
+}

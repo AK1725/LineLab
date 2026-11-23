@@ -1,0 +1,153 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "mcu.seeed-xiao-rp2040",
+  "name": "Seeed Studio XIAO RP2040",
+  "aliases": ["xiao rp2040", "xiao"],
+  "category": "mcu",
+  "manufacturer": "Seeed Studio",
+  "typicalPriceUsd": 5,
+  "dimensionsMm": {
+    "x": 21,
+    "y": 17.5,
+    "z": 3.5
+  },
+  "massG": 2,
+  "model": {
+    "kind": "procedural",
+    "generator": "pcb_board",
+    "params": {
+      "pcbColor": 3,
+      "usb": 1,
+      "chipMm": 6
+    }
+  },
+  "pins": [
+    {
+      "id": "D0",
+      "label": "D0 (GP26) / A0",
+      "functions": ["digital", "pwm", "analog"],
+      "arduinoPin": 0,
+      "adcChannel": 0,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    },
+    {
+      "id": "D1",
+      "label": "D1 (GP27) / A1",
+      "functions": ["digital", "pwm", "analog"],
+      "arduinoPin": 1,
+      "adcChannel": 1,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    },
+    {
+      "id": "D2",
+      "label": "D2 (GP28) / A2",
+      "functions": ["digital", "pwm", "analog"],
+      "arduinoPin": 2,
+      "adcChannel": 2,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    },
+    {
+      "id": "D3",
+      "label": "D3 (GP29) / A3",
+      "functions": ["digital", "pwm", "analog"],
+      "arduinoPin": 3,
+      "adcChannel": 3,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    },
+    {
+      "id": "D4",
+      "label": "D4 (GP6)",
+      "functions": ["digital", "pwm", "i2c_sda"],
+      "arduinoPin": 4,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    },
+    {
+      "id": "D5",
+      "label": "D5 (GP7)",
+      "functions": ["digital", "pwm", "i2c_scl"],
+      "arduinoPin": 5,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    },
+    {
+      "id": "D6",
+      "label": "D6 (GP0)",
+      "functions": ["digital", "pwm", "uart_tx"],
+      "arduinoPin": 6,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    },
+    {
+      "id": "D7",
+      "label": "D7 (GP1)",
+      "functions": ["digital", "pwm", "uart_rx"],
+      "arduinoPin": 7,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    },
+    {
+      "id": "D8",
+      "label": "D8 (GP2)",
+      "functions": ["digital", "pwm", "spi_sck"],
+      "arduinoPin": 8,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    },
+    {
+      "id": "D9",
+      "label": "D9 (GP4)",
+      "functions": ["digital", "pwm", "spi_miso"],
+      "arduinoPin": 9,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    },
+    {
+      "id": "D10",
+      "label": "D10 (GP3)",
+      "functions": ["digital", "pwm", "spi_mosi"],
+      "arduinoPin": 10,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    },
+    {
+      "id": "3V3",
+      "label": "3.3 V",
+      "functions": ["power_out"],
+      "voltageDomainV": 3.3
+    },
+    {
+      "id": "5V",
+      "label": "5 V",
+      "functions": ["power_in"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "GND",
+      "label": "Ground",
+      "functions": ["gnd"]
+    }
+  ],
+  "electrical": {
+    "kind": "mcu",
+    "arch": "rp2040",
+    "logicVoltageV": 3.3,
+    "inputVoltage": {
+      "min": 4.75,
+      "max": 5.5
+    },
+    "clockMHz": 133,
+    "flashKB": 2048,
+    "sramKB": 264,
+    "adcBits": 12,
+    "fiveVoltTolerantIO": false,
+    "fqbn": "rp2040:rp2040:seeed_xiao_rp2040"
+  },
+  "specStatus": "needs-review",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://wiki.seeedstudio.com/XIAO-RP2040/"]
+}

@@ -1,0 +1,70 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "sensor.vl53l0x-breakout",
+  "name": "VL53L0X time-of-flight distance sensor breakout",
+  "aliases": ["vl53l0x", "tof sensor"],
+  "category": "sensor",
+  "manufacturer": "Adafruit (ST VL53L0X)",
+  "typicalPriceUsd": 15,
+  "dimensionsMm": {
+    "x": 21,
+    "y": 18,
+    "z": 3
+  },
+  "massG": 1,
+  "model": {
+    "kind": "procedural",
+    "generator": "pcb_board",
+    "params": {
+      "pcbColor": 3,
+      "chipMm": 3
+    }
+  },
+  "pins": [
+    {
+      "id": "VIN",
+      "label": "VIN (2.6–5.5 V)",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "GND",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "SCL",
+      "label": "I2C SCL",
+      "functions": ["i2c_scl"]
+    },
+    {
+      "id": "SDA",
+      "label": "I2C SDA",
+      "functions": ["i2c_sda"]
+    },
+    {
+      "id": "GPIO1",
+      "label": "Interrupt",
+      "functions": ["digital"]
+    },
+    {
+      "id": "XSHUT",
+      "label": "Shutdown",
+      "functions": ["enable"]
+    }
+  ],
+  "electrical": {
+    "kind": "generic",
+    "supplyVoltage": {
+      "min": 2.6,
+      "max": 5.5
+    },
+    "maxCurrentmA": 40
+  },
+  "specStatus": "needs-review",
+  "notes": "Range up to about 1.2 m. Used for obstacle detection, not for line following.",
+  "license": "CC-BY-SA-4.0",
+  "sources": [
+    "https://www.adafruit.com/product/3317",
+    "https://www.st.com/en/imaging-and-photonics-solutions/vl53l0x.html"
+  ]
+}

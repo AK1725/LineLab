@@ -1,0 +1,58 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "indicator.ws2812b-single",
+  "name": "WS2812B addressable RGB LED (breakout)",
+  "aliases": ["ws2812b", "neopixel", "rgb led"],
+  "category": "indicator",
+  "manufacturer": "Generic (Worldsemi WS2812B)",
+  "typicalPriceUsd": 0.5,
+  "dimensionsMm": {
+    "x": 10,
+    "y": 10,
+    "z": 3
+  },
+  "massG": 0.3,
+  "model": {
+    "kind": "procedural",
+    "generator": "pcb_board",
+    "params": {
+      "pcbColor": 0,
+      "chipMm": 5
+    }
+  },
+  "pins": [
+    {
+      "id": "VDD",
+      "label": "VDD (5 V)",
+      "functions": ["power_in"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "GND",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "DIN",
+      "label": "Data in",
+      "functions": ["digital"]
+    },
+    {
+      "id": "DOUT",
+      "label": "Data out",
+      "functions": ["digital"]
+    }
+  ],
+  "electrical": {
+    "kind": "generic",
+    "supplyVoltage": {
+      "min": 3.5,
+      "max": 5.3
+    },
+    "maxCurrentmA": 60
+  },
+  "specStatus": "needs-review",
+  "notes": "Data input high threshold is 0.7 × VDD: marginal from 3.3 V MCUs.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=WS2812B"]
+}

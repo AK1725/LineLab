@@ -1,0 +1,47 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "motor.dc-130",
+  "name": "130-size DC motor (3–6 V, no gearbox)",
+  "aliases": ["130 motor", "dc 130", "toy motor"],
+  "category": "motor",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 1,
+  "dimensionsMm": {
+    "x": 35,
+    "y": 20,
+    "z": 20
+  },
+  "massG": 18,
+  "model": {
+    "kind": "procedural",
+    "generator": "dc_motor_can",
+    "params": {
+      "shaftLengthMm": 8
+    }
+  },
+  "pins": [
+    {
+      "id": "M+",
+      "label": "Motor terminal +",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "M-",
+      "label": "Motor terminal -",
+      "functions": ["power_in"]
+    }
+  ],
+  "electrical": {
+    "kind": "motor",
+    "ratedVoltageV": 6,
+    "noLoadRpm": 17000,
+    "noLoadCurrentA": 0.2,
+    "stallCurrentA": 2.2,
+    "stallTorqueKgCm": 0.06,
+    "gearRatio": 1
+  },
+  "specStatus": "needs-review",
+  "notes": "Generic module sold by many vendors; dimensions and values vary by seller. Needs a gearbox for driving wheels.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=130+DC+motor"]
+}

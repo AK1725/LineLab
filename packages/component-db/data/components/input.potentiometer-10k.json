@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "input.potentiometer-10k",
+  "name": "10 kΩ potentiometer",
+  "aliases": ["potentiometer", "pot", "10k pot"],
+  "category": "input",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 0.3,
+  "dimensionsMm": {
+    "x": 10,
+    "y": 12,
+    "z": 15
+  },
+  "massG": 2,
+  "model": {
+    "kind": "procedural",
+    "generator": "generic_cylinder",
+    "params": {
+      "color": 4
+    }
+  },
+  "pins": [
+    {
+      "id": "END1",
+      "label": "End 1 (VCC)",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "WIPER",
+      "label": "Wiper",
+      "functions": ["analog"]
+    },
+    {
+      "id": "END2",
+      "label": "End 2 (GND)",
+      "functions": ["gnd"]
+    }
+  ],
+  "electrical": {
+    "kind": "generic"
+  },
+  "specStatus": "needs-review",
+  "notes": "Useful for tuning Kp or base speed without reflashing.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=10k+potentiometer"]
+}

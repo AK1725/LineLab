@@ -1,0 +1,51 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "battery.aa-4x-alkaline",
+  "name": "4× AA alkaline pack (6 V)",
+  "aliases": ["4xaa", "aa pack", "4 aa alkaline"],
+  "category": "battery",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 4,
+  "dimensionsMm": {
+    "x": 62,
+    "y": 58,
+    "z": 16
+  },
+  "massG": 105,
+  "model": {
+    "kind": "procedural",
+    "generator": "battery_holder",
+    "params": {
+      "cells": 4,
+      "cellDiameterMm": 14.5,
+      "cellColor": 5
+    }
+  },
+  "pins": [
+    {
+      "id": "BAT+",
+      "label": "Positive",
+      "functions": ["power_out"]
+    },
+    {
+      "id": "BAT-",
+      "label": "Negative",
+      "functions": ["gnd"]
+    }
+  ],
+  "electrical": {
+    "kind": "battery",
+    "chemistry": "alkaline",
+    "cellsInSeries": 4,
+    "nominalVoltageV": 6.0,
+    "fullVoltageV": 6.4,
+    "cutoffVoltageV": 4.0,
+    "capacitymAh": 2500,
+    "maxContinuousDischargeA": 1,
+    "internalResistanceMilliohm": 600
+  },
+  "specStatus": "needs-review",
+  "notes": "Voltage sags quickly under motor load.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=4xAA+battery+holder"]
+}

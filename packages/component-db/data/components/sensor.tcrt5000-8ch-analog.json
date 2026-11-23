@@ -1,0 +1,105 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "sensor.tcrt5000-8ch-analog",
+  "name": "8-channel analog TCRT5000 array",
+  "aliases": ["8 channel analog line sensor", "tcrt5000 8ch", "8ch analog array"],
+  "category": "line_sensor",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 6,
+  "dimensionsMm": {
+    "x": 14,
+    "y": 100,
+    "z": 11
+  },
+  "massG": 14,
+  "model": {
+    "kind": "procedural",
+    "generator": "ir_sensor_array",
+    "params": {
+      "channels": 8,
+      "pitchMm": 12,
+      "packageStyle": 0,
+      "pcbColor": 3
+    }
+  },
+  "pins": [
+    {
+      "id": "VCC",
+      "label": "VCC (5 V)",
+      "functions": ["power_in"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "GND",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "OUT1",
+      "label": "Sensor 1 output",
+      "functions": ["analog"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "OUT2",
+      "label": "Sensor 2 output",
+      "functions": ["analog"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "OUT3",
+      "label": "Sensor 3 output",
+      "functions": ["analog"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "OUT4",
+      "label": "Sensor 4 output",
+      "functions": ["analog"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "OUT5",
+      "label": "Sensor 5 output",
+      "functions": ["analog"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "OUT6",
+      "label": "Sensor 6 output",
+      "functions": ["analog"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "OUT7",
+      "label": "Sensor 7 output",
+      "functions": ["analog"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "OUT8",
+      "label": "Sensor 8 output",
+      "functions": ["analog"],
+      "voltageDomainV": 5
+    }
+  ],
+  "electrical": {
+    "kind": "line_sensor",
+    "supplyVoltage": {
+      "min": 4.5,
+      "max": 5.5
+    },
+    "outputType": "analog",
+    "channels": 8,
+    "channelPitchMm": 12,
+    "optimalHeightMm": {
+      "min": 1,
+      "max": 8
+    },
+    "maxCurrentmA": 160
+  },
+  "specStatus": "needs-review",
+  "notes": "Generic module sold by many vendors; dimensions and values vary by seller.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.vishay.com/en/product/83760/"]
+}

@@ -1,0 +1,87 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "driver.max14870-pololu",
+  "name": "MAX14870 single brushed motor driver carrier (Pololu)",
+  "aliases": ["max14870"],
+  "category": "motor_driver",
+  "manufacturer": "Pololu (Analog Devices MAX14870)",
+  "typicalPriceUsd": 6,
+  "dimensionsMm": {
+    "x": 15.2,
+    "y": 12.7,
+    "z": 3
+  },
+  "massG": 0.6,
+  "model": {
+    "kind": "procedural",
+    "generator": "pcb_board",
+    "params": {
+      "pcbColor": 4,
+      "chipMm": 3
+    }
+  },
+  "pins": [
+    {
+      "id": "VM",
+      "label": "VM (4.5–36 V)",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "GND",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "M1",
+      "label": "Motor output M1",
+      "functions": ["motor_out"]
+    },
+    {
+      "id": "M2",
+      "label": "Motor output M2",
+      "functions": ["motor_out"]
+    },
+    {
+      "id": "PWM",
+      "label": "PWM",
+      "functions": ["pwm", "digital"]
+    },
+    {
+      "id": "DIR",
+      "label": "Direction",
+      "functions": ["digital"]
+    },
+    {
+      "id": "EN",
+      "label": "Enable (active low)",
+      "functions": ["enable"]
+    },
+    {
+      "id": "FAULT",
+      "label": "Fault (open-drain)",
+      "functions": ["digital"]
+    }
+  ],
+  "electrical": {
+    "kind": "motor_driver",
+    "channels": 1,
+    "logicVoltage": {
+      "min": 1.8,
+      "max": 5.5
+    },
+    "motorVoltage": {
+      "min": 4.5,
+      "max": 36
+    },
+    "continuousCurrentPerChannelA": 1.7,
+    "peakCurrentPerChannelA": 2.5,
+    "voltageDropV": 0.5,
+    "maxPwmFrequencyKHz": 50
+  },
+  "specStatus": "needs-review",
+  "license": "CC-BY-SA-4.0",
+  "sources": [
+    "https://www.digikey.com/en/products/result?keywords=Pololu+MAX14870",
+    "https://www.analog.com/en/products/max14870.html"
+  ]
+}

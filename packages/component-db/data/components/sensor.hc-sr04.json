@@ -1,0 +1,60 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "sensor.hc-sr04",
+  "name": "HC-SR04 ultrasonic distance sensor",
+  "aliases": ["hc-sr04", "hcsr04", "ultrasonic"],
+  "category": "sensor",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 2,
+  "dimensionsMm": {
+    "x": 45,
+    "y": 20,
+    "z": 15
+  },
+  "massG": 9,
+  "model": {
+    "kind": "procedural",
+    "generator": "pcb_board",
+    "params": {
+      "pcbColor": 4,
+      "transducers": 1
+    }
+  },
+  "pins": [
+    {
+      "id": "VCC",
+      "label": "VCC (5 V)",
+      "functions": ["power_in"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "TRIG",
+      "label": "Trigger",
+      "functions": ["digital"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "ECHO",
+      "label": "Echo (5 V output)",
+      "functions": ["digital"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "GND",
+      "label": "Ground",
+      "functions": ["gnd"]
+    }
+  ],
+  "electrical": {
+    "kind": "generic",
+    "supplyVoltage": {
+      "min": 4.5,
+      "max": 5.5
+    },
+    "maxCurrentmA": 15
+  },
+  "specStatus": "needs-review",
+  "notes": "ECHO is a 5 V signal: use a divider with 3.3 V MCUs (ESP32, Pico).",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=HC-SR04+ultrasonic+sensor"]
+}

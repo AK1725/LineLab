@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { Board } from "./board.js";
 import { DottedId, NonNegativeNumber, PositiveNumber, Range, Vec2 } from "./primitives.js";
 
 export const Category = z.enum([
@@ -56,6 +57,11 @@ export const Pin = z
     functions: z.array(PinFunction).min(1),
     /** Name the firmware uses for this pin, e.g. 9 or "A0". Lets Phase 3 check code against wiring. */
     arduinoPin: z.union([z.number().int().nonnegative(), z.string().min(1)]).optional(),
+    /** ADC peripheral number, where the MCU has several (ESP32 ADC2 is unusable while WiFi runs). */
+    adcUnit: z.number().int().min(0).max(3).optional(),
+    adcChannel: z.number().int().nonnegative().optional(),
+    /** Pin can only read, never drive (e.g. ESP32 GPIO34–39). */
+    inputOnly: z.boolean().optional(),
     voltageDomainV: PositiveNumber.optional(),
     maxCurrentmA: PositiveNumber.optional(),
     fiveVoltTolerant: z.boolean().optional(),
@@ -85,7 +91,10 @@ const McuSpec = z
     flashKB: PositiveNumber,
     sramKB: PositiveNumber,
     adcBits: z.number().int().min(8).max(16),
+    /** True only if every GPIO tolerates 5 V. Per-pin exceptions go on `Pin.fiveVoltTolerant`. */
     fiveVoltTolerantIO: z.boolean(),
+    /** Board id used to compile firmware for this MCU board. */
+    fqbn: Board.optional(),
   })
   .strict();
 
@@ -258,6 +267,13 @@ export const Component = z
     pins: z.array(Pin),
     electrical: ElectricalSpec,
     simModel: SimModelRef.optional(),
+    /**
+     * `needs-review` until a contributor has checked every value against the cited datasheet.
+     * The UI shows a badge for unreviewed entries.
+     */
+    specStatus: z.enum(["needs-review", "reviewed"]),
+    /** Caveats, e.g. "Generic clone; values vary by seller." */
+    notes: z.string().min(1).optional(),
     license: z.literal("CC-BY-SA-4.0"),
     sources: z.array(z.url()).min(1, "Cite at least one source (datasheet or product page)."),
   })
@@ -273,6 +289,29 @@ export const Component = z
         });
       }
       seen.add(pin.id);
+    });
+
+    c.pins.forEach((pin, i) => {
+      if (
+        (pin.adcUnit !== undefined || pin.adcChannel !== undefined) &&
+        !pin.functions.includes("analog")
+      ) {
+        ctx.addIssue({
+          code: "custom",
+          path: ["pins", i],
+          message: `Pin "${pin.id}" has an ADC unit/channel but no "analog" function.`,
+        });
+      }
+      if (
+        pin.inputOnly === true &&
+        pin.functions.some((f) => f === "pwm" || f === "uart_tx" || f === "power_out")
+      ) {
+        ctx.addIssue({
+          code: "custom",
+          path: ["pins", i],
+          message: `Input-only pin "${pin.id}" cannot have an output function.`,
+        });
+      }
     });
 
     const allowed = ALLOWED_SPEC_KINDS[c.category];

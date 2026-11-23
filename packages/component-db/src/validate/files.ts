@@ -15,9 +15,11 @@ export interface ValidationProblem {
   message: string;
 }
 
-export interface ValidationReport {
+export interface ValidationReport<T = { id: string }> {
   checked: number;
   problems: ValidationProblem[];
+  /** Documents that passed their schema, keyed by target label, for cross-file checks. */
+  valid: { label: string; file: string; data: T }[];
 }
 
 function listJsonFiles(dir: string): string[] {
@@ -45,6 +47,7 @@ export function validateTargets(
   rootForReport: string,
 ): ValidationReport {
   const problems: ValidationProblem[] = [];
+  const valid: ValidationReport["valid"] = [];
   const idToFile = new Map<string, string>();
   let checked = 0;
 
@@ -67,6 +70,7 @@ export function validateTargets(
       }
 
       const { id } = parsed.data;
+      valid.push({ label: target.label, file: shown, data: parsed.data });
       if (basename(file) !== `${id}.json`) {
         problems.push({ file: shown, message: `file name must be "${id}.json" to match its id` });
       }
@@ -78,5 +82,5 @@ export function validateTargets(
       }
     }
   }
-  return { checked, problems };
+  return { checked, problems, valid };
 }

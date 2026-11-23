@@ -1,0 +1,64 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "regulator.pololu-d24v10f5",
+  "name": "Pololu D24V10F5 5 V 1 A step-down regulator",
+  "aliases": ["d24v10f5", "pololu 5v buck"],
+  "category": "regulator",
+  "manufacturer": "Pololu",
+  "typicalPriceUsd": 6,
+  "dimensionsMm": {
+    "x": 12.7,
+    "y": 15.2,
+    "z": 4
+  },
+  "massG": 1.5,
+  "model": {
+    "kind": "procedural",
+    "generator": "pcb_board",
+    "params": {
+      "pcbColor": 4,
+      "chipMm": 3,
+      "inductorMm": 4
+    }
+  },
+  "pins": [
+    {
+      "id": "VIN",
+      "label": "VIN",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "GND",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "VOUT",
+      "label": "VOUT (5 V)",
+      "functions": ["power_out"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "EN",
+      "label": "Enable",
+      "functions": ["enable"]
+    }
+  ],
+  "electrical": {
+    "kind": "regulator",
+    "topology": "buck",
+    "inputVoltage": {
+      "min": 6,
+      "max": 36
+    },
+    "outputVoltage": {
+      "min": 5,
+      "max": 5
+    },
+    "maxOutputCurrentA": 1,
+    "efficiencyPct": 90
+  },
+  "specStatus": "needs-review",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=Pololu+D24V10F5"]
+}

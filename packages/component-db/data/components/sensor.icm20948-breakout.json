@@ -1,0 +1,62 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "sensor.icm20948-breakout",
+  "name": "ICM-20948 9-axis IMU breakout",
+  "aliases": ["icm20948", "icm-20948", "9 axis imu"],
+  "category": "sensor",
+  "manufacturer": "Generic (TDK InvenSense ICM-20948)",
+  "typicalPriceUsd": 15,
+  "dimensionsMm": {
+    "x": 25.4,
+    "y": 25.4,
+    "z": 3
+  },
+  "massG": 2,
+  "model": {
+    "kind": "procedural",
+    "generator": "pcb_board",
+    "params": {
+      "pcbColor": 3,
+      "chipMm": 3
+    }
+  },
+  "pins": [
+    {
+      "id": "VIN",
+      "label": "VIN (3.3 V)",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "GND",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "SCL",
+      "label": "I2C SCL",
+      "functions": ["i2c_scl"]
+    },
+    {
+      "id": "SDA",
+      "label": "I2C SDA",
+      "functions": ["i2c_sda"]
+    },
+    {
+      "id": "INT",
+      "label": "Interrupt",
+      "functions": ["digital"]
+    }
+  ],
+  "electrical": {
+    "kind": "generic",
+    "supplyVoltage": {
+      "min": 3.3,
+      "max": 3.3
+    },
+    "maxCurrentmA": 4
+  },
+  "specStatus": "needs-review",
+  "notes": "Some breakouts include a 5 V regulator and level shifting; check yours.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://invensense.tdk.com/products/motion-tracking/9-axis/icm-20948/"]
+}

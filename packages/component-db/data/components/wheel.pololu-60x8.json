@@ -1,0 +1,34 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "wheel.pololu-60x8",
+  "name": "Pololu wheel 60×8 mm",
+  "aliases": ["pololu wheel 60", "60mm wheel", "60x8 wheel"],
+  "category": "wheel",
+  "manufacturer": "Pololu",
+  "typicalPriceUsd": 4.5,
+  "dimensionsMm": {
+    "x": 60,
+    "y": 8,
+    "z": 60
+  },
+  "massG": 5,
+  "model": {
+    "kind": "procedural",
+    "generator": "wheel",
+    "params": {
+      "hubColor": 1,
+      "tireMm": 5
+    }
+  },
+  "pins": [],
+  "electrical": {
+    "kind": "wheel",
+    "diameterMm": 60,
+    "widthMm": 8,
+    "frictionCoefficient": 0.9
+  },
+  "specStatus": "needs-review",
+  "notes": "Fits micro metal gearmotor D-shafts (3 mm). Price is per pair.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=Pololu+wheel+60x8mm"]
+}

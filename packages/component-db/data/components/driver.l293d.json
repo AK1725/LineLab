@@ -1,0 +1,110 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "driver.l293d",
+  "name": "L293D quadruple half-H driver (DIP-16)",
+  "aliases": ["l293d", "l293"],
+  "category": "motor_driver",
+  "manufacturer": "Texas Instruments",
+  "datasheetUrl": "https://www.ti.com/lit/ds/symlink/l293d.pdf",
+  "typicalPriceUsd": 2,
+  "dimensionsMm": {
+    "x": 19.8,
+    "y": 6.4,
+    "z": 5
+  },
+  "massG": 1,
+  "model": {
+    "kind": "procedural",
+    "generator": "generic_box",
+    "params": {
+      "color": 0
+    }
+  },
+  "pins": [
+    {
+      "id": "EN12",
+      "label": "1,2EN",
+      "functions": ["enable", "pwm", "digital"]
+    },
+    {
+      "id": "EN34",
+      "label": "3,4EN",
+      "functions": ["enable", "pwm", "digital"]
+    },
+    {
+      "id": "1A",
+      "label": "1A",
+      "functions": ["digital"]
+    },
+    {
+      "id": "2A",
+      "label": "2A",
+      "functions": ["digital"]
+    },
+    {
+      "id": "3A",
+      "label": "3A",
+      "functions": ["digital"]
+    },
+    {
+      "id": "4A",
+      "label": "4A",
+      "functions": ["digital"]
+    },
+    {
+      "id": "1Y",
+      "label": "Motor output 1Y",
+      "functions": ["motor_out"]
+    },
+    {
+      "id": "2Y",
+      "label": "Motor output 2Y",
+      "functions": ["motor_out"]
+    },
+    {
+      "id": "3Y",
+      "label": "Motor output 3Y",
+      "functions": ["motor_out"]
+    },
+    {
+      "id": "4Y",
+      "label": "Motor output 4Y",
+      "functions": ["motor_out"]
+    },
+    {
+      "id": "VCC1",
+      "label": "VCC1 (logic 4.5–7 V)",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "VCC2",
+      "label": "VCC2 (motor 4.5–36 V)",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "GND",
+      "label": "Ground",
+      "functions": ["gnd"]
+    }
+  ],
+  "electrical": {
+    "kind": "motor_driver",
+    "channels": 2,
+    "logicVoltage": {
+      "min": 4.5,
+      "max": 7
+    },
+    "motorVoltage": {
+      "min": 4.5,
+      "max": 36
+    },
+    "continuousCurrentPerChannelA": 0.6,
+    "peakCurrentPerChannelA": 1.2,
+    "voltageDropV": 2.6,
+    "maxPwmFrequencyKHz": 5
+  },
+  "specStatus": "needs-review",
+  "notes": "Built-in flyback diodes. Large voltage drop and only 0.6 A: fine for TT motors, weak for N20 at stall.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.ti.com/product/L293D"]
+}

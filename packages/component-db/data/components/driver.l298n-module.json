@@ -1,0 +1,134 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "driver.l298n-module",
+  "name": "L298N dual H-bridge module",
+  "aliases": ["l298n", "l298", "l298 module"],
+  "category": "motor_driver",
+  "manufacturer": "Generic (ST L298)",
+  "typicalPriceUsd": 3,
+  "dimensionsMm": {
+    "x": 43,
+    "y": 43,
+    "z": 27
+  },
+  "massG": 26,
+  "mountingHoles": [
+    {
+      "x": -18.5,
+      "y": -18.5,
+      "d": 3
+    },
+    {
+      "x": 18.5,
+      "y": -18.5,
+      "d": 3
+    },
+    {
+      "x": -18.5,
+      "y": 18.5,
+      "d": 3
+    },
+    {
+      "x": 18.5,
+      "y": 18.5,
+      "d": 3
+    }
+  ],
+  "model": {
+    "kind": "procedural",
+    "generator": "pcb_board",
+    "params": {
+      "pcbColor": 2,
+      "heatsinkMm": 23,
+      "screwTerminals": 3
+    }
+  },
+  "pins": [
+    {
+      "id": "12V",
+      "label": "+12V (motor supply, VS)",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "GND",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "5V",
+      "label": "+5V (regulator out / logic in)",
+      "functions": ["power_in", "power_out"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "ENA",
+      "label": "Enable A (PWM)",
+      "functions": ["enable", "pwm", "digital"]
+    },
+    {
+      "id": "IN1",
+      "label": "IN1",
+      "functions": ["digital"]
+    },
+    {
+      "id": "IN2",
+      "label": "IN2",
+      "functions": ["digital"]
+    },
+    {
+      "id": "IN3",
+      "label": "IN3",
+      "functions": ["digital"]
+    },
+    {
+      "id": "IN4",
+      "label": "IN4",
+      "functions": ["digital"]
+    },
+    {
+      "id": "ENB",
+      "label": "Enable B (PWM)",
+      "functions": ["enable", "pwm", "digital"]
+    },
+    {
+      "id": "OUT1",
+      "label": "Motor output OUT1",
+      "functions": ["motor_out"]
+    },
+    {
+      "id": "OUT2",
+      "label": "Motor output OUT2",
+      "functions": ["motor_out"]
+    },
+    {
+      "id": "OUT3",
+      "label": "Motor output OUT3",
+      "functions": ["motor_out"]
+    },
+    {
+      "id": "OUT4",
+      "label": "Motor output OUT4",
+      "functions": ["motor_out"]
+    }
+  ],
+  "electrical": {
+    "kind": "motor_driver",
+    "channels": 2,
+    "logicVoltage": {
+      "min": 4.5,
+      "max": 7
+    },
+    "motorVoltage": {
+      "min": 5,
+      "max": 35
+    },
+    "continuousCurrentPerChannelA": 2,
+    "peakCurrentPerChannelA": 3,
+    "voltageDropV": 2.0,
+    "maxPwmFrequencyKHz": 25
+  },
+  "specStatus": "needs-review",
+  "notes": "Generic module sold by many vendors; dimensions and values vary by seller. Bipolar bridge: loses about 2 V or more, so 6 V motors on 7.4 V see much less than 6 V. The 5 V regulator jumper only works with a motor supply under 12 V.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.st.com/en/motor-drivers/l298.html"]
+}

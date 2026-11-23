@@ -1,0 +1,155 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "sensor.pololu-qtr-hd-15a",
+  "name": "Pololu QTR-HD-15A (15 ch, 4 mm pitch, analog)",
+  "aliases": ["qtr-hd-15a", "qtr hd 15a", "qtr 15"],
+  "category": "line_sensor",
+  "manufacturer": "Pololu",
+  "typicalPriceUsd": 20,
+  "dimensionsMm": {
+    "x": 10,
+    "y": 64,
+    "z": 3
+  },
+  "massG": 2.5,
+  "model": {
+    "kind": "procedural",
+    "generator": "ir_sensor_array",
+    "params": {
+      "channels": 15,
+      "pitchMm": 4,
+      "pcbColor": 4
+    }
+  },
+  "pins": [
+    {
+      "id": "VCC",
+      "label": "VCC (2.9–5.5 V)",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "GND",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "CTRL_ODD",
+      "label": "Odd emitter control",
+      "functions": ["enable", "digital"]
+    },
+    {
+      "id": "CTRL_EVEN",
+      "label": "Even emitter control",
+      "functions": ["enable", "digital"]
+    },
+    {
+      "id": "OUT1",
+      "label": "Sensor 1 output",
+      "functions": ["analog"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "OUT2",
+      "label": "Sensor 2 output",
+      "functions": ["analog"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "OUT3",
+      "label": "Sensor 3 output",
+      "functions": ["analog"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "OUT4",
+      "label": "Sensor 4 output",
+      "functions": ["analog"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "OUT5",
+      "label": "Sensor 5 output",
+      "functions": ["analog"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "OUT6",
+      "label": "Sensor 6 output",
+      "functions": ["analog"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "OUT7",
+      "label": "Sensor 7 output",
+      "functions": ["analog"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "OUT8",
+      "label": "Sensor 8 output",
+      "functions": ["analog"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "OUT9",
+      "label": "Sensor 9 output",
+      "functions": ["analog"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "OUT10",
+      "label": "Sensor 10 output",
+      "functions": ["analog"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "OUT11",
+      "label": "Sensor 11 output",
+      "functions": ["analog"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "OUT12",
+      "label": "Sensor 12 output",
+      "functions": ["analog"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "OUT13",
+      "label": "Sensor 13 output",
+      "functions": ["analog"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "OUT14",
+      "label": "Sensor 14 output",
+      "functions": ["analog"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "OUT15",
+      "label": "Sensor 15 output",
+      "functions": ["analog"],
+      "voltageDomainV": 5
+    }
+  ],
+  "electrical": {
+    "kind": "line_sensor",
+    "supplyVoltage": {
+      "min": 2.9,
+      "max": 5.5
+    },
+    "outputType": "analog",
+    "channels": 15,
+    "channelPitchMm": 4,
+    "optimalHeightMm": {
+      "min": 1,
+      "max": 5
+    },
+    "maxCurrentmA": 150
+  },
+  "specStatus": "needs-review",
+  "notes": "High-density array used on fast competition robots. Needs 15 ADC inputs or an external ADC/multiplexer. Dimensions approximate.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.pololu.com/category/123/pololu-qtr-reflectance-sensors"]
+}

@@ -3,7 +3,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 import { Track } from "@linelab/schema";
-import { validateTargets } from "./validate.js";
+import { validateTargets } from "./files.js";
 
 const track = (id: string) => ({
   id,
@@ -43,7 +43,10 @@ describe("validateTargets", () => {
       "track.a.json": JSON.stringify(track("track.a")),
       "sub/track.b.json": JSON.stringify(track("track.b")),
     });
-    expect(run(d)).toEqual({ checked: 2, problems: [] });
+    const report = run(d);
+    expect(report.problems).toEqual([]);
+    expect(report.checked).toBe(2);
+    expect(report.valid.map((v) => v.data.id).sort()).toEqual(["track.a", "track.b"]);
   });
 
   it("reports invalid JSON, schema errors, file-name mismatch and duplicate ids", () => {
@@ -70,6 +73,7 @@ describe("validateTargets", () => {
     expect(validateTargets([{ label: "x", dir: join(d, "missing"), schema: Track }], d)).toEqual({
       checked: 0,
       problems: [],
+      valid: [],
     });
   });
 });

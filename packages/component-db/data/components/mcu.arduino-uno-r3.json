@@ -1,0 +1,284 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "mcu.arduino-uno-r3",
+  "name": "Arduino Uno R3",
+  "aliases": ["uno", "arduino uno", "uno r3", "atmega328p uno"],
+  "category": "mcu",
+  "manufacturer": "Arduino",
+  "typicalPriceUsd": 27,
+  "dimensionsMm": {
+    "x": 68.6,
+    "y": 53.4,
+    "z": 15
+  },
+  "massG": 25,
+  "mountingHoles": [
+    {
+      "x": -20.299999999999997,
+      "y": -24.2,
+      "d": 3.2
+    },
+    {
+      "x": -18.999999999999996,
+      "y": 24.000000000000004,
+      "d": 3.2
+    },
+    {
+      "x": 31.799999999999997,
+      "y": -19.1,
+      "d": 3.2
+    },
+    {
+      "x": 31.799999999999997,
+      "y": 8.8,
+      "d": 3.2
+    }
+  ],
+  "model": {
+    "kind": "procedural",
+    "generator": "pcb_board",
+    "params": {
+      "pcbColor": 10,
+      "usb": 2,
+      "barrelJack": 1,
+      "headerRows": 2,
+      "chipMm": 8
+    }
+  },
+  "pins": [
+    {
+      "id": "D0",
+      "label": "D0",
+      "functions": ["digital", "uart_rx"],
+      "arduinoPin": 0,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40,
+      "notes": "Shared with USB serial; avoid while using Serial."
+    },
+    {
+      "id": "D1",
+      "label": "D1",
+      "functions": ["digital", "uart_tx"],
+      "arduinoPin": 1,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40,
+      "notes": "Shared with USB serial; avoid while using Serial."
+    },
+    {
+      "id": "D2",
+      "label": "D2",
+      "functions": ["digital"],
+      "arduinoPin": 2,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40,
+      "notes": "External interrupt INT0."
+    },
+    {
+      "id": "D3",
+      "label": "D3",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 3,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40,
+      "notes": "External interrupt INT1."
+    },
+    {
+      "id": "D4",
+      "label": "D4",
+      "functions": ["digital"],
+      "arduinoPin": 4,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D5",
+      "label": "D5",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 5,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D6",
+      "label": "D6",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 6,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D7",
+      "label": "D7",
+      "functions": ["digital"],
+      "arduinoPin": 7,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D8",
+      "label": "D8",
+      "functions": ["digital"],
+      "arduinoPin": 8,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D9",
+      "label": "D9",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 9,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D10",
+      "label": "D10",
+      "functions": ["digital", "pwm", "spi_cs"],
+      "arduinoPin": 10,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D11",
+      "label": "D11",
+      "functions": ["digital", "pwm", "spi_mosi"],
+      "arduinoPin": 11,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D12",
+      "label": "D12",
+      "functions": ["digital", "spi_miso"],
+      "arduinoPin": 12,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D13",
+      "label": "D13",
+      "functions": ["digital", "spi_sck"],
+      "arduinoPin": 13,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40,
+      "notes": "On-board LED."
+    },
+    {
+      "id": "A0",
+      "label": "A0",
+      "functions": ["analog", "digital"],
+      "arduinoPin": "A0",
+      "adcChannel": 0,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "A1",
+      "label": "A1",
+      "functions": ["analog", "digital"],
+      "arduinoPin": "A1",
+      "adcChannel": 1,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "A2",
+      "label": "A2",
+      "functions": ["analog", "digital"],
+      "arduinoPin": "A2",
+      "adcChannel": 2,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "A3",
+      "label": "A3",
+      "functions": ["analog", "digital"],
+      "arduinoPin": "A3",
+      "adcChannel": 3,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "A4",
+      "label": "A4",
+      "functions": ["analog", "digital", "i2c_sda"],
+      "arduinoPin": "A4",
+      "adcChannel": 4,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "A5",
+      "label": "A5",
+      "functions": ["analog", "digital", "i2c_scl"],
+      "arduinoPin": "A5",
+      "adcChannel": 5,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "5V",
+      "label": "5 V",
+      "functions": ["power_out"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "GND",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "GND2",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "3V3",
+      "label": "3.3 V",
+      "functions": ["power_out"],
+      "voltageDomainV": 3.3,
+      "maxCurrentmA": 50
+    },
+    {
+      "id": "VIN",
+      "label": "VIN (7–12 V)",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "RESET",
+      "label": "Reset",
+      "functions": ["reset"]
+    },
+    {
+      "id": "AREF",
+      "label": "Analog reference",
+      "functions": ["power_in"],
+      "notes": "ADC reference voltage input."
+    },
+    {
+      "id": "IOREF",
+      "label": "IO reference",
+      "functions": ["power_out"],
+      "voltageDomainV": 5
+    }
+  ],
+  "electrical": {
+    "kind": "mcu",
+    "arch": "avr",
+    "logicVoltageV": 5,
+    "inputVoltage": {
+      "min": 7,
+      "max": 12
+    },
+    "clockMHz": 16,
+    "flashKB": 32,
+    "sramKB": 2,
+    "adcBits": 10,
+    "fiveVoltTolerantIO": true,
+    "fqbn": "arduino:avr:uno"
+  },
+  "specStatus": "needs-review",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://docs.arduino.cc/hardware/uno-rev3/"]
+}

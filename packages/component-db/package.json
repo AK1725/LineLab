@@ -9,6 +9,10 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
+    },
+    "./validate": {
+      "types": "./dist/validate/index.d.ts",
+      "default": "./dist/validate/index.js"
     }
   },
   "files": [
@@ -16,14 +20,21 @@
     "data"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
-    "typecheck": "tsc --noEmit",
+    "catalog:generate": "tsx scripts/build-catalog.ts",
+    "build": "pnpm catalog:generate && tsc -p tsconfig.build.json",
+    "typecheck": "pnpm catalog:generate && tsc --noEmit",
     "lint": "eslint . --max-warnings 0",
-    "test": "vitest run",
+    "test": "pnpm catalog:generate && vitest run",
     "db:validate": "tsx scripts/validate.ts"
   },
   "dependencies": {
     "@linelab/schema": "workspace:*",
+    "@linelab/three-models": "workspace:*",
+    "fuse.js": "7.5.0",
     "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "three": "0.187.0",
+    "@types/three": "0.187.0"
   }
 }

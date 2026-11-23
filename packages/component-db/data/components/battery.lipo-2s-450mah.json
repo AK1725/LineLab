@@ -1,0 +1,50 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "battery.lipo-2s-450mah",
+  "name": "LiPo 2S 450 mAh 30C",
+  "aliases": ["lipo 2s 450", "2s 450mah", "2s lipo"],
+  "category": "battery",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 8.25,
+  "dimensionsMm": {
+    "x": 56,
+    "y": 31,
+    "z": 11
+  },
+  "massG": 28,
+  "model": {
+    "kind": "procedural",
+    "generator": "battery_pack",
+    "params": {
+      "color": 8,
+      "labelColor": 2
+    }
+  },
+  "pins": [
+    {
+      "id": "BAT+",
+      "label": "Positive",
+      "functions": ["power_out"]
+    },
+    {
+      "id": "BAT-",
+      "label": "Negative",
+      "functions": ["gnd"]
+    }
+  ],
+  "electrical": {
+    "kind": "battery",
+    "chemistry": "lipo",
+    "cellsInSeries": 2,
+    "nominalVoltageV": 7.4,
+    "fullVoltageV": 8.4,
+    "cutoffVoltageV": 6.0,
+    "capacitymAh": 450,
+    "maxContinuousDischargeA": 13.5,
+    "internalResistanceMilliohm": 60
+  },
+  "specStatus": "needs-review",
+  "notes": "Generic module sold by many vendors; dimensions and values vary by seller. Never discharge below 3.0 V per cell or charge above 4.2 V. Use a balance charger.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=lipo+2S+450mAh"]
+}

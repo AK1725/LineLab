@@ -1,0 +1,50 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "battery.lipo-1s-500mah",
+  "name": "LiPo 1S 500 mAh 10C",
+  "aliases": ["lipo 1s 500", "1s 500mah", "1s lipo"],
+  "category": "battery",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 8.5,
+  "dimensionsMm": {
+    "x": 45,
+    "y": 25,
+    "z": 8
+  },
+  "massG": 12,
+  "model": {
+    "kind": "procedural",
+    "generator": "battery_pack",
+    "params": {
+      "color": 4,
+      "labelColor": 2
+    }
+  },
+  "pins": [
+    {
+      "id": "BAT+",
+      "label": "Positive",
+      "functions": ["power_out"]
+    },
+    {
+      "id": "BAT-",
+      "label": "Negative",
+      "functions": ["gnd"]
+    }
+  ],
+  "electrical": {
+    "kind": "battery",
+    "chemistry": "lipo",
+    "cellsInSeries": 1,
+    "nominalVoltageV": 3.7,
+    "fullVoltageV": 4.2,
+    "cutoffVoltageV": 3.0,
+    "capacitymAh": 500,
+    "maxContinuousDischargeA": 5.0,
+    "internalResistanceMilliohm": 60
+  },
+  "specStatus": "needs-review",
+  "notes": "Generic module sold by many vendors; dimensions and values vary by seller. Never discharge below 3.0 V per cell or charge above 4.2 V. Use a balance charger.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=lipo+1S+500mAh"]
+}

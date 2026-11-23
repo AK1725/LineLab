@@ -1,0 +1,62 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "sensor.cny70-module",
+  "name": "CNY70 reflective sensor module",
+  "aliases": ["cny70"],
+  "category": "line_sensor",
+  "manufacturer": "Generic (Vishay CNY70)",
+  "typicalPriceUsd": 1.5,
+  "dimensionsMm": {
+    "x": 12,
+    "y": 20,
+    "z": 9
+  },
+  "massG": 2,
+  "model": {
+    "kind": "procedural",
+    "generator": "ir_sensor_array",
+    "params": {
+      "channels": 1,
+      "packageStyle": 0,
+      "pcbColor": 4
+    }
+  },
+  "pins": [
+    {
+      "id": "VCC",
+      "label": "VCC (5 V)",
+      "functions": ["power_in"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "GND",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "OUT",
+      "label": "Analog out",
+      "functions": ["analog"],
+      "voltageDomainV": 5
+    }
+  ],
+  "electrical": {
+    "kind": "line_sensor",
+    "supplyVoltage": {
+      "min": 4.5,
+      "max": 5.5
+    },
+    "outputType": "analog",
+    "channels": 1,
+    "channelPitchMm": 0,
+    "optimalHeightMm": {
+      "min": 0.3,
+      "max": 3
+    },
+    "maxCurrentmA": 50
+  },
+  "specStatus": "needs-review",
+  "notes": "Generic module sold by many vendors; dimensions and values vary by seller. CNY70 must be very close to the surface (peak below 1 mm).",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.vishay.com/en/product/83751/"]
+}

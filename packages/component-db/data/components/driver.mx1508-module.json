@@ -1,0 +1,95 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "driver.mx1508-module",
+  "name": "MX1508 dual motor driver module",
+  "aliases": ["mx1508"],
+  "category": "motor_driver",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 1,
+  "dimensionsMm": {
+    "x": 24,
+    "y": 21,
+    "z": 5
+  },
+  "massG": 2,
+  "model": {
+    "kind": "procedural",
+    "generator": "pcb_board",
+    "params": {
+      "pcbColor": 2,
+      "chipMm": 5
+    }
+  },
+  "pins": [
+    {
+      "id": "VCC",
+      "label": "+ (2–10 V)",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "GND",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "MA1",
+      "label": "Motor output MA1",
+      "functions": ["motor_out"]
+    },
+    {
+      "id": "MA2",
+      "label": "Motor output MA2",
+      "functions": ["motor_out"]
+    },
+    {
+      "id": "MB1",
+      "label": "Motor output MB1",
+      "functions": ["motor_out"]
+    },
+    {
+      "id": "MB2",
+      "label": "Motor output MB2",
+      "functions": ["motor_out"]
+    },
+    {
+      "id": "IN1",
+      "label": "IN1",
+      "functions": ["digital", "pwm"]
+    },
+    {
+      "id": "IN2",
+      "label": "IN2",
+      "functions": ["digital", "pwm"]
+    },
+    {
+      "id": "IN3",
+      "label": "IN3",
+      "functions": ["digital", "pwm"]
+    },
+    {
+      "id": "IN4",
+      "label": "IN4",
+      "functions": ["digital", "pwm"]
+    }
+  ],
+  "electrical": {
+    "kind": "motor_driver",
+    "channels": 2,
+    "logicVoltage": {
+      "min": 1.8,
+      "max": 7
+    },
+    "motorVoltage": {
+      "min": 2,
+      "max": 10
+    },
+    "continuousCurrentPerChannelA": 1.5,
+    "peakCurrentPerChannelA": 2.5,
+    "voltageDropV": 0.5,
+    "maxPwmFrequencyKHz": 20
+  },
+  "specStatus": "needs-review",
+  "notes": "Generic module sold by many vendors; dimensions and values vary by seller. Datasheet is hard to find; ratings are the commonly quoted values.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.lcsc.com/search?q=MX1508"]
+}

@@ -1,0 +1,326 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "mcu.stm32-black-pill-f411",
+  "name": "STM32 \"Black Pill\" (STM32F411CEU6)",
+  "aliases": ["black pill", "stm32f411", "blackpill"],
+  "category": "mcu",
+  "manufacturer": "WeAct Studio (STM32F411 by ST)",
+  "typicalPriceUsd": 7,
+  "dimensionsMm": {
+    "x": 53,
+    "y": 21,
+    "z": 4
+  },
+  "massG": 4,
+  "model": {
+    "kind": "procedural",
+    "generator": "pcb_board",
+    "params": {
+      "pcbColor": 0,
+      "usb": 1,
+      "chipMm": 7
+    }
+  },
+  "pins": [
+    {
+      "id": "PA0",
+      "label": "PA0",
+      "functions": ["digital", "pwm", "analog"],
+      "arduinoPin": "PA0",
+      "voltageDomainV": 3.3,
+      "adcChannel": 0
+    },
+    {
+      "id": "PA1",
+      "label": "PA1",
+      "functions": ["digital", "pwm", "analog"],
+      "arduinoPin": "PA1",
+      "voltageDomainV": 3.3,
+      "adcChannel": 1
+    },
+    {
+      "id": "PA2",
+      "label": "PA2",
+      "functions": ["digital", "pwm", "analog"],
+      "arduinoPin": "PA2",
+      "voltageDomainV": 3.3,
+      "adcChannel": 2
+    },
+    {
+      "id": "PA3",
+      "label": "PA3",
+      "functions": ["digital", "pwm", "analog"],
+      "arduinoPin": "PA3",
+      "voltageDomainV": 3.3,
+      "adcChannel": 3
+    },
+    {
+      "id": "PA4",
+      "label": "PA4",
+      "functions": ["digital", "analog", "spi_cs"],
+      "arduinoPin": "PA4",
+      "voltageDomainV": 3.3,
+      "adcChannel": 4
+    },
+    {
+      "id": "PA5",
+      "label": "PA5",
+      "functions": ["digital", "analog", "spi_sck"],
+      "arduinoPin": "PA5",
+      "voltageDomainV": 3.3,
+      "adcChannel": 5
+    },
+    {
+      "id": "PA6",
+      "label": "PA6",
+      "functions": ["digital", "pwm", "analog", "spi_miso"],
+      "arduinoPin": "PA6",
+      "voltageDomainV": 3.3,
+      "adcChannel": 6
+    },
+    {
+      "id": "PA7",
+      "label": "PA7",
+      "functions": ["digital", "pwm", "analog", "spi_mosi"],
+      "arduinoPin": "PA7",
+      "voltageDomainV": 3.3,
+      "adcChannel": 7
+    },
+    {
+      "id": "PA8",
+      "label": "PA8",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": "PA8",
+      "voltageDomainV": 3.3
+    },
+    {
+      "id": "PA9",
+      "label": "PA9",
+      "functions": ["digital", "pwm", "uart_tx"],
+      "arduinoPin": "PA9",
+      "voltageDomainV": 3.3
+    },
+    {
+      "id": "PA10",
+      "label": "PA10",
+      "functions": ["digital", "pwm", "uart_rx"],
+      "arduinoPin": "PA10",
+      "voltageDomainV": 3.3
+    },
+    {
+      "id": "PA11",
+      "label": "PA11",
+      "functions": ["digital"],
+      "arduinoPin": "PA11",
+      "voltageDomainV": 3.3,
+      "notes": "USB D-."
+    },
+    {
+      "id": "PA12",
+      "label": "PA12",
+      "functions": ["digital"],
+      "arduinoPin": "PA12",
+      "voltageDomainV": 3.3,
+      "notes": "USB D+."
+    },
+    {
+      "id": "PA13",
+      "label": "PA13",
+      "functions": ["digital"],
+      "arduinoPin": "PA13",
+      "voltageDomainV": 3.3,
+      "notes": "SWDIO (programming)."
+    },
+    {
+      "id": "PA14",
+      "label": "PA14",
+      "functions": ["digital"],
+      "arduinoPin": "PA14",
+      "voltageDomainV": 3.3,
+      "notes": "SWCLK (programming)."
+    },
+    {
+      "id": "PA15",
+      "label": "PA15",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": "PA15",
+      "voltageDomainV": 3.3
+    },
+    {
+      "id": "PB0",
+      "label": "PB0",
+      "functions": ["digital", "pwm", "analog"],
+      "arduinoPin": "PB0",
+      "voltageDomainV": 3.3,
+      "adcChannel": 8
+    },
+    {
+      "id": "PB1",
+      "label": "PB1",
+      "functions": ["digital", "pwm", "analog"],
+      "arduinoPin": "PB1",
+      "voltageDomainV": 3.3,
+      "adcChannel": 9
+    },
+    {
+      "id": "PB2",
+      "label": "PB2",
+      "functions": ["digital"],
+      "arduinoPin": "PB2",
+      "voltageDomainV": 3.3,
+      "notes": "BOOT1."
+    },
+    {
+      "id": "PB3",
+      "label": "PB3",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": "PB3",
+      "voltageDomainV": 3.3
+    },
+    {
+      "id": "PB4",
+      "label": "PB4",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": "PB4",
+      "voltageDomainV": 3.3
+    },
+    {
+      "id": "PB5",
+      "label": "PB5",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": "PB5",
+      "voltageDomainV": 3.3
+    },
+    {
+      "id": "PB6",
+      "label": "PB6",
+      "functions": ["digital", "pwm", "i2c_scl"],
+      "arduinoPin": "PB6",
+      "voltageDomainV": 3.3
+    },
+    {
+      "id": "PB7",
+      "label": "PB7",
+      "functions": ["digital", "pwm", "i2c_sda"],
+      "arduinoPin": "PB7",
+      "voltageDomainV": 3.3
+    },
+    {
+      "id": "PB8",
+      "label": "PB8",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": "PB8",
+      "voltageDomainV": 3.3
+    },
+    {
+      "id": "PB9",
+      "label": "PB9",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": "PB9",
+      "voltageDomainV": 3.3
+    },
+    {
+      "id": "PB10",
+      "label": "PB10",
+      "functions": ["digital", "pwm", "i2c_scl"],
+      "arduinoPin": "PB10",
+      "voltageDomainV": 3.3
+    },
+    {
+      "id": "PB12",
+      "label": "PB12",
+      "functions": ["digital"],
+      "arduinoPin": "PB12",
+      "voltageDomainV": 3.3
+    },
+    {
+      "id": "PB13",
+      "label": "PB13",
+      "functions": ["digital"],
+      "arduinoPin": "PB13",
+      "voltageDomainV": 3.3
+    },
+    {
+      "id": "PB14",
+      "label": "PB14",
+      "functions": ["digital"],
+      "arduinoPin": "PB14",
+      "voltageDomainV": 3.3
+    },
+    {
+      "id": "PB15",
+      "label": "PB15",
+      "functions": ["digital"],
+      "arduinoPin": "PB15",
+      "voltageDomainV": 3.3
+    },
+    {
+      "id": "PC13",
+      "label": "PC13",
+      "functions": ["digital"],
+      "arduinoPin": "PC13",
+      "voltageDomainV": 3.3,
+      "notes": "On-board LED (active low); weak output (3 mA)."
+    },
+    {
+      "id": "PC14",
+      "label": "PC14",
+      "functions": ["digital"],
+      "arduinoPin": "PC14",
+      "voltageDomainV": 3.3
+    },
+    {
+      "id": "PC15",
+      "label": "PC15",
+      "functions": ["digital"],
+      "arduinoPin": "PC15",
+      "voltageDomainV": 3.3
+    },
+    {
+      "id": "5V",
+      "label": "5 V",
+      "functions": ["power_in"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "3V3",
+      "label": "3.3 V",
+      "functions": ["power_out"],
+      "voltageDomainV": 3.3
+    },
+    {
+      "id": "GND",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "GND2",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "NRST",
+      "label": "Reset",
+      "functions": ["reset"]
+    }
+  ],
+  "electrical": {
+    "kind": "mcu",
+    "arch": "stm32f4",
+    "logicVoltageV": 3.3,
+    "inputVoltage": {
+      "min": 4.75,
+      "max": 5.5
+    },
+    "clockMHz": 100,
+    "flashKB": 512,
+    "sramKB": 128,
+    "adcBits": 12,
+    "fiveVoltTolerantIO": false,
+    "fqbn": "stm32:stm32:blackpill_f411ce"
+  },
+  "specStatus": "needs-review",
+  "notes": "Most pins are 5 V tolerant in digital mode; check the datasheet pin table before relying on it.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.st.com/en/microcontrollers-microprocessors/stm32f411ce.html"]
+}

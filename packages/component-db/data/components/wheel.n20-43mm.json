@@ -1,0 +1,34 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "wheel.n20-43mm",
+  "name": "N20 rubber wheel 43 mm (D-shaft)",
+  "aliases": ["43mm wheel", "n20 43mm"],
+  "category": "wheel",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 1.5,
+  "dimensionsMm": {
+    "x": 43,
+    "y": 19,
+    "z": 43
+  },
+  "massG": 8,
+  "model": {
+    "kind": "procedural",
+    "generator": "wheel",
+    "params": {
+      "hubColor": 2,
+      "tireMm": 5
+    }
+  },
+  "pins": [],
+  "electrical": {
+    "kind": "wheel",
+    "diameterMm": 43,
+    "widthMm": 19,
+    "frictionCoefficient": 0.85
+  },
+  "specStatus": "needs-review",
+  "notes": "Generic module sold by many vendors; dimensions and values vary by seller.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=43mm+rubber+wheel+3mm+shaft"]
+}

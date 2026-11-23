@@ -1,0 +1,51 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "fan.edf-30mm",
+  "name": "30 mm EDF ducted fan with brushless motor",
+  "aliases": ["edf", "edf 30mm", "ducted fan", "suction fan"],
+  "category": "fan",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 15,
+  "dimensionsMm": {
+    "x": 30,
+    "y": 30,
+    "z": 24
+  },
+  "massG": 16,
+  "model": {
+    "kind": "procedural",
+    "generator": "edf_fan",
+    "params": {
+      "blades": 11
+    }
+  },
+  "pins": [
+    {
+      "id": "A",
+      "label": "Phase A",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "B",
+      "label": "Phase B",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "C",
+      "label": "Phase C",
+      "functions": ["power_in"]
+    }
+  ],
+  "electrical": {
+    "kind": "generic",
+    "supplyVoltage": {
+      "min": 7.4,
+      "max": 11.1
+    },
+    "maxCurrentmA": 8000
+  },
+  "specStatus": "needs-review",
+  "notes": "Downforce for high-speed cornering. Needs a brushless ESC; draws several amps.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=30mm+EDF"]
+}

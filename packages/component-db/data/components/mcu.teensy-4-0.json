@@ -1,0 +1,259 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "mcu.teensy-4-0",
+  "name": "Teensy 4.0 (i.MX RT1062)",
+  "aliases": ["teensy 4", "teensy 4.0", "teensy40"],
+  "category": "mcu",
+  "manufacturer": "PJRC",
+  "typicalPriceUsd": 24,
+  "dimensionsMm": {
+    "x": 35.6,
+    "y": 17.8,
+    "z": 4
+  },
+  "massG": 3,
+  "model": {
+    "kind": "procedural",
+    "generator": "pcb_board",
+    "params": {
+      "pcbColor": 3,
+      "usb": 1,
+      "chipMm": 10
+    }
+  },
+  "pins": [
+    {
+      "id": "0",
+      "label": "Pin 0",
+      "functions": ["digital", "pwm", "uart_rx"],
+      "arduinoPin": 0,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    },
+    {
+      "id": "1",
+      "label": "Pin 1",
+      "functions": ["digital", "pwm", "uart_tx"],
+      "arduinoPin": 1,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    },
+    {
+      "id": "2",
+      "label": "Pin 2",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 2,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    },
+    {
+      "id": "3",
+      "label": "Pin 3",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 3,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    },
+    {
+      "id": "4",
+      "label": "Pin 4",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 4,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    },
+    {
+      "id": "5",
+      "label": "Pin 5",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 5,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    },
+    {
+      "id": "6",
+      "label": "Pin 6",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 6,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    },
+    {
+      "id": "7",
+      "label": "Pin 7",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 7,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    },
+    {
+      "id": "8",
+      "label": "Pin 8",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 8,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    },
+    {
+      "id": "9",
+      "label": "Pin 9",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 9,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    },
+    {
+      "id": "10",
+      "label": "Pin 10",
+      "functions": ["digital", "pwm", "spi_cs"],
+      "arduinoPin": 10,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    },
+    {
+      "id": "11",
+      "label": "Pin 11",
+      "functions": ["digital", "pwm", "spi_mosi"],
+      "arduinoPin": 11,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    },
+    {
+      "id": "12",
+      "label": "Pin 12",
+      "functions": ["digital", "pwm", "spi_miso"],
+      "arduinoPin": 12,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    },
+    {
+      "id": "13",
+      "label": "Pin 13",
+      "functions": ["digital", "pwm", "spi_sck"],
+      "arduinoPin": 13,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    },
+    {
+      "id": "14",
+      "label": "Pin 14 / A0",
+      "functions": ["digital", "pwm", "analog"],
+      "arduinoPin": 14,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    },
+    {
+      "id": "15",
+      "label": "Pin 15 / A1",
+      "functions": ["digital", "pwm", "analog"],
+      "arduinoPin": 15,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    },
+    {
+      "id": "16",
+      "label": "Pin 16 / A2",
+      "functions": ["digital", "analog"],
+      "arduinoPin": 16,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    },
+    {
+      "id": "17",
+      "label": "Pin 17 / A3",
+      "functions": ["digital", "analog"],
+      "arduinoPin": 17,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    },
+    {
+      "id": "18",
+      "label": "Pin 18 / A4",
+      "functions": ["digital", "pwm", "analog", "i2c_sda"],
+      "arduinoPin": 18,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    },
+    {
+      "id": "19",
+      "label": "Pin 19 / A5",
+      "functions": ["digital", "pwm", "analog", "i2c_scl"],
+      "arduinoPin": 19,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    },
+    {
+      "id": "20",
+      "label": "Pin 20 / A6",
+      "functions": ["digital", "analog"],
+      "arduinoPin": 20,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    },
+    {
+      "id": "21",
+      "label": "Pin 21 / A7",
+      "functions": ["digital", "analog"],
+      "arduinoPin": 21,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    },
+    {
+      "id": "22",
+      "label": "Pin 22 / A8",
+      "functions": ["digital", "pwm", "analog"],
+      "arduinoPin": 22,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    },
+    {
+      "id": "23",
+      "label": "Pin 23 / A9",
+      "functions": ["digital", "pwm", "analog"],
+      "arduinoPin": 23,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    },
+    {
+      "id": "VIN",
+      "label": "VIN (3.6–5.5 V)",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "3V3",
+      "label": "3.3 V",
+      "functions": ["power_out"],
+      "voltageDomainV": 3.3,
+      "maxCurrentmA": 250
+    },
+    {
+      "id": "GND",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "GND2",
+      "label": "Ground",
+      "functions": ["gnd"]
+    }
+  ],
+  "electrical": {
+    "kind": "mcu",
+    "arch": "imxrt1062",
+    "logicVoltageV": 3.3,
+    "inputVoltage": {
+      "min": 3.6,
+      "max": 5.5
+    },
+    "clockMHz": 600,
+    "flashKB": 1984,
+    "sramKB": 1024,
+    "adcBits": 12,
+    "fiveVoltTolerantIO": false,
+    "fqbn": "teensy:avr:teensy40"
+  },
+  "specStatus": "needs-review",
+  "notes": "Bottom-side pads (24–39) are not listed yet. Not 5 V tolerant.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.pjrc.com/store/teensy40.html"]
+}

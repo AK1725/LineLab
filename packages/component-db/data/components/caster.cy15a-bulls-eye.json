@@ -1,0 +1,31 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "caster.cy15a-bulls-eye",
+  "name": "CY-15A bull's-eye ball caster (15 mm)",
+  "aliases": ["cy-15a", "bulls eye caster", "15mm ball caster"],
+  "category": "caster",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 1,
+  "dimensionsMm": {
+    "x": 31,
+    "y": 31,
+    "z": 20
+  },
+  "massG": 12,
+  "model": {
+    "kind": "procedural",
+    "generator": "ball_caster",
+    "params": {
+      "ballDiameterMm": 15,
+      "housingColor": 8
+    }
+  },
+  "pins": [],
+  "electrical": {
+    "kind": "generic"
+  },
+  "specStatus": "needs-review",
+  "notes": "Generic module sold by many vendors; dimensions and values vary by seller.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=CY-15A+ball+transfer+unit"]
+}

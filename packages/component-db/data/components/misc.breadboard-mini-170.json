@@ -1,0 +1,30 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "misc.breadboard-mini-170",
+  "name": "Mini breadboard (170 tie points)",
+  "aliases": ["mini breadboard", "breadboard 170"],
+  "category": "misc",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 1,
+  "dimensionsMm": {
+    "x": 47,
+    "y": 35,
+    "z": 8.5
+  },
+  "massG": 9,
+  "model": {
+    "kind": "procedural",
+    "generator": "generic_box",
+    "params": {
+      "color": 1
+    }
+  },
+  "pins": [],
+  "electrical": {
+    "kind": "generic"
+  },
+  "specStatus": "needs-review",
+  "notes": "Breadboard contacts loosen under vibration: a common cause of intermittent faults on moving robots.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=170+tie+point+breadboard"]
+}

@@ -1,0 +1,72 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "esc.blheli-s-10a",
+  "name": "10 A brushless ESC (BLHeli_S, 2–3S)",
+  "aliases": ["esc", "blheli", "brushless esc"],
+  "category": "esc",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 8,
+  "dimensionsMm": {
+    "x": 25,
+    "y": 13,
+    "z": 5
+  },
+  "massG": 5,
+  "model": {
+    "kind": "procedural",
+    "generator": "pcb_board",
+    "params": {
+      "pcbColor": 0,
+      "chipMm": 4
+    }
+  },
+  "pins": [
+    {
+      "id": "BAT+",
+      "label": "Battery + (2–3S)",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "BAT-",
+      "label": "Battery -",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "SIG",
+      "label": "Signal (servo PWM / OneShot)",
+      "functions": ["pwm", "digital"]
+    },
+    {
+      "id": "SGND",
+      "label": "Signal ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "A",
+      "label": "Motor A",
+      "functions": ["motor_out"]
+    },
+    {
+      "id": "B",
+      "label": "Motor B",
+      "functions": ["motor_out"]
+    },
+    {
+      "id": "C",
+      "label": "Motor C",
+      "functions": ["motor_out"]
+    }
+  ],
+  "electrical": {
+    "kind": "generic",
+    "supplyVoltage": {
+      "min": 6,
+      "max": 12.6
+    },
+    "maxCurrentmA": 10000
+  },
+  "specStatus": "needs-review",
+  "notes": "Expects 1000–2000 µs pulses at 50–490 Hz (Servo library).",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=BLHeli_S+ESC+10A"]
+}

@@ -1,0 +1,47 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "input.slide-ss12d00",
+  "name": "SS12D00 slide switch (SPDT)",
+  "aliases": ["slide switch", "ss12d00", "power switch"],
+  "category": "input",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 0.1,
+  "dimensionsMm": {
+    "x": 8.5,
+    "y": 3.5,
+    "z": 8
+  },
+  "massG": 0.5,
+  "model": {
+    "kind": "procedural",
+    "generator": "switch_part",
+    "params": {
+      "kind": 1
+    }
+  },
+  "pins": [
+    {
+      "id": "COM",
+      "label": "Common",
+      "functions": ["digital"]
+    },
+    {
+      "id": "L",
+      "label": "Left throw",
+      "functions": ["digital"]
+    },
+    {
+      "id": "R",
+      "label": "Right throw",
+      "functions": ["digital"]
+    }
+  ],
+  "electrical": {
+    "kind": "generic",
+    "maxCurrentmA": 500
+  },
+  "specStatus": "needs-review",
+  "notes": "Rated about 0.5 A: too weak to switch motor current.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=SS12D00+slide+switch"]
+}

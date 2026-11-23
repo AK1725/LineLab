@@ -1,0 +1,51 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "battery.18650-2s-holder",
+  "name": "2× 18650 Li-ion in holder (2S, 3000 mAh)",
+  "aliases": ["2s 18650", "2x 18650", "18650 2s"],
+  "category": "battery",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 10,
+  "dimensionsMm": {
+    "x": 77,
+    "y": 41,
+    "z": 21
+  },
+  "massG": 100,
+  "model": {
+    "kind": "procedural",
+    "generator": "battery_holder",
+    "params": {
+      "cells": 2,
+      "cellDiameterMm": 18.5,
+      "cellColor": 4
+    }
+  },
+  "pins": [
+    {
+      "id": "BAT+",
+      "label": "Positive",
+      "functions": ["power_out"]
+    },
+    {
+      "id": "BAT-",
+      "label": "Negative",
+      "functions": ["gnd"]
+    }
+  ],
+  "electrical": {
+    "kind": "battery",
+    "chemistry": "li-ion",
+    "cellsInSeries": 2,
+    "nominalVoltageV": 7.2,
+    "fullVoltageV": 8.4,
+    "cutoffVoltageV": 5.6,
+    "capacitymAh": 3000,
+    "maxContinuousDischargeA": 10,
+    "internalResistanceMilliohm": 60
+  },
+  "specStatus": "needs-review",
+  "notes": "Heavy (100 g) for a fast line follower.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=2+cell+18650+battery+holder"]
+}

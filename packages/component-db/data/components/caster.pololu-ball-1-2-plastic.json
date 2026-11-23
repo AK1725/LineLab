@@ -1,0 +1,30 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "caster.pololu-ball-1-2-plastic",
+  "name": "Pololu ball caster, 1/2\" plastic ball",
+  "aliases": ["ball caster 1/2", "1/2 caster"],
+  "category": "caster",
+  "manufacturer": "Pololu",
+  "typicalPriceUsd": 3,
+  "dimensionsMm": {
+    "x": 26,
+    "y": 16,
+    "z": 15
+  },
+  "massG": 2,
+  "model": {
+    "kind": "procedural",
+    "generator": "ball_caster",
+    "params": {
+      "ballDiameterMm": 12.7,
+      "metalBall": 0
+    }
+  },
+  "pins": [],
+  "electrical": {
+    "kind": "generic"
+  },
+  "specStatus": "needs-review",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=Pololu+ball+caster+1%2F2"]
+}

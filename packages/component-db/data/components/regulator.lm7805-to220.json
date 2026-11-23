@@ -1,0 +1,56 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "regulator.lm7805-to220",
+  "name": "LM7805 5 V linear regulator (TO-220)",
+  "aliases": ["7805", "lm7805", "l7805"],
+  "category": "regulator",
+  "manufacturer": "STMicroelectronics / generic",
+  "typicalPriceUsd": 0.5,
+  "dimensionsMm": {
+    "x": 10,
+    "y": 4.5,
+    "z": 28
+  },
+  "massG": 2,
+  "model": {
+    "kind": "procedural",
+    "generator": "to220",
+    "params": {}
+  },
+  "pins": [
+    {
+      "id": "IN",
+      "label": "Input",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "GND",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "OUT",
+      "label": "Output (5 V)",
+      "functions": ["power_out"],
+      "voltageDomainV": 5
+    }
+  ],
+  "electrical": {
+    "kind": "regulator",
+    "topology": "linear",
+    "inputVoltage": {
+      "min": 7,
+      "max": 35
+    },
+    "outputVoltage": {
+      "min": 5,
+      "max": 5
+    },
+    "maxOutputCurrentA": 1.5,
+    "dropoutV": 2
+  },
+  "specStatus": "needs-review",
+  "notes": "Needs about 7 V in and gets hot: (Vin − 5) × I watts. Add input/output capacitors.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.st.com/en/power-management/l78.html"]
+}

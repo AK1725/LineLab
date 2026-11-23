@@ -1,0 +1,105 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "driver.drv8833-pololu",
+  "name": "DRV8833 dual motor driver carrier (Pololu)",
+  "aliases": ["drv8833", "drv8833 pololu"],
+  "category": "motor_driver",
+  "manufacturer": "Pololu (TI DRV8833)",
+  "typicalPriceUsd": 5,
+  "dimensionsMm": {
+    "x": 12.7,
+    "y": 20.3,
+    "z": 3
+  },
+  "massG": 1,
+  "model": {
+    "kind": "procedural",
+    "generator": "pcb_board",
+    "params": {
+      "pcbColor": 4,
+      "chipMm": 4
+    }
+  },
+  "pins": [
+    {
+      "id": "VIN",
+      "label": "VIN (motor 2.7–10.8 V)",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "GND",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "AOUT1",
+      "label": "Motor output AOUT1",
+      "functions": ["motor_out"]
+    },
+    {
+      "id": "AOUT2",
+      "label": "Motor output AOUT2",
+      "functions": ["motor_out"]
+    },
+    {
+      "id": "BOUT1",
+      "label": "Motor output BOUT1",
+      "functions": ["motor_out"]
+    },
+    {
+      "id": "BOUT2",
+      "label": "Motor output BOUT2",
+      "functions": ["motor_out"]
+    },
+    {
+      "id": "AIN1",
+      "label": "AIN1",
+      "functions": ["digital", "pwm"]
+    },
+    {
+      "id": "AIN2",
+      "label": "AIN2",
+      "functions": ["digital", "pwm"]
+    },
+    {
+      "id": "BIN1",
+      "label": "BIN1",
+      "functions": ["digital", "pwm"]
+    },
+    {
+      "id": "BIN2",
+      "label": "BIN2",
+      "functions": ["digital", "pwm"]
+    },
+    {
+      "id": "SLP",
+      "label": "Sleep (pull high to run)",
+      "functions": ["enable"]
+    },
+    {
+      "id": "FLT",
+      "label": "Fault (open-drain)",
+      "functions": ["digital"]
+    }
+  ],
+  "electrical": {
+    "kind": "motor_driver",
+    "channels": 2,
+    "logicVoltage": {
+      "min": 1.8,
+      "max": 7
+    },
+    "motorVoltage": {
+      "min": 2.7,
+      "max": 10.8
+    },
+    "continuousCurrentPerChannelA": 1.2,
+    "peakCurrentPerChannelA": 2,
+    "voltageDropV": 0.4,
+    "maxPwmFrequencyKHz": 50
+  },
+  "specStatus": "needs-review",
+  "notes": "No separate logic supply. Speed is controlled by PWM on the IN pins (no PWM pin).",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.pololu.com/product/2130", "https://www.ti.com/product/DRV8833"]
+}

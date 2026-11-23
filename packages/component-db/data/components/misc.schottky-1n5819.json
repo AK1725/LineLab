@@ -1,0 +1,43 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "misc.schottky-1n5819",
+  "name": "1N5819 Schottky diode (reverse-polarity protection)",
+  "aliases": ["1n5819", "schottky diode", "diode"],
+  "category": "misc",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 0.1,
+  "dimensionsMm": {
+    "x": 10,
+    "y": 2.7,
+    "z": 2.7
+  },
+  "massG": 0.3,
+  "model": {
+    "kind": "procedural",
+    "generator": "generic_cylinder",
+    "params": {
+      "axis": 1,
+      "color": 0
+    }
+  },
+  "pins": [
+    {
+      "id": "A",
+      "label": "Anode",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "K",
+      "label": "Cathode",
+      "functions": ["power_out"]
+    }
+  ],
+  "electrical": {
+    "kind": "generic",
+    "maxCurrentmA": 1000
+  },
+  "specStatus": "needs-review",
+  "notes": "About 0.45 V drop at 1 A.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=1N5819"]
+}

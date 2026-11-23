@@ -1,0 +1,34 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "wheel.tt-65mm",
+  "name": "TT motor wheel 65 mm",
+  "aliases": ["tt wheel", "65mm wheel", "bo wheel"],
+  "category": "wheel",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 1,
+  "dimensionsMm": {
+    "x": 65,
+    "y": 26,
+    "z": 65
+  },
+  "massG": 30,
+  "model": {
+    "kind": "procedural",
+    "generator": "wheel",
+    "params": {
+      "hubColor": 5,
+      "tireMm": 6
+    }
+  },
+  "pins": [],
+  "electrical": {
+    "kind": "wheel",
+    "diameterMm": 65,
+    "widthMm": 26,
+    "frictionCoefficient": 0.8
+  },
+  "specStatus": "needs-review",
+  "notes": "Generic module sold by many vendors; dimensions and values vary by seller.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=65mm+wheel+TT+motor"]
+}

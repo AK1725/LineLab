@@ -1,0 +1,57 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "sensor.fc-03-speed",
+  "name": "FC-03 optical speed sensor (slotted, LM393)",
+  "aliases": ["fc-03", "speed sensor", "optical encoder", "slot sensor"],
+  "category": "sensor",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 1,
+  "dimensionsMm": {
+    "x": 32,
+    "y": 14,
+    "z": 18
+  },
+  "massG": 3,
+  "model": {
+    "kind": "procedural",
+    "generator": "pcb_board",
+    "params": {
+      "pcbColor": 4,
+      "chipMm": 4
+    }
+  },
+  "pins": [
+    {
+      "id": "VCC",
+      "label": "VCC (3.3–5 V)",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "GND",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "D0",
+      "label": "Digital out",
+      "functions": ["digital"]
+    },
+    {
+      "id": "A0",
+      "label": "Analog out",
+      "functions": ["analog"]
+    }
+  ],
+  "electrical": {
+    "kind": "generic",
+    "supplyVoltage": {
+      "min": 3.3,
+      "max": 5
+    },
+    "maxCurrentmA": 15
+  },
+  "specStatus": "needs-review",
+  "notes": "Generic module sold by many vendors; dimensions and values vary by seller. Needs a slotted encoder disc on the wheel or shaft.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=slotted+optical+switch+LM393"]
+}

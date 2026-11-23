@@ -1,0 +1,77 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "sensor.tcs3200-module",
+  "name": "TCS3200 colour sensor module",
+  "aliases": ["tcs3200", "tcs230"],
+  "category": "sensor",
+  "manufacturer": "Generic (ams TCS3200)",
+  "typicalPriceUsd": 4,
+  "dimensionsMm": {
+    "x": 28,
+    "y": 28,
+    "z": 12
+  },
+  "massG": 4,
+  "model": {
+    "kind": "procedural",
+    "generator": "pcb_board",
+    "params": {
+      "pcbColor": 4,
+      "chipMm": 4
+    }
+  },
+  "pins": [
+    {
+      "id": "VCC",
+      "label": "VCC (2.7–5.5 V)",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "GND",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "S0",
+      "label": "S0",
+      "functions": ["digital"]
+    },
+    {
+      "id": "S1",
+      "label": "S1",
+      "functions": ["digital"]
+    },
+    {
+      "id": "S2",
+      "label": "S2",
+      "functions": ["digital"]
+    },
+    {
+      "id": "S3",
+      "label": "S3",
+      "functions": ["digital"]
+    },
+    {
+      "id": "OUT",
+      "label": "Frequency out",
+      "functions": ["digital"]
+    },
+    {
+      "id": "OE",
+      "label": "Output enable",
+      "functions": ["enable"]
+    }
+  ],
+  "electrical": {
+    "kind": "generic",
+    "supplyVoltage": {
+      "min": 2.7,
+      "max": 5.5
+    },
+    "maxCurrentmA": 30
+  },
+  "specStatus": "needs-review",
+  "notes": "Generic module sold by many vendors; dimensions and values vary by seller.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=TCS3200+color+sensor"]
+}

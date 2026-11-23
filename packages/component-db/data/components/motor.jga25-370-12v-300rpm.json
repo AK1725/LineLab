@@ -1,0 +1,48 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "motor.jga25-370-12v-300rpm",
+  "name": "JGA25-370 12V 300 RPM gearmotor",
+  "aliases": ["jga25-370", "jga25", "25mm gear motor"],
+  "category": "motor",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 8,
+  "dimensionsMm": {
+    "x": 66,
+    "y": 25,
+    "z": 25
+  },
+  "massG": 90,
+  "model": {
+    "kind": "procedural",
+    "generator": "dc_motor_can",
+    "params": {
+      "gearboxLengthMm": 19,
+      "shaftLengthMm": 12
+    }
+  },
+  "pins": [
+    {
+      "id": "M+",
+      "label": "Motor terminal +",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "M-",
+      "label": "Motor terminal -",
+      "functions": ["power_in"]
+    }
+  ],
+  "electrical": {
+    "kind": "motor",
+    "ratedVoltageV": 12,
+    "noLoadRpm": 300,
+    "noLoadCurrentA": 0.1,
+    "stallCurrentA": 1.5,
+    "stallTorqueKgCm": 4,
+    "gearRatio": 21
+  },
+  "specStatus": "needs-review",
+  "notes": "Generic module sold by many vendors; dimensions and values vary by seller. Heavy for a line follower; suits large 4WD robots.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=JGA25-370"]
+}

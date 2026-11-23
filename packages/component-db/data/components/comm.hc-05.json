@@ -1,0 +1,71 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "comm.hc-05",
+  "name": "HC-05 Bluetooth Classic module (with base board)",
+  "aliases": ["hc-05", "hc05", "bluetooth"],
+  "category": "communication",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 4,
+  "dimensionsMm": {
+    "x": 37,
+    "y": 16,
+    "z": 6
+  },
+  "massG": 3,
+  "model": {
+    "kind": "procedural",
+    "generator": "pcb_board",
+    "params": {
+      "pcbColor": 4,
+      "rfModuleMm": 27
+    }
+  },
+  "pins": [
+    {
+      "id": "VCC",
+      "label": "VCC (3.6–6 V)",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "GND",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "TXD",
+      "label": "TX (3.3 V)",
+      "functions": ["uart_tx"],
+      "voltageDomainV": 3.3
+    },
+    {
+      "id": "RXD",
+      "label": "RX (3.3 V)",
+      "functions": ["uart_rx"],
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "notes": "Use a divider from a 5 V TX."
+    },
+    {
+      "id": "STATE",
+      "label": "Connected state",
+      "functions": ["digital"]
+    },
+    {
+      "id": "EN",
+      "label": "Enable / AT mode (KEY)",
+      "functions": ["enable"]
+    }
+  ],
+  "electrical": {
+    "kind": "generic",
+    "supplyVoltage": {
+      "min": 3.6,
+      "max": 6
+    },
+    "maxCurrentmA": 40
+  },
+  "specStatus": "needs-review",
+  "notes": "Generic module sold by many vendors; dimensions and values vary by seller. Handy for live PID tuning from a phone.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.lcsc.com/search?q=HC-05+bluetooth"]
+}

@@ -1,0 +1,258 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "mcu.arduino-leonardo",
+  "name": "Arduino Leonardo (ATmega32U4)",
+  "aliases": ["leonardo", "atmega32u4 leonardo"],
+  "category": "mcu",
+  "manufacturer": "Arduino",
+  "typicalPriceUsd": 25,
+  "dimensionsMm": {
+    "x": 68.6,
+    "y": 53.3,
+    "z": 15
+  },
+  "massG": 20,
+  "model": {
+    "kind": "procedural",
+    "generator": "pcb_board",
+    "params": {
+      "pcbColor": 10,
+      "usb": 1,
+      "barrelJack": 1,
+      "headerRows": 2,
+      "chipMm": 8
+    }
+  },
+  "pins": [
+    {
+      "id": "D0",
+      "label": "D0",
+      "functions": ["digital", "uart_rx"],
+      "arduinoPin": 0,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D1",
+      "label": "D1",
+      "functions": ["digital", "uart_tx"],
+      "arduinoPin": 1,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D2",
+      "label": "D2",
+      "functions": ["digital", "i2c_sda"],
+      "arduinoPin": 2,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D3",
+      "label": "D3",
+      "functions": ["digital", "pwm", "i2c_scl"],
+      "arduinoPin": 3,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D4",
+      "label": "D4",
+      "functions": ["digital", "analog"],
+      "arduinoPin": 4,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40,
+      "notes": "Also analog input A6."
+    },
+    {
+      "id": "D5",
+      "label": "D5",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 5,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D6",
+      "label": "D6",
+      "functions": ["digital", "pwm", "analog"],
+      "arduinoPin": 6,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40,
+      "notes": "Also analog input A7."
+    },
+    {
+      "id": "D7",
+      "label": "D7",
+      "functions": ["digital"],
+      "arduinoPin": 7,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D8",
+      "label": "D8",
+      "functions": ["digital", "analog"],
+      "arduinoPin": 8,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40,
+      "notes": "Also analog input A8."
+    },
+    {
+      "id": "D9",
+      "label": "D9",
+      "functions": ["digital", "pwm", "analog"],
+      "arduinoPin": 9,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40,
+      "notes": "Also analog input A9."
+    },
+    {
+      "id": "D10",
+      "label": "D10",
+      "functions": ["digital", "pwm", "analog"],
+      "arduinoPin": 10,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40,
+      "notes": "Also analog input A10."
+    },
+    {
+      "id": "D11",
+      "label": "D11",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 11,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D12",
+      "label": "D12",
+      "functions": ["digital", "analog"],
+      "arduinoPin": 12,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40,
+      "notes": "Also analog input A11."
+    },
+    {
+      "id": "D13",
+      "label": "D13",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 13,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "A0",
+      "label": "A0",
+      "functions": ["analog", "digital"],
+      "arduinoPin": "A0",
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "A1",
+      "label": "A1",
+      "functions": ["analog", "digital"],
+      "arduinoPin": "A1",
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "A2",
+      "label": "A2",
+      "functions": ["analog", "digital"],
+      "arduinoPin": "A2",
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "A3",
+      "label": "A3",
+      "functions": ["analog", "digital"],
+      "arduinoPin": "A3",
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "A4",
+      "label": "A4",
+      "functions": ["analog", "digital"],
+      "arduinoPin": "A4",
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "A5",
+      "label": "A5",
+      "functions": ["analog", "digital"],
+      "arduinoPin": "A5",
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "5V",
+      "label": "5 V",
+      "functions": ["power_out"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "GND",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "GND2",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "3V3",
+      "label": "3.3 V",
+      "functions": ["power_out"],
+      "voltageDomainV": 3.3,
+      "maxCurrentmA": 50
+    },
+    {
+      "id": "VIN",
+      "label": "VIN (7–12 V)",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "RESET",
+      "label": "Reset",
+      "functions": ["reset"]
+    },
+    {
+      "id": "AREF",
+      "label": "Analog reference",
+      "functions": ["power_in"],
+      "notes": "ADC reference voltage input."
+    },
+    {
+      "id": "IOREF",
+      "label": "IO reference",
+      "functions": ["power_out"],
+      "voltageDomainV": 5
+    }
+  ],
+  "electrical": {
+    "kind": "mcu",
+    "arch": "avr",
+    "logicVoltageV": 5,
+    "inputVoltage": {
+      "min": 7,
+      "max": 12
+    },
+    "clockMHz": 16,
+    "flashKB": 32,
+    "sramKB": 2.5,
+    "adcBits": 10,
+    "fiveVoltTolerantIO": true,
+    "fqbn": "arduino:avr:leonardo"
+  },
+  "specStatus": "needs-review",
+  "notes": "I2C is on D2/D3, not A4/A5. SPI is only on the ICSP header.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://docs.arduino.cc/hardware/leonardo/"]
+}

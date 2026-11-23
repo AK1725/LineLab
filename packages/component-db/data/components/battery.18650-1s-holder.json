@@ -1,0 +1,51 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "battery.18650-1s-holder",
+  "name": "18650 Li-ion cell in holder (1S, 3000 mAh)",
+  "aliases": ["18650", "18650 holder", "li-ion 18650"],
+  "category": "battery",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 6,
+  "dimensionsMm": {
+    "x": 77,
+    "y": 21,
+    "z": 21
+  },
+  "massG": 52,
+  "model": {
+    "kind": "procedural",
+    "generator": "battery_holder",
+    "params": {
+      "cells": 1,
+      "cellDiameterMm": 18.5,
+      "cellColor": 4
+    }
+  },
+  "pins": [
+    {
+      "id": "BAT+",
+      "label": "Positive",
+      "functions": ["power_out"]
+    },
+    {
+      "id": "BAT-",
+      "label": "Negative",
+      "functions": ["gnd"]
+    }
+  ],
+  "electrical": {
+    "kind": "battery",
+    "chemistry": "li-ion",
+    "cellsInSeries": 1,
+    "nominalVoltageV": 3.6,
+    "fullVoltageV": 4.2,
+    "cutoffVoltageV": 2.8,
+    "capacitymAh": 3000,
+    "maxContinuousDischargeA": 10,
+    "internalResistanceMilliohm": 30
+  },
+  "specStatus": "needs-review",
+  "notes": "Capacity and current depend on the cell model. Beware of fake high-capacity cells.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=18650+battery+holder"]
+}

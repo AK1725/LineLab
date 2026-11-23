@@ -1,0 +1,45 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "motor.pololu-hp-6v-30-1",
+  "name": "Pololu micro metal gearmotor HP 6V 30:1",
+  "aliases": ["hp 30:1", "pololu 30:1", "n20 30:1", "micro metal 30:1"],
+  "category": "motor",
+  "manufacturer": "Pololu",
+  "typicalPriceUsd": 20,
+  "dimensionsMm": {
+    "x": 34,
+    "y": 12,
+    "z": 10
+  },
+  "massG": 9.5,
+  "model": {
+    "kind": "procedural",
+    "generator": "gearmotor_n20",
+    "params": {}
+  },
+  "pins": [
+    {
+      "id": "M+",
+      "label": "Motor terminal +",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "M-",
+      "label": "Motor terminal -",
+      "functions": ["power_in"]
+    }
+  ],
+  "electrical": {
+    "kind": "motor",
+    "ratedVoltageV": 6,
+    "noLoadRpm": 1000,
+    "noLoadCurrentA": 0.1,
+    "stallCurrentA": 1.6,
+    "stallTorqueKgCm": 0.6,
+    "gearRatio": 30
+  },
+  "specStatus": "needs-review",
+  "notes": "HP = high-power brushes. Torque above about 2 kg·cm can damage the gearbox; very high ratios are gearbox-limited.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.pololu.com/category/60/micro-metal-gearmotors"]
+}

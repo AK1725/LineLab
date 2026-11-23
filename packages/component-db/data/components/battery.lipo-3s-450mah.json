@@ -1,0 +1,50 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "battery.lipo-3s-450mah",
+  "name": "LiPo 3S 450 mAh 30C",
+  "aliases": ["lipo 3s 450", "3s 450mah"],
+  "category": "battery",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 8.25,
+  "dimensionsMm": {
+    "x": 56,
+    "y": 31,
+    "z": 17
+  },
+  "massG": 40,
+  "model": {
+    "kind": "procedural",
+    "generator": "battery_pack",
+    "params": {
+      "color": 4,
+      "labelColor": 2
+    }
+  },
+  "pins": [
+    {
+      "id": "BAT+",
+      "label": "Positive",
+      "functions": ["power_out"]
+    },
+    {
+      "id": "BAT-",
+      "label": "Negative",
+      "functions": ["gnd"]
+    }
+  ],
+  "electrical": {
+    "kind": "battery",
+    "chemistry": "lipo",
+    "cellsInSeries": 3,
+    "nominalVoltageV": 11.100000000000001,
+    "fullVoltageV": 12.600000000000001,
+    "cutoffVoltageV": 9.0,
+    "capacitymAh": 450,
+    "maxContinuousDischargeA": 13.5,
+    "internalResistanceMilliohm": 90
+  },
+  "specStatus": "needs-review",
+  "notes": "Generic module sold by many vendors; dimensions and values vary by seller. Never discharge below 3.0 V per cell or charge above 4.2 V. Use a balance charger.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=lipo+3S+450mAh"]
+}

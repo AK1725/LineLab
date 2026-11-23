@@ -1,0 +1,67 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "motor.n20-6v-300rpm-encoder",
+  "name": "N20 6V 300 RPM gearmotor with magnetic encoder",
+  "aliases": ["n20 encoder", "n20 300rpm encoder", "n20 with encoder"],
+  "category": "motor",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 6,
+  "dimensionsMm": {
+    "x": 40,
+    "y": 12,
+    "z": 10
+  },
+  "massG": 12,
+  "model": {
+    "kind": "procedural",
+    "generator": "gearmotor_n20",
+    "params": {
+      "encoder": 1
+    }
+  },
+  "pins": [
+    {
+      "id": "M+",
+      "label": "Motor terminal +",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "M-",
+      "label": "Motor terminal -",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "VCC",
+      "label": "Encoder VCC (3.3–5 V)",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "GND",
+      "label": "Encoder ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "C1",
+      "label": "Encoder A",
+      "functions": ["digital"]
+    },
+    {
+      "id": "C2",
+      "label": "Encoder B",
+      "functions": ["digital"]
+    }
+  ],
+  "electrical": {
+    "kind": "motor",
+    "ratedVoltageV": 6,
+    "noLoadRpm": 300,
+    "noLoadCurrentA": 0.06,
+    "stallCurrentA": 0.8,
+    "stallTorqueKgCm": 0.7,
+    "gearRatio": 50
+  },
+  "specStatus": "needs-review",
+  "notes": "Generic module sold by many vendors; dimensions and values vary by seller. Typically 7 pulses per motor revolution per channel (multiply by the gear ratio at the wheel).",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=N20+encoder+gear+motor"]
+}

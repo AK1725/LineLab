@@ -1,0 +1,41 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "input.rocker-kcd1",
+  "name": "KCD1 rocker switch (SPST)",
+  "aliases": ["rocker switch", "kcd1"],
+  "category": "input",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 0.3,
+  "dimensionsMm": {
+    "x": 21,
+    "y": 15,
+    "z": 18
+  },
+  "massG": 3,
+  "model": {
+    "kind": "procedural",
+    "generator": "switch_part",
+    "params": {
+      "kind": 2
+    }
+  },
+  "pins": [
+    {
+      "id": "T1",
+      "label": "Terminal 1",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "T2",
+      "label": "Terminal 2",
+      "functions": ["power_out"]
+    }
+  ],
+  "electrical": {
+    "kind": "generic",
+    "maxCurrentmA": 6000
+  },
+  "specStatus": "needs-review",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=KCD1+rocker+switch"]
+}

@@ -1,0 +1,107 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "driver.bts7960-ibt2",
+  "name": "BTS7960 43 A H-bridge module (IBT-2)",
+  "aliases": ["bts7960", "ibt-2", "ibt2"],
+  "category": "motor_driver",
+  "manufacturer": "Generic (Infineon BTS7960)",
+  "typicalPriceUsd": 8,
+  "dimensionsMm": {
+    "x": 50,
+    "y": 50,
+    "z": 43
+  },
+  "massG": 66,
+  "model": {
+    "kind": "procedural",
+    "generator": "pcb_board",
+    "params": {
+      "pcbColor": 6,
+      "heatsinkMm": 35,
+      "screwTerminals": 4
+    }
+  },
+  "pins": [
+    {
+      "id": "VCC",
+      "label": "VCC (logic 5 V)",
+      "functions": ["power_in"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "GND",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "RPWM",
+      "label": "RPWM",
+      "functions": ["pwm", "digital"]
+    },
+    {
+      "id": "LPWM",
+      "label": "LPWM",
+      "functions": ["pwm", "digital"]
+    },
+    {
+      "id": "R_EN",
+      "label": "R_EN",
+      "functions": ["enable"]
+    },
+    {
+      "id": "L_EN",
+      "label": "L_EN",
+      "functions": ["enable"]
+    },
+    {
+      "id": "R_IS",
+      "label": "R current sense",
+      "functions": ["analog"]
+    },
+    {
+      "id": "L_IS",
+      "label": "L current sense",
+      "functions": ["analog"]
+    },
+    {
+      "id": "B+",
+      "label": "B+ (motor 5.5–27 V)",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "B-",
+      "label": "B-",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "M+",
+      "label": "Motor output M+",
+      "functions": ["motor_out"]
+    },
+    {
+      "id": "M-",
+      "label": "Motor output M-",
+      "functions": ["motor_out"]
+    }
+  ],
+  "electrical": {
+    "kind": "motor_driver",
+    "channels": 1,
+    "logicVoltage": {
+      "min": 3.3,
+      "max": 5
+    },
+    "motorVoltage": {
+      "min": 5.5,
+      "max": 27
+    },
+    "continuousCurrentPerChannelA": 15,
+    "peakCurrentPerChannelA": 43,
+    "voltageDropV": 0.3,
+    "maxPwmFrequencyKHz": 25
+  },
+  "specStatus": "needs-review",
+  "notes": "Massive overkill for micro-motor robots (heavy, 66 g). Continuous rating depends on cooling.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.lcsc.com/search?q=BTS7960"]
+}

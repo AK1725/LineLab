@@ -1,0 +1,259 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "mcu.arduino-pro-mini-3v3",
+  "name": "Arduino Pro Mini 3.3 V / 8 MHz",
+  "aliases": ["pro mini 3v3", "pro mini 3.3v"],
+  "category": "mcu",
+  "manufacturer": "Arduino",
+  "typicalPriceUsd": 4,
+  "dimensionsMm": {
+    "x": 33,
+    "y": 18,
+    "z": 4
+  },
+  "massG": 2,
+  "model": {
+    "kind": "procedural",
+    "generator": "pcb_board",
+    "params": {
+      "pcbColor": 4,
+      "chipMm": 7
+    }
+  },
+  "pins": [
+    {
+      "id": "D0",
+      "label": "D0",
+      "functions": ["digital", "uart_rx"],
+      "arduinoPin": 0,
+      "voltageDomainV": 3.3,
+      "maxCurrentmA": 40,
+      "notes": "Shared with USB serial; avoid while using Serial."
+    },
+    {
+      "id": "D1",
+      "label": "D1",
+      "functions": ["digital", "uart_tx"],
+      "arduinoPin": 1,
+      "voltageDomainV": 3.3,
+      "maxCurrentmA": 40,
+      "notes": "Shared with USB serial; avoid while using Serial."
+    },
+    {
+      "id": "D2",
+      "label": "D2",
+      "functions": ["digital"],
+      "arduinoPin": 2,
+      "voltageDomainV": 3.3,
+      "maxCurrentmA": 40,
+      "notes": "External interrupt INT0."
+    },
+    {
+      "id": "D3",
+      "label": "D3",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 3,
+      "voltageDomainV": 3.3,
+      "maxCurrentmA": 40,
+      "notes": "External interrupt INT1."
+    },
+    {
+      "id": "D4",
+      "label": "D4",
+      "functions": ["digital"],
+      "arduinoPin": 4,
+      "voltageDomainV": 3.3,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D5",
+      "label": "D5",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 5,
+      "voltageDomainV": 3.3,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D6",
+      "label": "D6",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 6,
+      "voltageDomainV": 3.3,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D7",
+      "label": "D7",
+      "functions": ["digital"],
+      "arduinoPin": 7,
+      "voltageDomainV": 3.3,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D8",
+      "label": "D8",
+      "functions": ["digital"],
+      "arduinoPin": 8,
+      "voltageDomainV": 3.3,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D9",
+      "label": "D9",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 9,
+      "voltageDomainV": 3.3,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D10",
+      "label": "D10",
+      "functions": ["digital", "pwm", "spi_cs"],
+      "arduinoPin": 10,
+      "voltageDomainV": 3.3,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D11",
+      "label": "D11",
+      "functions": ["digital", "pwm", "spi_mosi"],
+      "arduinoPin": 11,
+      "voltageDomainV": 3.3,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D12",
+      "label": "D12",
+      "functions": ["digital", "spi_miso"],
+      "arduinoPin": 12,
+      "voltageDomainV": 3.3,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D13",
+      "label": "D13",
+      "functions": ["digital", "spi_sck"],
+      "arduinoPin": 13,
+      "voltageDomainV": 3.3,
+      "maxCurrentmA": 40,
+      "notes": "On-board LED."
+    },
+    {
+      "id": "A0",
+      "label": "A0",
+      "functions": ["analog", "digital"],
+      "arduinoPin": "A0",
+      "adcChannel": 0,
+      "voltageDomainV": 3.3,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "A1",
+      "label": "A1",
+      "functions": ["analog", "digital"],
+      "arduinoPin": "A1",
+      "adcChannel": 1,
+      "voltageDomainV": 3.3,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "A2",
+      "label": "A2",
+      "functions": ["analog", "digital"],
+      "arduinoPin": "A2",
+      "adcChannel": 2,
+      "voltageDomainV": 3.3,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "A3",
+      "label": "A3",
+      "functions": ["analog", "digital"],
+      "arduinoPin": "A3",
+      "adcChannel": 3,
+      "voltageDomainV": 3.3,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "A4",
+      "label": "A4",
+      "functions": ["analog", "digital", "i2c_sda"],
+      "arduinoPin": "A4",
+      "adcChannel": 4,
+      "voltageDomainV": 3.3,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "A5",
+      "label": "A5",
+      "functions": ["analog", "digital", "i2c_scl"],
+      "arduinoPin": "A5",
+      "adcChannel": 5,
+      "voltageDomainV": 3.3,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "A6",
+      "label": "A6",
+      "functions": ["analog"],
+      "arduinoPin": "A6",
+      "adcChannel": 6,
+      "voltageDomainV": 3.3,
+      "notes": "Analog input only (no digital I/O)."
+    },
+    {
+      "id": "A7",
+      "label": "A7",
+      "functions": ["analog"],
+      "arduinoPin": "A7",
+      "adcChannel": 7,
+      "voltageDomainV": 3.3,
+      "notes": "Analog input only (no digital I/O)."
+    },
+    {
+      "id": "VCC",
+      "label": "VCC (3.3 V regulated)",
+      "functions": ["power_out"],
+      "voltageDomainV": 3.3
+    },
+    {
+      "id": "GND",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "GND2",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "RAW",
+      "label": "RAW (unregulated input)",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "RESET",
+      "label": "Reset",
+      "functions": ["reset"]
+    }
+  ],
+  "electrical": {
+    "kind": "mcu",
+    "arch": "avr",
+    "logicVoltageV": 3.3,
+    "inputVoltage": {
+      "min": 3.8,
+      "max": 12
+    },
+    "clockMHz": 8,
+    "flashKB": 32,
+    "sramKB": 2,
+    "adcBits": 10,
+    "fiveVoltTolerantIO": false,
+    "fqbn": "arduino:avr:pro"
+  },
+  "specStatus": "needs-review",
+  "notes": "No USB: program it with a USB-serial adapter (FTDI header).",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://docs.arduino.cc/retired/boards/arduino-pro-mini/"]
+}

@@ -1,0 +1,270 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "mcu.arduino-micro",
+  "name": "Arduino Micro (ATmega32U4)",
+  "aliases": ["micro", "arduino micro", "atmega32u4 micro"],
+  "category": "mcu",
+  "manufacturer": "Arduino",
+  "typicalPriceUsd": 24,
+  "dimensionsMm": {
+    "x": 48,
+    "y": 18,
+    "z": 7
+  },
+  "massG": 13,
+  "model": {
+    "kind": "procedural",
+    "generator": "pcb_board",
+    "params": {
+      "pcbColor": 10,
+      "usb": 1,
+      "chipMm": 7
+    }
+  },
+  "pins": [
+    {
+      "id": "D0",
+      "label": "D0",
+      "functions": ["digital", "uart_rx"],
+      "arduinoPin": 0,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D1",
+      "label": "D1",
+      "functions": ["digital", "uart_tx"],
+      "arduinoPin": 1,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D2",
+      "label": "D2",
+      "functions": ["digital", "i2c_sda"],
+      "arduinoPin": 2,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D3",
+      "label": "D3",
+      "functions": ["digital", "pwm", "i2c_scl"],
+      "arduinoPin": 3,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D4",
+      "label": "D4",
+      "functions": ["digital", "analog"],
+      "arduinoPin": 4,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40,
+      "notes": "Also analog input A6."
+    },
+    {
+      "id": "D5",
+      "label": "D5",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 5,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D6",
+      "label": "D6",
+      "functions": ["digital", "pwm", "analog"],
+      "arduinoPin": 6,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40,
+      "notes": "Also analog input A7."
+    },
+    {
+      "id": "D7",
+      "label": "D7",
+      "functions": ["digital"],
+      "arduinoPin": 7,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D8",
+      "label": "D8",
+      "functions": ["digital", "analog"],
+      "arduinoPin": 8,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40,
+      "notes": "Also analog input A8."
+    },
+    {
+      "id": "D9",
+      "label": "D9",
+      "functions": ["digital", "pwm", "analog"],
+      "arduinoPin": 9,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40,
+      "notes": "Also analog input A9."
+    },
+    {
+      "id": "D10",
+      "label": "D10",
+      "functions": ["digital", "pwm", "analog"],
+      "arduinoPin": 10,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40,
+      "notes": "Also analog input A10."
+    },
+    {
+      "id": "D11",
+      "label": "D11",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 11,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D12",
+      "label": "D12",
+      "functions": ["digital", "analog"],
+      "arduinoPin": 12,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40,
+      "notes": "Also analog input A11."
+    },
+    {
+      "id": "D13",
+      "label": "D13",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 13,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "A0",
+      "label": "A0",
+      "functions": ["analog", "digital"],
+      "arduinoPin": "A0",
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "A1",
+      "label": "A1",
+      "functions": ["analog", "digital"],
+      "arduinoPin": "A1",
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "A2",
+      "label": "A2",
+      "functions": ["analog", "digital"],
+      "arduinoPin": "A2",
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "A3",
+      "label": "A3",
+      "functions": ["analog", "digital"],
+      "arduinoPin": "A3",
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "A4",
+      "label": "A4",
+      "functions": ["analog", "digital"],
+      "arduinoPin": "A4",
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "A5",
+      "label": "A5",
+      "functions": ["analog", "digital"],
+      "arduinoPin": "A5",
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "MISO",
+      "label": "MISO (D14)",
+      "functions": ["digital", "spi_miso"],
+      "arduinoPin": 14,
+      "voltageDomainV": 5
+    },
+    {
+      "id": "SCK",
+      "label": "SCK (D15)",
+      "functions": ["digital", "spi_sck"],
+      "arduinoPin": 15,
+      "voltageDomainV": 5
+    },
+    {
+      "id": "MOSI",
+      "label": "MOSI (D16)",
+      "functions": ["digital", "spi_mosi"],
+      "arduinoPin": 16,
+      "voltageDomainV": 5
+    },
+    {
+      "id": "5V",
+      "label": "5 V",
+      "functions": ["power_out"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "GND",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "GND2",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "3V3",
+      "label": "3.3 V",
+      "functions": ["power_out"],
+      "voltageDomainV": 3.3,
+      "maxCurrentmA": 50
+    },
+    {
+      "id": "VIN",
+      "label": "VIN (7–12 V)",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "RESET",
+      "label": "Reset",
+      "functions": ["reset"]
+    },
+    {
+      "id": "AREF",
+      "label": "Analog reference",
+      "functions": ["power_in"],
+      "notes": "ADC reference voltage input."
+    }
+  ],
+  "electrical": {
+    "kind": "mcu",
+    "arch": "avr",
+    "logicVoltageV": 5,
+    "inputVoltage": {
+      "min": 7,
+      "max": 12
+    },
+    "clockMHz": 16,
+    "flashKB": 32,
+    "sramKB": 2.5,
+    "adcBits": 10,
+    "fiveVoltTolerantIO": true,
+    "fqbn": "arduino:avr:micro"
+  },
+  "specStatus": "needs-review",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://docs.arduino.cc/hardware/micro/"]
+}

@@ -1,0 +1,74 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "sensor.tcrt5000-3ch",
+  "name": "3-channel TCRT5000 tracking module",
+  "aliases": ["3 channel line sensor", "tcrt5000 3ch", "3 way tracking"],
+  "category": "line_sensor",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 2,
+  "dimensionsMm": {
+    "x": 12,
+    "y": 42,
+    "z": 11
+  },
+  "massG": 6,
+  "model": {
+    "kind": "procedural",
+    "generator": "ir_sensor_array",
+    "params": {
+      "channels": 3,
+      "pitchMm": 13,
+      "packageStyle": 0,
+      "pcbColor": 4
+    }
+  },
+  "pins": [
+    {
+      "id": "VCC",
+      "label": "VCC (3.3–5 V)",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "GND",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "OUT1",
+      "label": "Sensor 1 output",
+      "functions": ["digital"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "OUT2",
+      "label": "Sensor 2 output",
+      "functions": ["digital"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "OUT3",
+      "label": "Sensor 3 output",
+      "functions": ["digital"],
+      "voltageDomainV": 5
+    }
+  ],
+  "electrical": {
+    "kind": "line_sensor",
+    "supplyVoltage": {
+      "min": 3.3,
+      "max": 5
+    },
+    "outputType": "digital",
+    "channels": 3,
+    "channelPitchMm": 13,
+    "optimalHeightMm": {
+      "min": 1,
+      "max": 8
+    },
+    "maxCurrentmA": 60
+  },
+  "specStatus": "needs-review",
+  "notes": "Generic module sold by many vendors; dimensions and values vary by seller.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.vishay.com/en/product/83760/"]
+}

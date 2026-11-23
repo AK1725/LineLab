@@ -1,0 +1,48 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "motor.coreless-8520",
+  "name": "Coreless motor 8520 (3.7 V)",
+  "aliases": ["8520", "coreless 8520", "coreless motor"],
+  "category": "motor",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 2,
+  "dimensionsMm": {
+    "x": 28,
+    "y": 8.5,
+    "z": 8.5
+  },
+  "massG": 4,
+  "model": {
+    "kind": "procedural",
+    "generator": "dc_motor_can",
+    "params": {
+      "shaftLengthMm": 8,
+      "color": 8
+    }
+  },
+  "pins": [
+    {
+      "id": "M+",
+      "label": "Motor terminal +",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "M-",
+      "label": "Motor terminal -",
+      "functions": ["power_in"]
+    }
+  ],
+  "electrical": {
+    "kind": "motor",
+    "ratedVoltageV": 3.7,
+    "noLoadRpm": 45000,
+    "noLoadCurrentA": 0.15,
+    "stallCurrentA": 2.5,
+    "stallTorqueKgCm": 0.012,
+    "gearRatio": 1
+  },
+  "specStatus": "needs-review",
+  "notes": "Generic module sold by many vendors; dimensions and values vary by seller. Used for small suction/downforce fans, not for driving.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=8520+coreless+motor"]
+}

@@ -1,0 +1,34 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "wheel.pololu-32x7",
+  "name": "Pololu wheel 32×7 mm",
+  "aliases": ["pololu wheel 32", "32mm wheel", "32x7 wheel"],
+  "category": "wheel",
+  "manufacturer": "Pololu",
+  "typicalPriceUsd": 3.5,
+  "dimensionsMm": {
+    "x": 32,
+    "y": 7,
+    "z": 32
+  },
+  "massG": 1.6,
+  "model": {
+    "kind": "procedural",
+    "generator": "wheel",
+    "params": {
+      "hubColor": 1,
+      "tireMm": 3
+    }
+  },
+  "pins": [],
+  "electrical": {
+    "kind": "wheel",
+    "diameterMm": 32,
+    "widthMm": 7,
+    "frictionCoefficient": 0.9
+  },
+  "specStatus": "needs-review",
+  "notes": "Fits micro metal gearmotor D-shafts (3 mm). Price is per pair.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=Pololu+wheel+32x7mm"]
+}

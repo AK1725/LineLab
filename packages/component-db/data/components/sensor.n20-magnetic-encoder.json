@@ -1,0 +1,57 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "sensor.n20-magnetic-encoder",
+  "name": "Magnetic encoder board for N20 motors",
+  "aliases": ["n20 encoder board", "magnetic encoder", "hall encoder"],
+  "category": "sensor",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 2,
+  "dimensionsMm": {
+    "x": 12,
+    "y": 10,
+    "z": 4
+  },
+  "massG": 0.5,
+  "model": {
+    "kind": "procedural",
+    "generator": "pcb_board",
+    "params": {
+      "pcbColor": 2,
+      "chipMm": 2
+    }
+  },
+  "pins": [
+    {
+      "id": "VCC",
+      "label": "VCC (3.3–5 V)",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "GND",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "A",
+      "label": "Channel A",
+      "functions": ["digital"]
+    },
+    {
+      "id": "B",
+      "label": "Channel B",
+      "functions": ["digital"]
+    }
+  ],
+  "electrical": {
+    "kind": "generic",
+    "supplyVoltage": {
+      "min": 3.3,
+      "max": 5
+    },
+    "maxCurrentmA": 10
+  },
+  "specStatus": "needs-review",
+  "notes": "Generic module sold by many vendors; dimensions and values vary by seller.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=N20+magnetic+encoder"]
+}

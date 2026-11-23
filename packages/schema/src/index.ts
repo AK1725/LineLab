@@ -6,6 +6,7 @@ import { RunTrace } from "./run.js";
 import { Track } from "./track.js";
 
 export * from "./primitives.js";
+export * from "./board.js";
 export * from "./component.js";
 export * from "./chassis.js";
 export * from "./design.js";

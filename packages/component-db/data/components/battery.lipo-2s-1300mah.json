@@ -1,0 +1,50 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "battery.lipo-2s-1300mah",
+  "name": "LiPo 2S 1300 mAh 25C",
+  "aliases": ["lipo 2s 1300", "2s 1300mah"],
+  "category": "battery",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 12.5,
+  "dimensionsMm": {
+    "x": 72,
+    "y": 35,
+    "z": 17
+  },
+  "massG": 75,
+  "model": {
+    "kind": "procedural",
+    "generator": "battery_pack",
+    "params": {
+      "color": 8,
+      "labelColor": 2
+    }
+  },
+  "pins": [
+    {
+      "id": "BAT+",
+      "label": "Positive",
+      "functions": ["power_out"]
+    },
+    {
+      "id": "BAT-",
+      "label": "Negative",
+      "functions": ["gnd"]
+    }
+  ],
+  "electrical": {
+    "kind": "battery",
+    "chemistry": "lipo",
+    "cellsInSeries": 2,
+    "nominalVoltageV": 7.4,
+    "fullVoltageV": 8.4,
+    "cutoffVoltageV": 6.0,
+    "capacitymAh": 1300,
+    "maxContinuousDischargeA": 32.5,
+    "internalResistanceMilliohm": 30
+  },
+  "specStatus": "needs-review",
+  "notes": "Generic module sold by many vendors; dimensions and values vary by seller. Never discharge below 3.0 V per cell or charge above 4.2 V. Use a balance charger.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=lipo+2S+1300mAh"]
+}

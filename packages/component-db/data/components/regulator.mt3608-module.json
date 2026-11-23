@@ -1,0 +1,63 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "regulator.mt3608-module",
+  "name": "MT3608 mini boost module",
+  "aliases": ["mt3608", "mini boost"],
+  "category": "regulator",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 1,
+  "dimensionsMm": {
+    "x": 36,
+    "y": 17,
+    "z": 6
+  },
+  "massG": 3,
+  "model": {
+    "kind": "procedural",
+    "generator": "buck_module",
+    "params": {
+      "inductorMm": 6,
+      "capacitors": 0
+    }
+  },
+  "pins": [
+    {
+      "id": "IN+",
+      "label": "Input +",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "IN-",
+      "label": "Input -",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "OUT+",
+      "label": "Output +",
+      "functions": ["power_out"]
+    },
+    {
+      "id": "OUT-",
+      "label": "Output -",
+      "functions": ["gnd"]
+    }
+  ],
+  "electrical": {
+    "kind": "regulator",
+    "topology": "boost",
+    "inputVoltage": {
+      "min": 2,
+      "max": 24
+    },
+    "outputVoltage": {
+      "min": 2,
+      "max": 28
+    },
+    "maxOutputCurrentA": 1,
+    "efficiencyPct": 90
+  },
+  "specStatus": "needs-review",
+  "notes": "Generic module sold by many vendors; dimensions and values vary by seller.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.lcsc.com/search?q=MT3608"]
+}

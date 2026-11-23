@@ -1,0 +1,363 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "mcu.esp32-devkitc",
+  "name": "ESP32-DevKitC (ESP32-WROOM-32)",
+  "aliases": ["esp32", "esp32 devkit", "esp32 devkitc", "esp32 wroom", "devkit v1"],
+  "category": "mcu",
+  "manufacturer": "Espressif",
+  "typicalPriceUsd": 10,
+  "dimensionsMm": {
+    "x": 54.4,
+    "y": 27.9,
+    "z": 5
+  },
+  "massG": 10,
+  "model": {
+    "kind": "procedural",
+    "generator": "pcb_board",
+    "params": {
+      "pcbColor": 0,
+      "usb": 1,
+      "rfModuleMm": 18
+    }
+  },
+  "pins": [
+    {
+      "id": "GPIO36",
+      "label": "GPIO36",
+      "functions": ["digital", "analog"],
+      "arduinoPin": 36,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "inputOnly": true,
+      "notes": "Input only.",
+      "adcUnit": 1,
+      "adcChannel": 0
+    },
+    {
+      "id": "GPIO39",
+      "label": "GPIO39",
+      "functions": ["digital", "analog"],
+      "arduinoPin": 39,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "inputOnly": true,
+      "notes": "Input only.",
+      "adcUnit": 1,
+      "adcChannel": 3
+    },
+    {
+      "id": "GPIO34",
+      "label": "GPIO34",
+      "functions": ["digital", "analog"],
+      "arduinoPin": 34,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "inputOnly": true,
+      "notes": "Input only.",
+      "adcUnit": 1,
+      "adcChannel": 6
+    },
+    {
+      "id": "GPIO35",
+      "label": "GPIO35",
+      "functions": ["digital", "analog"],
+      "arduinoPin": 35,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "inputOnly": true,
+      "notes": "Input only.",
+      "adcUnit": 1,
+      "adcChannel": 7
+    },
+    {
+      "id": "GPIO32",
+      "label": "GPIO32",
+      "functions": ["digital", "pwm", "analog"],
+      "arduinoPin": 32,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 40,
+      "adcUnit": 1,
+      "adcChannel": 4
+    },
+    {
+      "id": "GPIO33",
+      "label": "GPIO33",
+      "functions": ["digital", "pwm", "analog"],
+      "arduinoPin": 33,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 40,
+      "adcUnit": 1,
+      "adcChannel": 5
+    },
+    {
+      "id": "GPIO25",
+      "label": "GPIO25",
+      "functions": ["digital", "pwm", "analog"],
+      "arduinoPin": 25,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 40,
+      "notes": "ADC2 pin: analogRead() does not work while WiFi is active.",
+      "adcUnit": 2,
+      "adcChannel": 8
+    },
+    {
+      "id": "GPIO26",
+      "label": "GPIO26",
+      "functions": ["digital", "pwm", "analog"],
+      "arduinoPin": 26,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 40,
+      "notes": "ADC2 pin: analogRead() does not work while WiFi is active.",
+      "adcUnit": 2,
+      "adcChannel": 9
+    },
+    {
+      "id": "GPIO27",
+      "label": "GPIO27",
+      "functions": ["digital", "pwm", "analog"],
+      "arduinoPin": 27,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 40,
+      "notes": "ADC2 pin: analogRead() does not work while WiFi is active.",
+      "adcUnit": 2,
+      "adcChannel": 7
+    },
+    {
+      "id": "GPIO14",
+      "label": "GPIO14",
+      "functions": ["digital", "pwm", "analog"],
+      "arduinoPin": 14,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 40,
+      "notes": "ADC2 pin: analogRead() does not work while WiFi is active.",
+      "adcUnit": 2,
+      "adcChannel": 6
+    },
+    {
+      "id": "GPIO12",
+      "label": "GPIO12",
+      "functions": ["digital", "pwm", "analog"],
+      "arduinoPin": 12,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 40,
+      "notes": "Strapping pin (flash voltage): must be LOW at boot. ADC2 pin: analogRead() does not work while WiFi is active.",
+      "adcUnit": 2,
+      "adcChannel": 5
+    },
+    {
+      "id": "GPIO13",
+      "label": "GPIO13",
+      "functions": ["digital", "pwm", "analog"],
+      "arduinoPin": 13,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 40,
+      "notes": "ADC2 pin: analogRead() does not work while WiFi is active.",
+      "adcUnit": 2,
+      "adcChannel": 4
+    },
+    {
+      "id": "GPIO15",
+      "label": "GPIO15",
+      "functions": ["digital", "pwm", "analog"],
+      "arduinoPin": 15,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 40,
+      "notes": "Strapping pin. ADC2 pin: analogRead() does not work while WiFi is active.",
+      "adcUnit": 2,
+      "adcChannel": 3
+    },
+    {
+      "id": "GPIO2",
+      "label": "GPIO2",
+      "functions": ["digital", "pwm", "analog"],
+      "arduinoPin": 2,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 40,
+      "notes": "Strapping pin; on-board LED on some boards. ADC2 pin: analogRead() does not work while WiFi is active.",
+      "adcUnit": 2,
+      "adcChannel": 2
+    },
+    {
+      "id": "GPIO0",
+      "label": "GPIO0",
+      "functions": ["digital", "pwm", "analog"],
+      "arduinoPin": 0,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 40,
+      "notes": "Strapping pin (boot mode). ADC2 pin: analogRead() does not work while WiFi is active.",
+      "adcUnit": 2,
+      "adcChannel": 1
+    },
+    {
+      "id": "GPIO4",
+      "label": "GPIO4",
+      "functions": ["digital", "pwm", "analog"],
+      "arduinoPin": 4,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 40,
+      "notes": "ADC2 pin: analogRead() does not work while WiFi is active.",
+      "adcUnit": 2,
+      "adcChannel": 0
+    },
+    {
+      "id": "GPIO16",
+      "label": "GPIO16",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 16,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "GPIO17",
+      "label": "GPIO17",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 17,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "GPIO5",
+      "label": "GPIO5",
+      "functions": ["digital", "pwm", "spi_cs"],
+      "arduinoPin": 5,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 40,
+      "notes": "Strapping pin."
+    },
+    {
+      "id": "GPIO18",
+      "label": "GPIO18",
+      "functions": ["digital", "pwm", "spi_sck"],
+      "arduinoPin": 18,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "GPIO19",
+      "label": "GPIO19",
+      "functions": ["digital", "pwm", "spi_miso"],
+      "arduinoPin": 19,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "GPIO21",
+      "label": "GPIO21",
+      "functions": ["digital", "pwm", "i2c_sda"],
+      "arduinoPin": 21,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "GPIO3",
+      "label": "GPIO3",
+      "functions": ["digital", "pwm", "uart_rx"],
+      "arduinoPin": 3,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 40,
+      "notes": "UART0: used by USB serial."
+    },
+    {
+      "id": "GPIO1",
+      "label": "GPIO1",
+      "functions": ["digital", "pwm", "uart_tx"],
+      "arduinoPin": 1,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 40,
+      "notes": "UART0: used by USB serial."
+    },
+    {
+      "id": "GPIO22",
+      "label": "GPIO22",
+      "functions": ["digital", "pwm", "i2c_scl"],
+      "arduinoPin": 22,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "GPIO23",
+      "label": "GPIO23",
+      "functions": ["digital", "pwm", "spi_mosi"],
+      "arduinoPin": 23,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "3V3",
+      "label": "3.3 V",
+      "functions": ["power_out"],
+      "voltageDomainV": 3.3,
+      "maxCurrentmA": 500
+    },
+    {
+      "id": "5V",
+      "label": "5 V (VIN)",
+      "functions": ["power_in"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "GND",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "GND2",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "GND3",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "EN",
+      "label": "Enable / reset",
+      "functions": ["reset"]
+    }
+  ],
+  "electrical": {
+    "kind": "mcu",
+    "arch": "esp32",
+    "logicVoltageV": 3.3,
+    "inputVoltage": {
+      "min": 4.75,
+      "max": 5.5
+    },
+    "clockMHz": 240,
+    "flashKB": 4096,
+    "sramKB": 520,
+    "adcBits": 12,
+    "fiveVoltTolerantIO": false,
+    "fqbn": "esp32:esp32:esp32"
+  },
+  "specStatus": "needs-review",
+  "notes": "GPIO6–11 connect to the on-module flash and are not listed. 'DevKit V1' clones use the same GPIO numbers but a different pin order.",
+  "license": "CC-BY-SA-4.0",
+  "sources": [
+    "https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32/esp32-devkitc/index.html"
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "comm.hm-10",
+  "name": "HM-10 Bluetooth LE module",
+  "aliases": ["hm-10", "hm10", "ble module"],
+  "category": "communication",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 4,
+  "dimensionsMm": {
+    "x": 37,
+    "y": 16,
+    "z": 6
+  },
+  "massG": 3,
+  "model": {
+    "kind": "procedural",
+    "generator": "pcb_board",
+    "params": {
+      "pcbColor": 4,
+      "rfModuleMm": 27
+    }
+  },
+  "pins": [
+    {
+      "id": "VCC",
+      "label": "VCC (3.6–6 V)",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "GND",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "TX",
+      "label": "TX",
+      "functions": ["uart_tx"],
+      "voltageDomainV": 3.3
+    },
+    {
+      "id": "RX",
+      "label": "RX",
+      "functions": ["uart_rx"],
+      "voltageDomainV": 3.3
+    },
+    {
+      "id": "STATE",
+      "label": "State",
+      "functions": ["digital"]
+    },
+    {
+      "id": "BRK",
+      "label": "Break",
+      "functions": ["digital"]
+    }
+  ],
+  "electrical": {
+    "kind": "generic",
+    "supplyVoltage": {
+      "min": 3.6,
+      "max": 6
+    },
+    "maxCurrentmA": 20
+  },
+  "specStatus": "needs-review",
+  "notes": "Generic module sold by many vendors; dimensions and values vary by seller. Works with Web Bluetooth (Phase 9 telemetry).",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.lcsc.com/search?q=HM-10+BLE"]
+}

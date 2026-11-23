@@ -1,0 +1,29 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "mech.standoff-m3-10-brass",
+  "name": "M3 brass hex standoff, 10 mm",
+  "aliases": ["standoff", "m3 standoff", "spacer"],
+  "category": "mechanical",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 0.1,
+  "dimensionsMm": {
+    "x": 5.5,
+    "y": 5.5,
+    "z": 10
+  },
+  "massG": 1,
+  "model": {
+    "kind": "procedural",
+    "generator": "standoff",
+    "params": {
+      "color": 9
+    }
+  },
+  "pins": [],
+  "electrical": {
+    "kind": "generic"
+  },
+  "specStatus": "needs-review",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=M3+brass+hex+standoff%2C+10+mm"]
+}

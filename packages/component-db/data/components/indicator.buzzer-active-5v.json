@@ -1,0 +1,45 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "indicator.buzzer-active-5v",
+  "name": "Active buzzer 5 V (12 mm)",
+  "aliases": ["buzzer", "active buzzer"],
+  "category": "indicator",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 0.3,
+  "dimensionsMm": {
+    "x": 12,
+    "y": 12,
+    "z": 9.5
+  },
+  "massG": 2,
+  "model": {
+    "kind": "procedural",
+    "generator": "generic_cylinder",
+    "params": {
+      "color": 0
+    }
+  },
+  "pins": [
+    {
+      "id": "+",
+      "label": "Positive",
+      "functions": ["digital", "power_in"]
+    },
+    {
+      "id": "-",
+      "label": "Negative",
+      "functions": ["gnd"]
+    }
+  ],
+  "electrical": {
+    "kind": "generic",
+    "supplyVoltage": {
+      "min": 3.5,
+      "max": 5.5
+    },
+    "maxCurrentmA": 30
+  },
+  "specStatus": "needs-review",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=12mm+active+buzzer+5V"]
+}

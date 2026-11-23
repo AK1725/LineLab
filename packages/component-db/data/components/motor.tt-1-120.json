@@ -1,0 +1,45 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "motor.tt-1-120",
+  "name": "TT gearmotor 1:120 (yellow, 3–6 V)",
+  "aliases": ["tt 1:120", "bo motor 120"],
+  "category": "motor",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 1.5,
+  "dimensionsMm": {
+    "x": 70,
+    "y": 37,
+    "z": 22.5
+  },
+  "massG": 30,
+  "model": {
+    "kind": "procedural",
+    "generator": "tt_motor",
+    "params": {}
+  },
+  "pins": [
+    {
+      "id": "M+",
+      "label": "Motor terminal +",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "M-",
+      "label": "Motor terminal -",
+      "functions": ["power_in"]
+    }
+  ],
+  "electrical": {
+    "kind": "motor",
+    "ratedVoltageV": 6,
+    "noLoadRpm": 100,
+    "noLoadCurrentA": 0.16,
+    "stallCurrentA": 1.5,
+    "stallTorqueKgCm": 1.6,
+    "gearRatio": 120
+  },
+  "specStatus": "needs-review",
+  "notes": "Generic module sold by many vendors; dimensions and values vary by seller.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=TT+gear+motor+1%3A120"]
+}

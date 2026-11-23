@@ -1,0 +1,667 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "mcu.arduino-mega-2560",
+  "name": "Arduino Mega 2560 Rev3",
+  "aliases": ["mega", "mega 2560", "atmega2560"],
+  "category": "mcu",
+  "manufacturer": "Arduino",
+  "typicalPriceUsd": 45,
+  "dimensionsMm": {
+    "x": 101.5,
+    "y": 53.3,
+    "z": 15
+  },
+  "massG": 37,
+  "model": {
+    "kind": "procedural",
+    "generator": "pcb_board",
+    "params": {
+      "pcbColor": 10,
+      "usb": 2,
+      "barrelJack": 1,
+      "headerRows": 2,
+      "chipMm": 14
+    }
+  },
+  "pins": [
+    {
+      "id": "D0",
+      "label": "D0",
+      "functions": ["digital", "uart_rx"],
+      "arduinoPin": 0,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D1",
+      "label": "D1",
+      "functions": ["digital", "uart_tx"],
+      "arduinoPin": 1,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D2",
+      "label": "D2",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 2,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D3",
+      "label": "D3",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 3,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D4",
+      "label": "D4",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 4,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D5",
+      "label": "D5",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 5,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D6",
+      "label": "D6",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 6,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D7",
+      "label": "D7",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 7,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D8",
+      "label": "D8",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 8,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D9",
+      "label": "D9",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 9,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D10",
+      "label": "D10",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 10,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D11",
+      "label": "D11",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 11,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D12",
+      "label": "D12",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 12,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D13",
+      "label": "D13",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 13,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D14",
+      "label": "D14",
+      "functions": ["digital", "uart_tx"],
+      "arduinoPin": 14,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D15",
+      "label": "D15",
+      "functions": ["digital", "uart_rx"],
+      "arduinoPin": 15,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D16",
+      "label": "D16",
+      "functions": ["digital", "uart_tx"],
+      "arduinoPin": 16,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D17",
+      "label": "D17",
+      "functions": ["digital", "uart_rx"],
+      "arduinoPin": 17,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D18",
+      "label": "D18",
+      "functions": ["digital", "uart_tx"],
+      "arduinoPin": 18,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D19",
+      "label": "D19",
+      "functions": ["digital", "uart_rx"],
+      "arduinoPin": 19,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D20",
+      "label": "D20",
+      "functions": ["digital", "i2c_sda"],
+      "arduinoPin": 20,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D21",
+      "label": "D21",
+      "functions": ["digital", "i2c_scl"],
+      "arduinoPin": 21,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D22",
+      "label": "D22",
+      "functions": ["digital"],
+      "arduinoPin": 22,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D23",
+      "label": "D23",
+      "functions": ["digital"],
+      "arduinoPin": 23,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D24",
+      "label": "D24",
+      "functions": ["digital"],
+      "arduinoPin": 24,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D25",
+      "label": "D25",
+      "functions": ["digital"],
+      "arduinoPin": 25,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D26",
+      "label": "D26",
+      "functions": ["digital"],
+      "arduinoPin": 26,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D27",
+      "label": "D27",
+      "functions": ["digital"],
+      "arduinoPin": 27,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D28",
+      "label": "D28",
+      "functions": ["digital"],
+      "arduinoPin": 28,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D29",
+      "label": "D29",
+      "functions": ["digital"],
+      "arduinoPin": 29,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D30",
+      "label": "D30",
+      "functions": ["digital"],
+      "arduinoPin": 30,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D31",
+      "label": "D31",
+      "functions": ["digital"],
+      "arduinoPin": 31,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D32",
+      "label": "D32",
+      "functions": ["digital"],
+      "arduinoPin": 32,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D33",
+      "label": "D33",
+      "functions": ["digital"],
+      "arduinoPin": 33,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D34",
+      "label": "D34",
+      "functions": ["digital"],
+      "arduinoPin": 34,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D35",
+      "label": "D35",
+      "functions": ["digital"],
+      "arduinoPin": 35,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D36",
+      "label": "D36",
+      "functions": ["digital"],
+      "arduinoPin": 36,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D37",
+      "label": "D37",
+      "functions": ["digital"],
+      "arduinoPin": 37,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D38",
+      "label": "D38",
+      "functions": ["digital"],
+      "arduinoPin": 38,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D39",
+      "label": "D39",
+      "functions": ["digital"],
+      "arduinoPin": 39,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D40",
+      "label": "D40",
+      "functions": ["digital"],
+      "arduinoPin": 40,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D41",
+      "label": "D41",
+      "functions": ["digital"],
+      "arduinoPin": 41,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D42",
+      "label": "D42",
+      "functions": ["digital"],
+      "arduinoPin": 42,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D43",
+      "label": "D43",
+      "functions": ["digital"],
+      "arduinoPin": 43,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D44",
+      "label": "D44",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 44,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D45",
+      "label": "D45",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 45,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D46",
+      "label": "D46",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 46,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D47",
+      "label": "D47",
+      "functions": ["digital"],
+      "arduinoPin": 47,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D48",
+      "label": "D48",
+      "functions": ["digital"],
+      "arduinoPin": 48,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D49",
+      "label": "D49",
+      "functions": ["digital"],
+      "arduinoPin": 49,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D50",
+      "label": "D50",
+      "functions": ["digital", "spi_miso"],
+      "arduinoPin": 50,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D51",
+      "label": "D51",
+      "functions": ["digital", "spi_mosi"],
+      "arduinoPin": 51,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D52",
+      "label": "D52",
+      "functions": ["digital", "spi_sck"],
+      "arduinoPin": 52,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "D53",
+      "label": "D53",
+      "functions": ["digital", "spi_cs"],
+      "arduinoPin": 53,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "A0",
+      "label": "A0",
+      "functions": ["analog", "digital"],
+      "arduinoPin": "A0",
+      "adcChannel": 0,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "A1",
+      "label": "A1",
+      "functions": ["analog", "digital"],
+      "arduinoPin": "A1",
+      "adcChannel": 1,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "A2",
+      "label": "A2",
+      "functions": ["analog", "digital"],
+      "arduinoPin": "A2",
+      "adcChannel": 2,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "A3",
+      "label": "A3",
+      "functions": ["analog", "digital"],
+      "arduinoPin": "A3",
+      "adcChannel": 3,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "A4",
+      "label": "A4",
+      "functions": ["analog", "digital"],
+      "arduinoPin": "A4",
+      "adcChannel": 4,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "A5",
+      "label": "A5",
+      "functions": ["analog", "digital"],
+      "arduinoPin": "A5",
+      "adcChannel": 5,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "A6",
+      "label": "A6",
+      "functions": ["analog", "digital"],
+      "arduinoPin": "A6",
+      "adcChannel": 6,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "A7",
+      "label": "A7",
+      "functions": ["analog", "digital"],
+      "arduinoPin": "A7",
+      "adcChannel": 7,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "A8",
+      "label": "A8",
+      "functions": ["analog", "digital"],
+      "arduinoPin": "A8",
+      "adcChannel": 8,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "A9",
+      "label": "A9",
+      "functions": ["analog", "digital"],
+      "arduinoPin": "A9",
+      "adcChannel": 9,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "A10",
+      "label": "A10",
+      "functions": ["analog", "digital"],
+      "arduinoPin": "A10",
+      "adcChannel": 10,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "A11",
+      "label": "A11",
+      "functions": ["analog", "digital"],
+      "arduinoPin": "A11",
+      "adcChannel": 11,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "A12",
+      "label": "A12",
+      "functions": ["analog", "digital"],
+      "arduinoPin": "A12",
+      "adcChannel": 12,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "A13",
+      "label": "A13",
+      "functions": ["analog", "digital"],
+      "arduinoPin": "A13",
+      "adcChannel": 13,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "A14",
+      "label": "A14",
+      "functions": ["analog", "digital"],
+      "arduinoPin": "A14",
+      "adcChannel": 14,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "A15",
+      "label": "A15",
+      "functions": ["analog", "digital"],
+      "arduinoPin": "A15",
+      "adcChannel": 15,
+      "voltageDomainV": 5,
+      "maxCurrentmA": 40
+    },
+    {
+      "id": "5V",
+      "label": "5 V",
+      "functions": ["power_out"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "GND",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "GND2",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "3V3",
+      "label": "3.3 V",
+      "functions": ["power_out"],
+      "voltageDomainV": 3.3,
+      "maxCurrentmA": 50
+    },
+    {
+      "id": "VIN",
+      "label": "VIN (7–12 V)",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "RESET",
+      "label": "Reset",
+      "functions": ["reset"]
+    },
+    {
+      "id": "AREF",
+      "label": "Analog reference",
+      "functions": ["power_in"],
+      "notes": "ADC reference voltage input."
+    },
+    {
+      "id": "IOREF",
+      "label": "IO reference",
+      "functions": ["power_out"],
+      "voltageDomainV": 5
+    }
+  ],
+  "electrical": {
+    "kind": "mcu",
+    "arch": "avr",
+    "logicVoltageV": 5,
+    "inputVoltage": {
+      "min": 7,
+      "max": 12
+    },
+    "clockMHz": 16,
+    "flashKB": 256,
+    "sramKB": 8,
+    "adcBits": 10,
+    "fiveVoltTolerantIO": true,
+    "fqbn": "arduino:avr:mega"
+  },
+  "specStatus": "needs-review",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://docs.arduino.cc/hardware/mega-2560/"]
+}

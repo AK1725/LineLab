@@ -1,0 +1,108 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "sensor.pololu-qtr-md-08a",
+  "name": "Pololu QTR-MD-08A (8 ch, 8 mm pitch, analog)",
+  "aliases": ["qtr-md-08a", "qtr md 08a"],
+  "category": "line_sensor",
+  "manufacturer": "Pololu",
+  "typicalPriceUsd": 12,
+  "dimensionsMm": {
+    "x": 10,
+    "y": 66,
+    "z": 3
+  },
+  "massG": 2,
+  "model": {
+    "kind": "procedural",
+    "generator": "ir_sensor_array",
+    "params": {
+      "channels": 8,
+      "pitchMm": 8,
+      "pcbColor": 4
+    }
+  },
+  "pins": [
+    {
+      "id": "VCC",
+      "label": "VCC (2.9–5.5 V)",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "GND",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "CTRL",
+      "label": "Emitter control (dimming)",
+      "functions": ["enable", "digital"]
+    },
+    {
+      "id": "OUT1",
+      "label": "Sensor 1 output",
+      "functions": ["analog"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "OUT2",
+      "label": "Sensor 2 output",
+      "functions": ["analog"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "OUT3",
+      "label": "Sensor 3 output",
+      "functions": ["analog"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "OUT4",
+      "label": "Sensor 4 output",
+      "functions": ["analog"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "OUT5",
+      "label": "Sensor 5 output",
+      "functions": ["analog"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "OUT6",
+      "label": "Sensor 6 output",
+      "functions": ["analog"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "OUT7",
+      "label": "Sensor 7 output",
+      "functions": ["analog"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "OUT8",
+      "label": "Sensor 8 output",
+      "functions": ["analog"],
+      "voltageDomainV": 5
+    }
+  ],
+  "electrical": {
+    "kind": "line_sensor",
+    "supplyVoltage": {
+      "min": 2.9,
+      "max": 5.5
+    },
+    "outputType": "analog",
+    "channels": 8,
+    "channelPitchMm": 8,
+    "optimalHeightMm": {
+      "min": 1,
+      "max": 5
+    },
+    "maxCurrentmA": 90
+  },
+  "specStatus": "needs-review",
+  "notes": "Newer QTR generation with dimmable emitters. Dimensions approximate: check the product page.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.pololu.com/category/123/pololu-qtr-reflectance-sensors"]
+}

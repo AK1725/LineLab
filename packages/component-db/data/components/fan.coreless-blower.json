@@ -1,0 +1,47 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "fan.coreless-blower",
+  "name": "Coreless-motor suction blower (8520 + impeller)",
+  "aliases": ["coreless fan", "suction blower", "8520 fan"],
+  "category": "fan",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 4,
+  "dimensionsMm": {
+    "x": 20,
+    "y": 20,
+    "z": 22
+  },
+  "massG": 6,
+  "model": {
+    "kind": "procedural",
+    "generator": "edf_fan",
+    "params": {
+      "blades": 6
+    }
+  },
+  "pins": [
+    {
+      "id": "M+",
+      "label": "Motor +",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "M-",
+      "label": "Motor -",
+      "functions": ["power_in"]
+    }
+  ],
+  "electrical": {
+    "kind": "motor",
+    "ratedVoltageV": 3.7,
+    "noLoadRpm": 45000,
+    "noLoadCurrentA": 0.15,
+    "stallCurrentA": 2.5,
+    "stallTorqueKgCm": 0.012,
+    "gearRatio": 1
+  },
+  "specStatus": "needs-review",
+  "notes": "Can be driven by one channel of a MOSFET motor driver.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=8520+coreless+motor"]
+}

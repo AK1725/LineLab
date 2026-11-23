@@ -1,0 +1,50 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "battery.aa-4x-nimh",
+  "name": "4× AA NiMH pack (4.8 V)",
+  "aliases": ["4xaa nimh", "nimh aa pack", "eneloop pack"],
+  "category": "battery",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 12,
+  "dimensionsMm": {
+    "x": 62,
+    "y": 58,
+    "z": 16
+  },
+  "massG": 115,
+  "model": {
+    "kind": "procedural",
+    "generator": "battery_holder",
+    "params": {
+      "cells": 4,
+      "cellDiameterMm": 14.5,
+      "cellColor": 1
+    }
+  },
+  "pins": [
+    {
+      "id": "BAT+",
+      "label": "Positive",
+      "functions": ["power_out"]
+    },
+    {
+      "id": "BAT-",
+      "label": "Negative",
+      "functions": ["gnd"]
+    }
+  ],
+  "electrical": {
+    "kind": "battery",
+    "chemistry": "nimh",
+    "cellsInSeries": 4,
+    "nominalVoltageV": 4.8,
+    "fullVoltageV": 5.6,
+    "cutoffVoltageV": 4.0,
+    "capacitymAh": 2000,
+    "maxContinuousDischargeA": 4,
+    "internalResistanceMilliohm": 120
+  },
+  "specStatus": "needs-review",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=4xAA+battery+holder"]
+}

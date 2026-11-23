@@ -1,0 +1,60 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "sensor.pololu-qtr-1a",
+  "name": "Pololu QTR-1A reflectance sensor",
+  "aliases": ["qtr-1a", "qtr1a"],
+  "category": "line_sensor",
+  "manufacturer": "Pololu",
+  "typicalPriceUsd": 3,
+  "dimensionsMm": {
+    "x": 7.6,
+    "y": 12.7,
+    "z": 3
+  },
+  "massG": 0.3,
+  "model": {
+    "kind": "procedural",
+    "generator": "ir_sensor_array",
+    "params": {
+      "channels": 1,
+      "pcbColor": 4
+    }
+  },
+  "pins": [
+    {
+      "id": "VIN",
+      "label": "VIN (5 V)",
+      "functions": ["power_in"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "GND",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "OUT",
+      "label": "Output",
+      "functions": ["analog"],
+      "voltageDomainV": 5
+    }
+  ],
+  "electrical": {
+    "kind": "line_sensor",
+    "supplyVoltage": {
+      "min": 4.5,
+      "max": 5.5
+    },
+    "outputType": "analog",
+    "channels": 1,
+    "channelPitchMm": 0,
+    "optimalHeightMm": {
+      "min": 3,
+      "max": 6
+    },
+    "maxCurrentmA": 17
+  },
+  "specStatus": "needs-review",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.pololu.com/product/958"]
+}

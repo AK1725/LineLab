@@ -15,6 +15,7 @@ export const ignores = {
     "**/test-results/**",
     "**/next-env.d.ts",
     "**/.venv/**",
+    "**/src/generated/**",
   ],
 };
 

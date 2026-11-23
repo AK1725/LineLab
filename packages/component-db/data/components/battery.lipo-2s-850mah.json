@@ -1,0 +1,50 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "battery.lipo-2s-850mah",
+  "name": "LiPo 2S 850 mAh 25C",
+  "aliases": ["lipo 2s 850", "2s 850mah"],
+  "category": "battery",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 10.25,
+  "dimensionsMm": {
+    "x": 61,
+    "y": 31,
+    "z": 14
+  },
+  "massG": 48,
+  "model": {
+    "kind": "procedural",
+    "generator": "battery_pack",
+    "params": {
+      "color": 8,
+      "labelColor": 2
+    }
+  },
+  "pins": [
+    {
+      "id": "BAT+",
+      "label": "Positive",
+      "functions": ["power_out"]
+    },
+    {
+      "id": "BAT-",
+      "label": "Negative",
+      "functions": ["gnd"]
+    }
+  ],
+  "electrical": {
+    "kind": "battery",
+    "chemistry": "lipo",
+    "cellsInSeries": 2,
+    "nominalVoltageV": 7.4,
+    "fullVoltageV": 8.4,
+    "cutoffVoltageV": 6.0,
+    "capacitymAh": 850,
+    "maxContinuousDischargeA": 21.2,
+    "internalResistanceMilliohm": 40
+  },
+  "specStatus": "needs-review",
+  "notes": "Generic module sold by many vendors; dimensions and values vary by seller. Never discharge below 3.0 V per cell or charge above 4.2 V. Use a balance charger.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=lipo+2S+850mAh"]
+}

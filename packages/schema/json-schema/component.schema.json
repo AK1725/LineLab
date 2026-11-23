@@ -236,6 +236,19 @@
               }
             ]
           },
+          "adcUnit": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 3
+          },
+          "adcChannel": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "inputOnly": {
+            "type": "boolean"
+          },
           "voltageDomainV": {
             "type": "number",
             "exclusiveMinimum": 0
@@ -322,6 +335,28 @@
             },
             "fiveVoltTolerantIO": {
               "type": "boolean"
+            },
+            "fqbn": {
+              "type": "string",
+              "enum": [
+                "arduino:avr:uno",
+                "arduino:avr:nano",
+                "arduino:avr:mega",
+                "arduino:avr:leonardo",
+                "arduino:avr:micro",
+                "arduino:avr:pro",
+                "arduino:megaavr:nona4809",
+                "arduino:samd:nano_33_iot",
+                "rp2040:rp2040:rpipico",
+                "rp2040:rp2040:rpipicow",
+                "rp2040:rp2040:seeed_xiao_rp2040",
+                "esp32:esp32:esp32",
+                "esp32:esp32:esp32s3",
+                "esp32:esp32:esp32c3",
+                "stm32:stm32:bluepill_f103c8",
+                "stm32:stm32:blackpill_f411ce",
+                "teensy:avr:teensy40"
+              ]
             }
           },
           "required": [
@@ -740,6 +775,17 @@
       ],
       "additionalProperties": false
     },
+    "specStatus": {
+      "type": "string",
+      "enum": [
+        "needs-review",
+        "reviewed"
+      ]
+    },
+    "notes": {
+      "type": "string",
+      "minLength": 1
+    },
     "license": {
       "type": "string",
       "const": "CC-BY-SA-4.0"
@@ -763,6 +809,7 @@
     "model",
     "pins",
     "electrical",
+    "specStatus",
     "license",
     "sources"
   ],

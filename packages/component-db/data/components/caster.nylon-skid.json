@@ -1,0 +1,30 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "caster.nylon-skid",
+  "name": "Nylon skid pad (low-friction glide)",
+  "aliases": ["skid", "glide pad", "slider"],
+  "category": "caster",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 0.2,
+  "dimensionsMm": {
+    "x": 12,
+    "y": 12,
+    "z": 5
+  },
+  "massG": 0.5,
+  "model": {
+    "kind": "procedural",
+    "generator": "generic_cylinder",
+    "params": {
+      "color": 1
+    }
+  },
+  "pins": [],
+  "electrical": {
+    "kind": "generic"
+  },
+  "specStatus": "needs-review",
+  "notes": "Lightest option. Drags on uneven tracks.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=nylon+furniture+glide+12mm"]
+}

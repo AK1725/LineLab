@@ -1,0 +1,29 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "mech.velcro-strap",
+  "name": "Battery strap (hook-and-loop, 20 mm)",
+  "aliases": ["velcro", "battery strap"],
+  "category": "mechanical",
+  "manufacturer": "Generic",
+  "typicalPriceUsd": 0.3,
+  "dimensionsMm": {
+    "x": 200,
+    "y": 20,
+    "z": 1.5
+  },
+  "massG": 3,
+  "model": {
+    "kind": "procedural",
+    "generator": "generic_box",
+    "params": {
+      "color": 0
+    }
+  },
+  "pins": [],
+  "electrical": {
+    "kind": "generic"
+  },
+  "specStatus": "needs-review",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.digikey.com/en/products/result?keywords=hook+and+loop+strap+20mm"]
+}

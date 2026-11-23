@@ -1,0 +1,61 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "regulator.lm2596-module",
+  "name": "LM2596 adjustable buck module",
+  "aliases": ["lm2596", "buck converter", "step down"],
+  "category": "regulator",
+  "manufacturer": "Generic (TI LM2596)",
+  "typicalPriceUsd": 1.5,
+  "dimensionsMm": {
+    "x": 43,
+    "y": 21,
+    "z": 14
+  },
+  "massG": 12,
+  "model": {
+    "kind": "procedural",
+    "generator": "buck_module",
+    "params": {}
+  },
+  "pins": [
+    {
+      "id": "IN+",
+      "label": "Input +",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "IN-",
+      "label": "Input -",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "OUT+",
+      "label": "Output +",
+      "functions": ["power_out"]
+    },
+    {
+      "id": "OUT-",
+      "label": "Output -",
+      "functions": ["gnd"]
+    }
+  ],
+  "electrical": {
+    "kind": "regulator",
+    "topology": "buck",
+    "inputVoltage": {
+      "min": 4.5,
+      "max": 40
+    },
+    "outputVoltage": {
+      "min": 1.25,
+      "max": 37
+    },
+    "maxOutputCurrentA": 2,
+    "dropoutV": 1.5,
+    "efficiencyPct": 88
+  },
+  "specStatus": "needs-review",
+  "notes": "Generic module sold by many vendors; dimensions and values vary by seller. Rated 3 A, but cheap modules overheat above about 2 A. Set the output with the trimpot before connecting.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.ti.com/product/LM2596"]
+}

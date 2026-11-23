@@ -101,6 +101,18 @@ describe("Component", () => {
     expect(issuesOf(Component, inverted).join("\n")).toMatch(/min must be <= max/);
   });
 
+  it("requires specStatus", () => {
+    const bad = mutate(base, (d) => delete d.specStatus);
+    expect(issuesOf(Component, bad).join("\n")).toMatch(/specStatus/);
+  });
+
+  it("rejects ADC data on a non-analog pin and outputs on input-only pins", () => {
+    const adc = mutate(base, (d) => (d.pins[5].adcChannel = 3));
+    expect(issuesOf(Component, adc).join("\n")).toMatch(/ADC unit\/channel but no "analog"/);
+    const inOnly = mutate(base, (d) => (d.pins[5].inputOnly = true));
+    expect(issuesOf(Component, inOnly).join("\n")).toMatch(/Input-only pin "PWMA"/);
+  });
+
   it("checks battery voltage ordering", () => {
     const battery = mutate(base, (d) => {
       d.category = "battery";

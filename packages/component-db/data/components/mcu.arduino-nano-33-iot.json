@@ -1,0 +1,268 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "mcu.arduino-nano-33-iot",
+  "name": "Arduino Nano 33 IoT (SAMD21)",
+  "aliases": ["nano 33 iot", "samd21 nano"],
+  "category": "mcu",
+  "manufacturer": "Arduino",
+  "typicalPriceUsd": 25,
+  "dimensionsMm": {
+    "x": 45,
+    "y": 18,
+    "z": 7
+  },
+  "massG": 5,
+  "model": {
+    "kind": "procedural",
+    "generator": "pcb_board",
+    "params": {
+      "pcbColor": 10,
+      "usb": 1,
+      "chipMm": 7,
+      "rfModuleMm": 10
+    }
+  },
+  "pins": [
+    {
+      "id": "D0",
+      "label": "D0",
+      "functions": ["digital", "uart_rx"],
+      "arduinoPin": 0,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 7
+    },
+    {
+      "id": "D1",
+      "label": "D1",
+      "functions": ["digital", "uart_tx"],
+      "arduinoPin": 1,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 7
+    },
+    {
+      "id": "D2",
+      "label": "D2",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 2,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 7
+    },
+    {
+      "id": "D3",
+      "label": "D3",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 3,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 7
+    },
+    {
+      "id": "D4",
+      "label": "D4",
+      "functions": ["digital"],
+      "arduinoPin": 4,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 7
+    },
+    {
+      "id": "D5",
+      "label": "D5",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 5,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 7
+    },
+    {
+      "id": "D6",
+      "label": "D6",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 6,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 7
+    },
+    {
+      "id": "D7",
+      "label": "D7",
+      "functions": ["digital"],
+      "arduinoPin": 7,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 7
+    },
+    {
+      "id": "D8",
+      "label": "D8",
+      "functions": ["digital"],
+      "arduinoPin": 8,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 7
+    },
+    {
+      "id": "D9",
+      "label": "D9",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 9,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 7
+    },
+    {
+      "id": "D10",
+      "label": "D10",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 10,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 7
+    },
+    {
+      "id": "D11",
+      "label": "D11",
+      "functions": ["digital", "pwm", "spi_mosi"],
+      "arduinoPin": 11,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 7
+    },
+    {
+      "id": "D12",
+      "label": "D12",
+      "functions": ["digital", "pwm", "spi_miso"],
+      "arduinoPin": 12,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 7
+    },
+    {
+      "id": "D13",
+      "label": "D13",
+      "functions": ["digital", "spi_sck"],
+      "arduinoPin": 13,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 7
+    },
+    {
+      "id": "A0",
+      "label": "A0",
+      "functions": ["analog", "digital"],
+      "arduinoPin": "A0",
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    },
+    {
+      "id": "A1",
+      "label": "A1",
+      "functions": ["analog", "digital"],
+      "arduinoPin": "A1",
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    },
+    {
+      "id": "A2",
+      "label": "A2",
+      "functions": ["analog", "digital", "pwm"],
+      "arduinoPin": "A2",
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    },
+    {
+      "id": "A3",
+      "label": "A3",
+      "functions": ["analog", "digital", "pwm"],
+      "arduinoPin": "A3",
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    },
+    {
+      "id": "A4",
+      "label": "A4",
+      "functions": ["analog", "digital", "i2c_sda"],
+      "arduinoPin": "A4",
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    },
+    {
+      "id": "A5",
+      "label": "A5",
+      "functions": ["analog", "digital", "pwm", "i2c_scl"],
+      "arduinoPin": "A5",
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    },
+    {
+      "id": "A6",
+      "label": "A6",
+      "functions": ["analog"],
+      "arduinoPin": "A6",
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    },
+    {
+      "id": "A7",
+      "label": "A7",
+      "functions": ["analog"],
+      "arduinoPin": "A7",
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false
+    },
+    {
+      "id": "3V3",
+      "label": "3.3 V",
+      "functions": ["power_out"],
+      "voltageDomainV": 3.3
+    },
+    {
+      "id": "5V",
+      "label": "+5V (USB, jumper)",
+      "functions": ["power_out"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "GND",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "GND2",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "VIN",
+      "label": "VIN (5–18 V)",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "RESET",
+      "label": "Reset",
+      "functions": ["reset"]
+    }
+  ],
+  "electrical": {
+    "kind": "mcu",
+    "arch": "samd21",
+    "logicVoltageV": 3.3,
+    "inputVoltage": {
+      "min": 5,
+      "max": 18
+    },
+    "clockMHz": 48,
+    "flashKB": 256,
+    "sramKB": 32,
+    "adcBits": 12,
+    "fiveVoltTolerantIO": false,
+    "fqbn": "arduino:samd:nano_33_iot"
+  },
+  "specStatus": "needs-review",
+  "notes": "3.3 V logic: 5 V signals on any pin can damage it.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://docs.arduino.cc/hardware/nano-33-iot/"]
+}

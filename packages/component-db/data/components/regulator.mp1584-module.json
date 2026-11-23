@@ -1,0 +1,64 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "regulator.mp1584-module",
+  "name": "MP1584 mini adjustable buck module",
+  "aliases": ["mp1584", "mini buck"],
+  "category": "regulator",
+  "manufacturer": "Generic (MPS MP1584)",
+  "typicalPriceUsd": 1.5,
+  "dimensionsMm": {
+    "x": 22,
+    "y": 17,
+    "z": 4
+  },
+  "massG": 2,
+  "model": {
+    "kind": "procedural",
+    "generator": "buck_module",
+    "params": {
+      "inductorMm": 6,
+      "capacitors": 0
+    }
+  },
+  "pins": [
+    {
+      "id": "IN+",
+      "label": "Input +",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "IN-",
+      "label": "Input -",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "OUT+",
+      "label": "Output +",
+      "functions": ["power_out"]
+    },
+    {
+      "id": "OUT-",
+      "label": "Output -",
+      "functions": ["gnd"]
+    }
+  ],
+  "electrical": {
+    "kind": "regulator",
+    "topology": "buck",
+    "inputVoltage": {
+      "min": 4.5,
+      "max": 28
+    },
+    "outputVoltage": {
+      "min": 0.8,
+      "max": 20
+    },
+    "maxOutputCurrentA": 3,
+    "dropoutV": 1,
+    "efficiencyPct": 92
+  },
+  "specStatus": "needs-review",
+  "notes": "Generic module sold by many vendors; dimensions and values vary by seller.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.monolithicpower.com/en/products/mp1584.html"]
+}

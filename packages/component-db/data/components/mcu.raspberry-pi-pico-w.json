@@ -1,0 +1,337 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "mcu.raspberry-pi-pico-w",
+  "name": "Raspberry Pi Pico W (RP2040 + WiFi)",
+  "aliases": ["pico w", "pico wifi"],
+  "category": "mcu",
+  "manufacturer": "Raspberry Pi",
+  "typicalPriceUsd": 6,
+  "dimensionsMm": {
+    "x": 51,
+    "y": 21,
+    "z": 4
+  },
+  "massG": 4,
+  "model": {
+    "kind": "procedural",
+    "generator": "pcb_board",
+    "params": {
+      "pcbColor": 3,
+      "usb": 1,
+      "chipMm": 7,
+      "thicknessMm": 1,
+      "rfModuleMm": 12
+    }
+  },
+  "pins": [
+    {
+      "id": "GP0",
+      "label": "GP0",
+      "functions": ["digital", "pwm", "uart_tx"],
+      "arduinoPin": 0,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 12
+    },
+    {
+      "id": "GP1",
+      "label": "GP1",
+      "functions": ["digital", "pwm", "uart_rx"],
+      "arduinoPin": 1,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 12
+    },
+    {
+      "id": "GP2",
+      "label": "GP2",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 2,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 12
+    },
+    {
+      "id": "GP3",
+      "label": "GP3",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 3,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 12
+    },
+    {
+      "id": "GP4",
+      "label": "GP4",
+      "functions": ["digital", "pwm", "i2c_sda"],
+      "arduinoPin": 4,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 12
+    },
+    {
+      "id": "GP5",
+      "label": "GP5",
+      "functions": ["digital", "pwm", "i2c_scl"],
+      "arduinoPin": 5,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 12
+    },
+    {
+      "id": "GP6",
+      "label": "GP6",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 6,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 12
+    },
+    {
+      "id": "GP7",
+      "label": "GP7",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 7,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 12
+    },
+    {
+      "id": "GP8",
+      "label": "GP8",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 8,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 12
+    },
+    {
+      "id": "GP9",
+      "label": "GP9",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 9,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 12
+    },
+    {
+      "id": "GP10",
+      "label": "GP10",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 10,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 12
+    },
+    {
+      "id": "GP11",
+      "label": "GP11",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 11,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 12
+    },
+    {
+      "id": "GP12",
+      "label": "GP12",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 12,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 12
+    },
+    {
+      "id": "GP13",
+      "label": "GP13",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 13,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 12
+    },
+    {
+      "id": "GP14",
+      "label": "GP14",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 14,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 12
+    },
+    {
+      "id": "GP15",
+      "label": "GP15",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 15,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 12
+    },
+    {
+      "id": "GP16",
+      "label": "GP16",
+      "functions": ["digital", "pwm", "spi_miso"],
+      "arduinoPin": 16,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 12
+    },
+    {
+      "id": "GP17",
+      "label": "GP17",
+      "functions": ["digital", "pwm", "spi_cs"],
+      "arduinoPin": 17,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 12
+    },
+    {
+      "id": "GP18",
+      "label": "GP18",
+      "functions": ["digital", "pwm", "spi_sck"],
+      "arduinoPin": 18,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 12
+    },
+    {
+      "id": "GP19",
+      "label": "GP19",
+      "functions": ["digital", "pwm", "spi_mosi"],
+      "arduinoPin": 19,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 12
+    },
+    {
+      "id": "GP20",
+      "label": "GP20",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 20,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 12
+    },
+    {
+      "id": "GP21",
+      "label": "GP21",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 21,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 12
+    },
+    {
+      "id": "GP22",
+      "label": "GP22",
+      "functions": ["digital", "pwm"],
+      "arduinoPin": 22,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 12
+    },
+    {
+      "id": "GP26",
+      "label": "GP26 / ADC0",
+      "functions": ["digital", "pwm", "analog"],
+      "arduinoPin": 26,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 12,
+      "adcChannel": 0
+    },
+    {
+      "id": "GP27",
+      "label": "GP27 / ADC1",
+      "functions": ["digital", "pwm", "analog"],
+      "arduinoPin": 27,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 12,
+      "adcChannel": 1
+    },
+    {
+      "id": "GP28",
+      "label": "GP28 / ADC2",
+      "functions": ["digital", "pwm", "analog"],
+      "arduinoPin": 28,
+      "voltageDomainV": 3.3,
+      "fiveVoltTolerant": false,
+      "maxCurrentmA": 12,
+      "adcChannel": 2
+    },
+    {
+      "id": "VBUS",
+      "label": "VBUS (USB 5 V)",
+      "functions": ["power_in"],
+      "voltageDomainV": 5
+    },
+    {
+      "id": "VSYS",
+      "label": "VSYS (1.8–5.5 V)",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "3V3",
+      "label": "3V3(OUT)",
+      "functions": ["power_out"],
+      "voltageDomainV": 3.3,
+      "maxCurrentmA": 300
+    },
+    {
+      "id": "3V3_EN",
+      "label": "3V3 enable",
+      "functions": ["enable"]
+    },
+    {
+      "id": "RUN",
+      "label": "Run (reset)",
+      "functions": ["reset"]
+    },
+    {
+      "id": "ADC_VREF",
+      "label": "ADC reference",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "AGND",
+      "label": "Analog ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "GND",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "GND2",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "GND3",
+      "label": "Ground",
+      "functions": ["gnd"]
+    }
+  ],
+  "electrical": {
+    "kind": "mcu",
+    "arch": "rp2040",
+    "logicVoltageV": 3.3,
+    "inputVoltage": {
+      "min": 1.8,
+      "max": 5.5
+    },
+    "clockMHz": 133,
+    "flashKB": 2048,
+    "sramKB": 264,
+    "adcBits": 12,
+    "fiveVoltTolerantIO": false,
+    "fqbn": "rp2040:rp2040:rpipicow"
+  },
+  "specStatus": "needs-review",
+  "notes": "GPIO23–25 and GPIO29 are used internally by the wireless chip.",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://datasheets.raspberrypi.com/picow/pico-w-datasheet.pdf"]
+}

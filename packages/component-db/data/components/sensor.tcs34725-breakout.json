@@ -1,0 +1,73 @@
+{
+  "$schema": "../../../schema/json-schema/component.schema.json",
+  "id": "sensor.tcs34725-breakout",
+  "name": "TCS34725 RGB colour sensor breakout",
+  "aliases": ["tcs34725", "color sensor", "colour sensor"],
+  "category": "sensor",
+  "manufacturer": "Adafruit (ams TCS34725)",
+  "typicalPriceUsd": 8,
+  "dimensionsMm": {
+    "x": 20.3,
+    "y": 20.3,
+    "z": 3
+  },
+  "massG": 3,
+  "model": {
+    "kind": "procedural",
+    "generator": "pcb_board",
+    "params": {
+      "pcbColor": 4,
+      "chipMm": 3
+    }
+  },
+  "pins": [
+    {
+      "id": "VIN",
+      "label": "VIN (3.3–5 V)",
+      "functions": ["power_in"]
+    },
+    {
+      "id": "GND",
+      "label": "Ground",
+      "functions": ["gnd"]
+    },
+    {
+      "id": "SCL",
+      "label": "I2C SCL",
+      "functions": ["i2c_scl"]
+    },
+    {
+      "id": "SDA",
+      "label": "I2C SDA",
+      "functions": ["i2c_sda"]
+    },
+    {
+      "id": "INT",
+      "label": "Interrupt",
+      "functions": ["digital"]
+    },
+    {
+      "id": "LED",
+      "label": "LED control",
+      "functions": ["digital"]
+    },
+    {
+      "id": "3V3",
+      "label": "3.3 V out",
+      "functions": ["power_out"],
+      "voltageDomainV": 3.3
+    }
+  ],
+  "electrical": {
+    "kind": "generic",
+    "supplyVoltage": {
+      "min": 3.3,
+      "max": 5
+    },
+    "maxCurrentmA": 20
+  },
+  "specStatus": "needs-review",
+  "notes": "For colour-marked tracks (e.g. stop/turn markers).",
+  "license": "CC-BY-SA-4.0",
+  "sources": ["https://www.adafruit.com/product/1334"]
+}
