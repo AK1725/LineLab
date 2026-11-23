@@ -1,0 +1,140 @@
+{
+  "$schema": "../packages/schema/json-schema/track.schema.json",
+  "id": "track.sprint",
+  "name": "Competition-style sprint",
+  "units": "mm",
+  "surface": {
+    "lineColor": "#111111",
+    "backgroundColor": "#f5f5f0",
+    "lineReflectance": 0.05,
+    "backgroundReflectance": 0.85
+  },
+  "lineWidthMm": 19,
+  "segments": [
+    {
+      "type": "line",
+      "from": {
+        "x": 0,
+        "y": 0
+      },
+      "to": {
+        "x": 800,
+        "y": 0
+      }
+    },
+    {
+      "type": "arc",
+      "center": {
+        "x": 800,
+        "y": -150
+      },
+      "radiusMm": 150,
+      "startAngleRad": 1.5707963267948966,
+      "sweepRad": -1.5707963267948966
+    },
+    {
+      "type": "line",
+      "from": {
+        "x": 950,
+        "y": -150
+      },
+      "to": {
+        "x": 950,
+        "y": -450
+      }
+    },
+    {
+      "type": "arc",
+      "center": {
+        "x": 920,
+        "y": -450
+      },
+      "radiusMm": 30,
+      "startAngleRad": 0,
+      "sweepRad": -1.0471975511965976
+    },
+    {
+      "type": "line",
+      "from": {
+        "x": 935,
+        "y": -475.981
+      },
+      "to": {
+        "x": 718.494,
+        "y": -600.981
+      }
+    },
+    {
+      "type": "arc",
+      "center": {
+        "x": 763.494,
+        "y": -678.923
+      },
+      "radiusMm": 90,
+      "startAngleRad": 2.0943951023931957,
+      "sweepRad": 2.6179938779914944
+    },
+    {
+      "type": "line",
+      "from": {
+        "x": 763.494,
+        "y": -768.923
+      },
+      "to": {
+        "x": 1113.494,
+        "y": -768.923
+      }
+    },
+    {
+      "type": "line",
+      "from": {
+        "x": 1113.494,
+        "y": -768.923
+      },
+      "to": {
+        "x": 1413.494,
+        "y": -768.923
+      }
+    },
+    {
+      "type": "arc",
+      "center": {
+        "x": 1413.494,
+        "y": -968.923
+      },
+      "radiusMm": 200,
+      "startAngleRad": 1.5707963267948966,
+      "sweepRad": -1.5707963267948966
+    },
+    {
+      "type": "line",
+      "from": {
+        "x": 1613.494,
+        "y": -968.923
+      },
+      "to": {
+        "x": 1613.494,
+        "y": -1368.923
+      }
+    }
+  ],
+  "features": [
+    {
+      "type": "gap",
+      "startS": 2202.655,
+      "endS": 2232.655
+    }
+  ],
+  "start": {
+    "x": 50,
+    "y": 0,
+    "headingRad": 0
+  },
+  "description": "A mixed course: long straight, sharp corner, hairpin, a gap and a fast sweeper.",
+  "difficulty": "expert",
+  "finish": {
+    "x": 1613.494,
+    "y": -1368.923,
+    "headingRad": -1.5707963267948961
+  }
+}

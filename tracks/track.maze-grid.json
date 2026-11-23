@@ -1,0 +1,208 @@
+{
+  "$schema": "../packages/schema/json-schema/track.schema.json",
+  "id": "track.maze-grid",
+  "name": "Maze grid",
+  "difficulty": "expert",
+  "description": "A 3 × 3 grid of 300 mm cells with T- and cross-junctions, for maze-solving robots.",
+  "units": "mm",
+  "surface": {
+    "lineColor": "#111111",
+    "backgroundColor": "#f5f5f0",
+    "lineReflectance": 0.05,
+    "backgroundReflectance": 0.85
+  },
+  "lineWidthMm": 19,
+  "segments": [
+    {
+      "type": "line",
+      "from": {
+        "x": 0,
+        "y": 0
+      },
+      "to": {
+        "x": 900,
+        "y": 0
+      }
+    },
+    {
+      "type": "line",
+      "from": {
+        "x": 0,
+        "y": 0
+      },
+      "to": {
+        "x": 0,
+        "y": 900
+      }
+    },
+    {
+      "type": "line",
+      "from": {
+        "x": 0,
+        "y": 300
+      },
+      "to": {
+        "x": 900,
+        "y": 300
+      }
+    },
+    {
+      "type": "line",
+      "from": {
+        "x": 300,
+        "y": 0
+      },
+      "to": {
+        "x": 300,
+        "y": 900
+      }
+    },
+    {
+      "type": "line",
+      "from": {
+        "x": 0,
+        "y": 600
+      },
+      "to": {
+        "x": 900,
+        "y": 600
+      }
+    },
+    {
+      "type": "line",
+      "from": {
+        "x": 600,
+        "y": 0
+      },
+      "to": {
+        "x": 600,
+        "y": 900
+      }
+    },
+    {
+      "type": "line",
+      "from": {
+        "x": 0,
+        "y": 900
+      },
+      "to": {
+        "x": 900,
+        "y": 900
+      }
+    },
+    {
+      "type": "line",
+      "from": {
+        "x": 900,
+        "y": 0
+      },
+      "to": {
+        "x": 900,
+        "y": 900
+      }
+    }
+  ],
+  "features": [
+    {
+      "type": "junction",
+      "position": {
+        "x": 0,
+        "y": 300
+      },
+      "branches": 3
+    },
+    {
+      "type": "junction",
+      "position": {
+        "x": 0,
+        "y": 600
+      },
+      "branches": 3
+    },
+    {
+      "type": "junction",
+      "position": {
+        "x": 300,
+        "y": 0
+      },
+      "branches": 3
+    },
+    {
+      "type": "junction",
+      "position": {
+        "x": 300,
+        "y": 300
+      },
+      "branches": 4
+    },
+    {
+      "type": "junction",
+      "position": {
+        "x": 300,
+        "y": 600
+      },
+      "branches": 4
+    },
+    {
+      "type": "junction",
+      "position": {
+        "x": 300,
+        "y": 900
+      },
+      "branches": 3
+    },
+    {
+      "type": "junction",
+      "position": {
+        "x": 600,
+        "y": 0
+      },
+      "branches": 3
+    },
+    {
+      "type": "junction",
+      "position": {
+        "x": 600,
+        "y": 300
+      },
+      "branches": 4
+    },
+    {
+      "type": "junction",
+      "position": {
+        "x": 600,
+        "y": 600
+      },
+      "branches": 4
+    },
+    {
+      "type": "junction",
+      "position": {
+        "x": 600,
+        "y": 900
+      },
+      "branches": 3
+    },
+    {
+      "type": "junction",
+      "position": {
+        "x": 900,
+        "y": 300
+      },
+      "branches": 3
+    },
+    {
+      "type": "junction",
+      "position": {
+        "x": 900,
+        "y": 600
+      },
+      "branches": 3
+    }
+  ],
+  "start": {
+    "x": 50,
+    "y": 0,
+    "headingRad": 0
+  }
+}

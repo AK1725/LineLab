@@ -1,0 +1,154 @@
+{
+  "$schema": "../packages/schema/json-schema/track.schema.json",
+  "id": "track.random-curvy",
+  "name": "Random curvy",
+  "units": "mm",
+  "surface": {
+    "lineColor": "#111111",
+    "backgroundColor": "#f5f5f0",
+    "lineReflectance": 0.05,
+    "backgroundReflectance": 0.85
+  },
+  "lineWidthMm": 19,
+  "segments": [
+    {
+      "type": "line",
+      "from": {
+        "x": 0,
+        "y": 0
+      },
+      "to": {
+        "x": 200,
+        "y": 0
+      }
+    },
+    {
+      "type": "arc",
+      "center": {
+        "x": 200,
+        "y": 160.807
+      },
+      "radiusMm": 160.80712041817605,
+      "startAngleRad": -1.5707963267948966,
+      "sweepRad": 1.7478157233423497
+    },
+    {
+      "type": "arc",
+      "center": {
+        "x": 46.039,
+        "y": 133.265
+      },
+      "radiusMm": 317.21207830123603,
+      "startAngleRad": 0.17701939654745305,
+      "sweepRad": 1.9457728999790522
+    },
+    {
+      "type": "line",
+      "from": {
+        "x": -120.303,
+        "y": 403.364
+      },
+      "to": {
+        "x": -402.393,
+        "y": 229.638
+      }
+    },
+    {
+      "type": "arc",
+      "center": {
+        "x": -196.153,
+        "y": -105.246
+      },
+      "radiusMm": 393.29605107195675,
+      "startAngleRad": 2.122792296526505,
+      "sweepRad": 1.4181922275321
+    },
+    {
+      "type": "line",
+      "from": {
+        "x": -558.496,
+        "y": -258.182
+      },
+      "to": {
+        "x": -481.154,
+        "y": -441.423
+      }
+    },
+    {
+      "type": "arc",
+      "center": {
+        "x": -234.702,
+        "y": -337.401
+      },
+      "radiusMm": 267.50576564110816,
+      "startAngleRad": -2.7422007831209814,
+      "sweepRad": 0.9623503571456349
+    },
+    {
+      "type": "arc",
+      "center": {
+        "x": -319.651,
+        "y": -737.814
+      },
+      "radiusMm": 141.81964843533933,
+      "startAngleRad": 1.3617422276144469,
+      "sweepRad": -1.24601610375116
+    },
+    {
+      "type": "arc",
+      "center": {
+        "x": 61.117,
+        "y": -693.552
+      },
+      "radiusMm": 241.51217783801258,
+      "startAngleRad": -3.025866529726506,
+      "sweepRad": 0.9201023780105817
+    },
+    {
+      "type": "line",
+      "from": {
+        "x": -62.01,
+        "y": -901.321
+      },
+      "to": {
+        "x": 131.029,
+        "y": -1015.717
+      }
+    },
+    {
+      "type": "line",
+      "from": {
+        "x": 131.029,
+        "y": -1015.717
+      },
+      "to": {
+        "x": 409.636,
+        "y": -1180.823
+      }
+    },
+    {
+      "type": "line",
+      "from": {
+        "x": 409.636,
+        "y": -1180.823
+      },
+      "to": {
+        "x": 581.693,
+        "y": -1282.785
+      }
+    }
+  ],
+  "features": [],
+  "start": {
+    "x": 50,
+    "y": 0,
+    "headingRad": 0
+  },
+  "description": "A reproducible random mix of straights and curves (seeded).",
+  "difficulty": "medium",
+  "finish": {
+    "x": 581.693,
+    "y": -1282.785,
+    "headingRad": 5.748217482258559
+  }
+}

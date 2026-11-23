@@ -1,0 +1,107 @@
+{
+  "$schema": "../packages/schema/json-schema/track.schema.json",
+  "id": "track.right-angles",
+  "name": "Right angles",
+  "units": "mm",
+  "surface": {
+    "lineColor": "#111111",
+    "backgroundColor": "#f5f5f0",
+    "lineReflectance": 0.05,
+    "backgroundReflectance": 0.85
+  },
+  "lineWidthMm": 19,
+  "segments": [
+    {
+      "type": "line",
+      "from": {
+        "x": 0,
+        "y": 0
+      },
+      "to": {
+        "x": 1000,
+        "y": 0
+      }
+    },
+    {
+      "type": "arc",
+      "center": {
+        "x": 1000,
+        "y": 20
+      },
+      "radiusMm": 20,
+      "startAngleRad": -1.5707963267948966,
+      "sweepRad": 1.5707963267948966
+    },
+    {
+      "type": "line",
+      "from": {
+        "x": 1020,
+        "y": 20
+      },
+      "to": {
+        "x": 1020,
+        "y": 620
+      }
+    },
+    {
+      "type": "arc",
+      "center": {
+        "x": 1000,
+        "y": 620
+      },
+      "radiusMm": 20,
+      "startAngleRad": 0,
+      "sweepRad": 1.5707963267948966
+    },
+    {
+      "type": "line",
+      "from": {
+        "x": 1000,
+        "y": 640
+      },
+      "to": {
+        "x": 0,
+        "y": 640
+      }
+    },
+    {
+      "type": "arc",
+      "center": {
+        "x": 0,
+        "y": 620
+      },
+      "radiusMm": 20,
+      "startAngleRad": 1.5707963267948966,
+      "sweepRad": 1.5707963267948966
+    },
+    {
+      "type": "line",
+      "from": {
+        "x": -20,
+        "y": 620
+      },
+      "to": {
+        "x": -20,
+        "y": 20
+      }
+    },
+    {
+      "type": "arc",
+      "center": {
+        "x": 0,
+        "y": 20
+      },
+      "radiusMm": 20,
+      "startAngleRad": 3.141592653589793,
+      "sweepRad": 1.5707963267948966
+    }
+  ],
+  "features": [],
+  "start": {
+    "x": 100,
+    "y": 0,
+    "headingRad": 0
+  },
+  "description": "A rectangle with sharp 90° corners: needs turn detection, not just PID.",
+  "difficulty": "hard"
+}

@@ -1,0 +1,65 @@
+{
+  "$schema": "../packages/schema/json-schema/track.schema.json",
+  "id": "track.thin-line",
+  "name": "Thin line oval",
+  "units": "mm",
+  "surface": {
+    "lineColor": "#111111",
+    "backgroundColor": "#f5f5f0",
+    "lineReflectance": 0.05,
+    "backgroundReflectance": 0.85
+  },
+  "lineWidthMm": 12,
+  "segments": [
+    {
+      "type": "line",
+      "from": {
+        "x": 0,
+        "y": 0
+      },
+      "to": {
+        "x": 1000,
+        "y": 0
+      }
+    },
+    {
+      "type": "arc",
+      "center": {
+        "x": 1000,
+        "y": 250
+      },
+      "radiusMm": 250,
+      "startAngleRad": -1.5707963267948966,
+      "sweepRad": 3.141592653589793
+    },
+    {
+      "type": "line",
+      "from": {
+        "x": 1000,
+        "y": 500
+      },
+      "to": {
+        "x": 0,
+        "y": 500
+      }
+    },
+    {
+      "type": "arc",
+      "center": {
+        "x": 0,
+        "y": 250
+      },
+      "radiusMm": 250,
+      "startAngleRad": 1.5707963267948966,
+      "sweepRad": 3.141592653589793
+    }
+  ],
+  "features": [],
+  "start": {
+    "x": 100,
+    "y": 0,
+    "headingRad": 0
+  },
+  "description": "A 12 mm line: sensor spacing matters.",
+  "difficulty": "medium"
+}

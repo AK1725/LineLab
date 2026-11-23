@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "@linelab/schema": "workspace:*",
+    "@linelab/sim-core": "workspace:*",
     "@linelab/three-models": "workspace:*",
     "fuse.js": "7.5.0",
     "zod": "4.6.7"

@@ -1,0 +1,39 @@
+{
+  "$schema": "../packages/schema/json-schema/track.schema.json",
+  "id": "track.long-straight",
+  "name": "Long straight",
+  "units": "mm",
+  "surface": {
+    "lineColor": "#111111",
+    "backgroundColor": "#f5f5f0",
+    "lineReflectance": 0.05,
+    "backgroundReflectance": 0.85
+  },
+  "lineWidthMm": 19,
+  "segments": [
+    {
+      "type": "line",
+      "from": {
+        "x": 0,
+        "y": 0
+      },
+      "to": {
+        "x": 3000,
+        "y": 0
+      }
+    }
+  ],
+  "features": [],
+  "start": {
+    "x": 50,
+    "y": 0,
+    "headingRad": 0
+  },
+  "description": "Three metres straight: top speed and straight-line stability.",
+  "difficulty": "easy",
+  "finish": {
+    "x": 3000,
+    "y": 0,
+    "headingRad": 0
+  }
+}

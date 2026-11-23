@@ -1,0 +1,102 @@
+{
+  "$schema": "../packages/schema/json-schema/track.schema.json",
+  "id": "track.acute-angles",
+  "name": "Acute angles",
+  "units": "mm",
+  "surface": {
+    "lineColor": "#111111",
+    "backgroundColor": "#f5f5f0",
+    "lineReflectance": 0.05,
+    "backgroundReflectance": 0.85
+  },
+  "lineWidthMm": 19,
+  "segments": [
+    {
+      "type": "line",
+      "from": {
+        "x": 0,
+        "y": 0
+      },
+      "to": {
+        "x": 400,
+        "y": 0
+      }
+    },
+    {
+      "type": "arc",
+      "center": {
+        "x": 400,
+        "y": -20
+      },
+      "radiusMm": 20,
+      "startAngleRad": 1.5707963267948966,
+      "sweepRad": -2.356194490192345
+    },
+    {
+      "type": "line",
+      "from": {
+        "x": 414.142,
+        "y": -34.142
+      },
+      "to": {
+        "x": 131.299,
+        "y": -316.985
+      }
+    },
+    {
+      "type": "arc",
+      "center": {
+        "x": 145.442,
+        "y": -331.127
+      },
+      "radiusMm": 20,
+      "startAngleRad": 2.356194490192345,
+      "sweepRad": 2.356194490192345
+    },
+    {
+      "type": "line",
+      "from": {
+        "x": 145.442,
+        "y": -351.127
+      },
+      "to": {
+        "x": 545.442,
+        "y": -351.127
+      }
+    },
+    {
+      "type": "arc",
+      "center": {
+        "x": 545.442,
+        "y": -371.127
+      },
+      "radiusMm": 20,
+      "startAngleRad": 1.5707963267948966,
+      "sweepRad": -2.356194490192345
+    },
+    {
+      "type": "line",
+      "from": {
+        "x": 559.584,
+        "y": -385.269
+      },
+      "to": {
+        "x": 276.741,
+        "y": -668.112
+      }
+    }
+  ],
+  "features": [],
+  "start": {
+    "x": 50,
+    "y": 0,
+    "headingRad": 0
+  },
+  "description": "Three 135° hairpin corners: the line doubles back at 45°.",
+  "difficulty": "expert",
+  "finish": {
+    "x": 276.741,
+    "y": -668.112,
+    "headingRad": -2.356194490192345
+  }
+}

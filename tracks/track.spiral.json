@@ -1,0 +1,90 @@
+{
+  "$schema": "../packages/schema/json-schema/track.schema.json",
+  "id": "track.spiral",
+  "name": "Spiral",
+  "units": "mm",
+  "surface": {
+    "lineColor": "#111111",
+    "backgroundColor": "#f5f5f0",
+    "lineReflectance": 0.05,
+    "backgroundReflectance": 0.85
+  },
+  "lineWidthMm": 19,
+  "segments": [
+    {
+      "type": "line",
+      "from": {
+        "x": 0,
+        "y": 0
+      },
+      "to": {
+        "x": 200,
+        "y": 0
+      }
+    },
+    {
+      "type": "arc",
+      "center": {
+        "x": 200,
+        "y": 500
+      },
+      "radiusMm": 500,
+      "startAngleRad": -1.5707963267948966,
+      "sweepRad": 6.283185307179586
+    },
+    {
+      "type": "arc",
+      "center": {
+        "x": 200,
+        "y": 380
+      },
+      "radiusMm": 380,
+      "startAngleRad": -1.570796326794897,
+      "sweepRad": 6.283185307179586
+    },
+    {
+      "type": "arc",
+      "center": {
+        "x": 200,
+        "y": 260
+      },
+      "radiusMm": 260,
+      "startAngleRad": -1.5707963267948972,
+      "sweepRad": 6.283185307179586
+    },
+    {
+      "type": "arc",
+      "center": {
+        "x": 200,
+        "y": 150
+      },
+      "radiusMm": 150,
+      "startAngleRad": -1.5707963267948974,
+      "sweepRad": 4.71238898038469
+    },
+    {
+      "type": "line",
+      "from": {
+        "x": 50,
+        "y": 150
+      },
+      "to": {
+        "x": 50,
+        "y": -50
+      }
+    }
+  ],
+  "features": [],
+  "start": {
+    "x": 50,
+    "y": 0,
+    "headingRad": 0
+  },
+  "description": "Ever-tighter loops (500 → 150 mm radius): finds the cornering limit.",
+  "difficulty": "hard",
+  "finish": {
+    "x": 50,
+    "y": -50,
+    "headingRad": 23.561944901923447
+  }
+}

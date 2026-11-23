@@ -18,6 +18,13 @@
     "build": "tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --max-warnings 0",
-    "test": "vitest run --passWithNoTests"
+    "test": "vitest run",
+    "tracks:generate": "tsx scripts/build-tracks.ts"
+  },
+  "dependencies": {
+    "@linelab/schema": "workspace:*"
+  },
+  "devDependencies": {
+    "fast-check": "4.11.0"
   }
 }

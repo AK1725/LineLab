@@ -1,0 +1,102 @@
+{
+  "$schema": "../packages/schema/json-schema/track.schema.json",
+  "id": "track.hairpins",
+  "name": "Hairpins",
+  "units": "mm",
+  "surface": {
+    "lineColor": "#111111",
+    "backgroundColor": "#f5f5f0",
+    "lineReflectance": 0.05,
+    "backgroundReflectance": 0.85
+  },
+  "lineWidthMm": 19,
+  "segments": [
+    {
+      "type": "line",
+      "from": {
+        "x": 0,
+        "y": 0
+      },
+      "to": {
+        "x": 400,
+        "y": 0
+      }
+    },
+    {
+      "type": "arc",
+      "center": {
+        "x": 400,
+        "y": 60
+      },
+      "radiusMm": 60,
+      "startAngleRad": -1.5707963267948966,
+      "sweepRad": 3.141592653589793
+    },
+    {
+      "type": "line",
+      "from": {
+        "x": 400,
+        "y": 120
+      },
+      "to": {
+        "x": 0,
+        "y": 120
+      }
+    },
+    {
+      "type": "arc",
+      "center": {
+        "x": 0,
+        "y": 180
+      },
+      "radiusMm": 60,
+      "startAngleRad": -1.5707963267948968,
+      "sweepRad": -3.141592653589793
+    },
+    {
+      "type": "line",
+      "from": {
+        "x": 0,
+        "y": 240
+      },
+      "to": {
+        "x": 400,
+        "y": 240
+      }
+    },
+    {
+      "type": "arc",
+      "center": {
+        "x": 400,
+        "y": 300
+      },
+      "radiusMm": 60,
+      "startAngleRad": -1.5707963267948966,
+      "sweepRad": 3.141592653589793
+    },
+    {
+      "type": "line",
+      "from": {
+        "x": 400,
+        "y": 360
+      },
+      "to": {
+        "x": 0,
+        "y": 360
+      }
+    }
+  ],
+  "features": [],
+  "start": {
+    "x": 50,
+    "y": 0,
+    "headingRad": 0
+  },
+  "description": "Three 60 mm-radius U-turns.",
+  "difficulty": "hard",
+  "finish": {
+    "x": 0,
+    "y": 360,
+    "headingRad": 3.141592653589793
+  }
+}

@@ -1,0 +1,130 @@
+{
+  "$schema": "../packages/schema/json-schema/track.schema.json",
+  "id": "track.dashed",
+  "name": "Dashed line",
+  "units": "mm",
+  "surface": {
+    "lineColor": "#111111",
+    "backgroundColor": "#f5f5f0",
+    "lineReflectance": 0.05,
+    "backgroundReflectance": 0.85
+  },
+  "lineWidthMm": 19,
+  "segments": [
+    {
+      "type": "line",
+      "from": {
+        "x": 0,
+        "y": 0
+      },
+      "to": {
+        "x": 400,
+        "y": 0
+      }
+    },
+    {
+      "type": "line",
+      "from": {
+        "x": 400,
+        "y": 0
+      },
+      "to": {
+        "x": 800,
+        "y": 0
+      }
+    },
+    {
+      "type": "line",
+      "from": {
+        "x": 800,
+        "y": 0
+      },
+      "to": {
+        "x": 1200,
+        "y": 0
+      }
+    },
+    {
+      "type": "arc",
+      "center": {
+        "x": 1200,
+        "y": 300
+      },
+      "radiusMm": 300,
+      "startAngleRad": -1.5707963267948966,
+      "sweepRad": 3.141592653589793
+    },
+    {
+      "type": "line",
+      "from": {
+        "x": 1200,
+        "y": 600
+      },
+      "to": {
+        "x": 1000,
+        "y": 600
+      }
+    },
+    {
+      "type": "line",
+      "from": {
+        "x": 1000,
+        "y": 600
+      },
+      "to": {
+        "x": 400,
+        "y": 600
+      }
+    },
+    {
+      "type": "line",
+      "from": {
+        "x": 400,
+        "y": 600
+      },
+      "to": {
+        "x": 0,
+        "y": 600
+      }
+    },
+    {
+      "type": "arc",
+      "center": {
+        "x": 0,
+        "y": 300
+      },
+      "radiusMm": 300,
+      "startAngleRad": 1.5707963267948966,
+      "sweepRad": 3.141592653589793
+    }
+  ],
+  "features": [
+    {
+      "type": "gap",
+      "startS": 400,
+      "endS": 440
+    },
+    {
+      "type": "gap",
+      "startS": 800,
+      "endS": 840
+    },
+    {
+      "type": "gap",
+      "startS": 2342.478,
+      "endS": 2382.478
+    },
+    {
+      "type": "gap",
+      "startS": 2942.478,
+      "endS": 2982.478
+    }
+  ],
+  "start": {
+    "x": 100,
+    "y": 0,
+    "headingRad": 0
+  },
+  "description": "40 mm gaps in the line: the robot has to hold its heading across them.",
+  "difficulty": "hard"
+}

@@ -1,7 +1,7 @@
 /**
- * @linelab/sim-core — Deterministic 1 kHz physics, sensor and track model, metrics and failure detectors. No DOM.
- *
- * Placeholder workspace created in Phase 0. Implementation lands in Phase 5
- * (see docs/BUILD_PLAN.md). Nothing is exported yet on purpose: no stubs that pretend to work.
+ * @linelab/sim-core: deterministic simulation (no DOM, no wall clock, no Math.random).
+ * Phase 4 provides the track model; physics, sensors and controllers follow in Phase 5.
  */
-export {};
+export * from "./track/geometry.js";
+export * from "./track/builder.js";
+export * from "./track/validate.js";

@@ -1,0 +1,110 @@
+{
+  "$schema": "../packages/schema/json-schema/track.schema.json",
+  "id": "track.zigzag",
+  "name": "Zigzag",
+  "units": "mm",
+  "surface": {
+    "lineColor": "#111111",
+    "backgroundColor": "#f5f5f0",
+    "lineReflectance": 0.05,
+    "backgroundReflectance": 0.85
+  },
+  "lineWidthMm": 19,
+  "segments": [
+    {
+      "type": "line",
+      "from": {
+        "x": 0,
+        "y": 0
+      },
+      "to": {
+        "x": 200,
+        "y": 0
+      }
+    },
+    {
+      "type": "arc",
+      "center": {
+        "x": 200,
+        "y": 100
+      },
+      "radiusMm": 100,
+      "startAngleRad": -1.5707963267948966,
+      "sweepRad": 1.0471975511965976
+    },
+    {
+      "type": "arc",
+      "center": {
+        "x": 373.205,
+        "y": 0
+      },
+      "radiusMm": 100,
+      "startAngleRad": 2.617993877991494,
+      "sweepRad": -1.0471975511965976
+    },
+    {
+      "type": "arc",
+      "center": {
+        "x": 373.205,
+        "y": 200
+      },
+      "radiusMm": 100,
+      "startAngleRad": -1.5707963267948966,
+      "sweepRad": 1.0471975511965976
+    },
+    {
+      "type": "arc",
+      "center": {
+        "x": 546.41,
+        "y": 100
+      },
+      "radiusMm": 100,
+      "startAngleRad": 2.617993877991494,
+      "sweepRad": -1.0471975511965976
+    },
+    {
+      "type": "arc",
+      "center": {
+        "x": 546.41,
+        "y": 300
+      },
+      "radiusMm": 100,
+      "startAngleRad": -1.5707963267948966,
+      "sweepRad": 1.0471975511965976
+    },
+    {
+      "type": "arc",
+      "center": {
+        "x": 719.615,
+        "y": 200
+      },
+      "radiusMm": 100,
+      "startAngleRad": 2.6179938779914944,
+      "sweepRad": -1.0471975511965976
+    },
+    {
+      "type": "line",
+      "from": {
+        "x": 719.615,
+        "y": 300
+      },
+      "to": {
+        "x": 919.615,
+        "y": 300
+      }
+    }
+  ],
+  "features": [],
+  "start": {
+    "x": 50,
+    "y": 0,
+    "headingRad": 0
+  },
+  "description": "Six alternating 60° curves at 100 mm radius.",
+  "difficulty": "medium",
+  "finish": {
+    "x": 919.615,
+    "y": 300,
+    "headingRad": 0
+  }
+}

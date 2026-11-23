@@ -1,0 +1,80 @@
+{
+  "$schema": "../packages/schema/json-schema/track.schema.json",
+  "id": "track.chicane",
+  "name": "Chicane",
+  "units": "mm",
+  "surface": {
+    "lineColor": "#111111",
+    "backgroundColor": "#f5f5f0",
+    "lineReflectance": 0.05,
+    "backgroundReflectance": 0.85
+  },
+  "lineWidthMm": 19,
+  "segments": [
+    {
+      "type": "line",
+      "from": {
+        "x": 0,
+        "y": 0
+      },
+      "to": {
+        "x": 600,
+        "y": 0
+      }
+    },
+    {
+      "type": "arc",
+      "center": {
+        "x": 600,
+        "y": 200
+      },
+      "radiusMm": 200,
+      "startAngleRad": -1.5707963267948966,
+      "sweepRad": 0.7853981633974483
+    },
+    {
+      "type": "arc",
+      "center": {
+        "x": 882.843,
+        "y": -82.843
+      },
+      "radiusMm": 200,
+      "startAngleRad": 2.356194490192345,
+      "sweepRad": -1.5707963267948966
+    },
+    {
+      "type": "arc",
+      "center": {
+        "x": 1165.685,
+        "y": 200
+      },
+      "radiusMm": 200,
+      "startAngleRad": -2.356194490192345,
+      "sweepRad": 0.7853981633974483
+    },
+    {
+      "type": "line",
+      "from": {
+        "x": 1165.685,
+        "y": 0
+      },
+      "to": {
+        "x": 1765.685,
+        "y": 0
+      }
+    }
+  ],
+  "features": [],
+  "start": {
+    "x": 50,
+    "y": 0,
+    "headingRad": 0
+  },
+  "description": "A quick left-right-left kink between two straights.",
+  "difficulty": "medium",
+  "finish": {
+    "x": 1765.685,
+    "y": 0,
+    "headingRad": 0
+  }
+}

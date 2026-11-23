@@ -23,6 +23,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <Link href="/build" className="text-sm text-muted hover:text-fg">
               Build
             </Link>
+            <Link href="/tracks" className="text-sm text-muted hover:text-fg">
+              Tracks
+            </Link>
             <Link href="/components" className="text-sm text-muted hover:text-fg">
               Components
             </Link>

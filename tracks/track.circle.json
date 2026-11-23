@@ -1,0 +1,33 @@
+{
+  "$schema": "../packages/schema/json-schema/track.schema.json",
+  "id": "track.circle",
+  "name": "Circle",
+  "units": "mm",
+  "surface": {
+    "lineColor": "#111111",
+    "backgroundColor": "#f5f5f0",
+    "lineReflectance": 0.05,
+    "backgroundReflectance": 0.85
+  },
+  "lineWidthMm": 19,
+  "segments": [
+    {
+      "type": "arc",
+      "center": {
+        "x": 0,
+        "y": 0
+      },
+      "radiusMm": 500,
+      "startAngleRad": -1.5707963267948966,
+      "sweepRad": 6.283185307179586
+    }
+  ],
+  "features": [],
+  "start": {
+    "x": 0,
+    "y": -500,
+    "headingRad": 0
+  },
+  "description": "A constant 500 mm radius: good for tuning steady-state cornering.",
+  "difficulty": "easy"
+}

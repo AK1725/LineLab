@@ -75,7 +75,9 @@ services:
     profiles: [apps]
     build: { context: ., dockerfile: apps/web/Dockerfile }
     ports: ["3000:3000"]
-    depends_on: [api]
+    environment:
+      VISION_URL: http://vision:8000
+    depends_on: [api, vision]
 
   # compiler: added in Phase 6 (sandboxed, network_mode: none).
 
