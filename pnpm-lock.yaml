@@ -135,9 +135,6 @@ importers:
       '@linelab/schema':
         specifier: workspace:*
         version: link:../schema
-      '@linelab/sim-core':
-        specifier: workspace:*
-        version: link:../sim-core
       '@linelab/three-models':
         specifier: workspace:*
         version: link:../three-models
@@ -196,10 +193,16 @@ importers:
 
   packages/sim-core:
     dependencies:
+      '@linelab/design-core':
+        specifier: workspace:*
+        version: link:../design-core
       '@linelab/schema':
         specifier: workspace:*
         version: link:../schema
     devDependencies:
+      '@linelab/component-db':
+        specifier: workspace:*
+        version: link:../component-db
       fast-check:
         specifier: 4.11.0
         version: 4.11.0

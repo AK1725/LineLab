@@ -125,6 +125,10 @@ export interface ClosestPoint {
   ty: number;
 }
 
+/** Numeric grid-cell key (tracks are far smaller than ±32 k cells). */
+const cellKey = (cx: number, cy: number) => (cx + 32768) * 65536 + (cy + 32768);
+const EMPTY: readonly number[] = [];
+
 /**
  * Fast spatial queries on a track: closest centreline point, and the IR reflectance at any point
  * of the surface (line, background, gaps, inverted sections). Analytic, so accurate at any scale.
@@ -133,7 +137,7 @@ export class TrackField {
   readonly path: SampledPath;
   readonly halfWidth: number;
   private readonly cell: number;
-  private readonly grid = new Map<string, number[]>();
+  private readonly grid = new Map<number, number[]>();
   private readonly gaps: [number, number][];
   private readonly inversions: [number, number][];
 
@@ -155,7 +159,7 @@ export class TrackField {
       const y1 = Math.floor(Math.max(a.y, b.y) / this.cell);
       for (let cx = x0; cx <= x1; cx++) {
         for (let cy = y0; cy <= y1; cy++) {
-          const k = `${cx},${cy}`;
+          const k = cellKey(cx, cy);
           const list = this.grid.get(k);
           if (list) list.push(i);
           else this.grid.set(k, [i]);
@@ -170,20 +174,25 @@ export class TrackField {
     );
   }
 
-  private nearSegments(x: number, y: number, radius: number): number[] {
-    const r = Math.ceil(radius / this.cell);
+  private nearSegments(x: number, y: number, radius: number): readonly number[] {
+    const c = this.cell;
+    const i0 = Math.floor((x - radius) / c);
+    const i1 = Math.floor((x + radius) / c);
+    const j0 = Math.floor((y - radius) / c);
+    const j1 = Math.floor((y + radius) / c);
     // Very large searches: every segment is a candidate.
-    if (!Number.isFinite(radius) || r > 64)
+    if (!Number.isFinite(radius) || (i1 - i0 + 1) * (j1 - j0 + 1) > 4096)
       return Array.from({ length: Math.max(0, this.path.samples.length - 1) }, (_, i) => i);
-    const out = new Set<number>();
-    const cx = Math.floor(x / this.cell);
-    const cy = Math.floor(y / this.cell);
-    for (let i = cx - r; i <= cx + r; i++) {
-      for (let j = cy - r; j <= cy + r; j++) {
-        for (const s of this.grid.get(`${i},${j}`) ?? []) out.add(s);
+    if (i0 === i1 && j0 === j1) return this.grid.get(cellKey(i0, j0)) ?? EMPTY;
+    // Segments can repeat across cells; callers take a min or an any, so duplicates are harmless.
+    const out: number[] = [];
+    for (let i = i0; i <= i1; i++) {
+      for (let j = j0; j <= j1; j++) {
+        const list = this.grid.get(cellKey(i, j));
+        if (list) for (const k of list) out.push(k);
       }
     }
-    return [...out];
+    return out;
   }
 
   /** Closest point on the centreline within `searchMm` (undefined if none is that close). */
@@ -225,15 +234,22 @@ export class TrackField {
 
   /** True if (x, y) is on the painted line (respecting gaps). Crossings work naturally. */
   onLine(x: number, y: number): boolean {
+    return this.onLineAmong(this.nearSegments(x, y, this.halfWidth + 1), x, y);
+  }
+
+  private onLineAmong(candidates: readonly number[], x: number, y: number): boolean {
     const { samples } = this.path;
-    for (const i of this.nearSegments(x, y, this.halfWidth + 1)) {
+    const hw2 = this.halfWidth * this.halfWidth;
+    for (const i of candidates) {
       const a = samples[i] as PathSample;
       const b = samples[i + 1] as PathSample;
       const dx = b.x - a.x;
       const dy = b.y - a.y;
       const len2 = dx * dx + dy * dy;
       const t = len2 === 0 ? 0 : Math.max(0, Math.min(1, ((x - a.x) * dx + (y - a.y) * dy) / len2));
-      if (Math.hypot(x - a.x - t * dx, y - a.y - t * dy) <= this.halfWidth) {
+      const ex = x - a.x - t * dx;
+      const ey = y - a.y - t * dy;
+      if (ex * ex + ey * ey <= hw2) {
         const s = a.s + t * (b.s - a.s);
         if (!TrackField.within(s, this.gaps)) return true;
       }
@@ -241,17 +257,66 @@ export class TrackField {
     return false;
   }
 
+  /**
+   * Weighted mean reflectance of points around (x, y) — a sensor footprint. `points` holds
+   * [dx, dy, weight] offsets no further than `radiusMm` from the centre. One grid lookup serves
+   * every point, and the inverted-band test is done once at the centre.
+   */
+  meanReflectance(
+    x: number,
+    y: number,
+    points: readonly (readonly [number, number, number])[],
+    radiusMm: number,
+  ): number {
+    const { lineReflectance: line, backgroundReflectance: bg } = this.track.surface;
+    const inv = this.invertedAt(x, y);
+    const cand = this.nearSegments(x, y, radiusMm + this.halfWidth + 1);
+    let sum = 0;
+    for (const [dx, dy, w] of points) {
+      const on = this.onLineAmong(cand, x + dx, y + dy);
+      sum += w * (inv ? (on ? bg : line) : on ? line : bg);
+    }
+    return sum;
+  }
+
   /** IR reflectance (0–1) of the surface at (x, y). */
   reflectanceAt(x: number, y: number): number {
+    return this.surfaceAt(x, y, this.invertedAt(x, y));
+  }
+
+  /** True inside an inverted section's band (4 line widths wide), where the colours swap. */
+  invertedAt(x: number, y: number): boolean {
+    if (this.inversions.length === 0) return false;
+    const near = this.closest(x, y, this.halfWidth * 4);
+    return near !== undefined && TrackField.within(near.s, this.inversions);
+  }
+
+  /** Reflectance at (x, y) when it is already known whether the point is in an inverted band
+   * (lets a sensor footprint do the band lookup once for all its sample points). */
+  surfaceAt(x: number, y: number, inverted: boolean): number {
     const { lineReflectance: line, backgroundReflectance: bg } = this.track.surface;
-    const near = this.inversions.length > 0 ? this.closest(x, y, this.halfWidth * 4) : undefined;
-    // Inverted sections: a band around the path where the colours swap.
-    const inverted =
-      near !== undefined &&
-      near.distance <= this.halfWidth * 4 &&
-      TrackField.within(near.s, this.inversions);
     const on = this.onLine(x, y);
     return inverted ? (on ? bg : line) : on ? line : bg;
+  }
+
+  /** True when the path ends where it starts. */
+  get closedLoop(): boolean {
+    const a = this.path.samples[0];
+    const z = this.path.samples.at(-1);
+    return a !== undefined && z !== undefined && Math.hypot(a.x - z.x, a.y - z.y) < 1;
+  }
+
+  /** Index of the last sample with arc length ≤ s. */
+  indexAt(s: number): number {
+    const { samples } = this.path;
+    let lo = 0;
+    let hi = samples.length - 1;
+    while (hi - lo > 1) {
+      const mid = (lo + hi) >> 1;
+      if ((samples[mid] as PathSample).s <= s) lo = mid;
+      else hi = mid;
+    }
+    return lo;
   }
 
   /** Point and heading at arc length s (clamped to the path). */
@@ -307,44 +372,62 @@ export class ProgressTracker {
     x: number,
     y: number,
     windowMm = 60,
-  ): { s: number; laps: number; total: number; lateral?: number } {
+  ): { s: number; laps: number; total: number; lateral?: number; distance: number } {
     if (!this.started) {
       // First fix: search the whole track, then follow locally from there.
       this.started = true;
       const c = this.field.closest(x, y, Infinity);
-      if (c) this.s = c.s;
+      // On a loop the start and the end are the same point: count from 0, not from L.
+      if (c) this.s = this.field.closedLoop && this.field.path.length - c.s < 1 ? 0 : c.s;
     }
     const L = this.field.path.length;
     const { samples } = this.field.path;
     let best: { s: number; d: number; lateral: number } | undefined;
-    for (let i = 0; i + 1 < samples.length; i++) {
-      const a = samples[i] as PathSample;
-      const b = samples[i + 1] as PathSample;
-      // Only consider path within ±window of the last known progress (wrapping for loops).
-      let ds = a.s - this.s;
-      if (ds > L / 2) ds -= L;
-      if (ds < -L / 2) ds += L;
-      if (Math.abs(ds) > windowMm) continue;
-      const dx = b.x - a.x;
-      const dy = b.y - a.y;
-      const len2 = dx * dx + dy * dy;
-      const t = len2 === 0 ? 0 : Math.max(0, Math.min(1, ((x - a.x) * dx + (y - a.y) * dy) / len2));
-      const px = a.x + t * dx;
-      const py = a.y + t * dy;
-      const d = Math.hypot(x - px, y - py);
-      if (!best || d < best.d) {
-        const len = Math.sqrt(len2) || 1;
-        best = {
-          s: a.s + t * (b.s - a.s),
-          d,
-          lateral: (dx / len) * (y - py) - (dy / len) * (x - px),
-        };
+    // Only consider path within ±window of the last known progress (wrapping for loops):
+    // binary-search the sample range instead of scanning the whole path.
+    const closed = this.field.closedLoop;
+    const ranges: [number, number][] = [];
+    const lo = this.s - windowMm;
+    const hi = this.s + windowMm;
+    if (closed && lo < 0) ranges.push([lo + L, L], [0, hi]);
+    else if (closed && hi > L) ranges.push([lo, L], [0, hi - L]);
+    else ranges.push([Math.max(0, lo), Math.min(L, hi)]);
+    for (const [s0, s1] of ranges) {
+      for (let i = Math.max(0, this.field.indexAt(s0) - 1); i + 1 < samples.length; i++) {
+        const a = samples[i] as PathSample;
+        if (a.s > s1) break;
+        const b = samples[i + 1] as PathSample;
+        const dx = b.x - a.x;
+        const dy = b.y - a.y;
+        const len2 = dx * dx + dy * dy;
+        const t =
+          len2 === 0 ? 0 : Math.max(0, Math.min(1, ((x - a.x) * dx + (y - a.y) * dy) / len2));
+        const px = a.x + t * dx;
+        const py = a.y + t * dy;
+        const d = Math.hypot(x - px, y - py);
+        if (!best || d < best.d) {
+          const len = Math.sqrt(len2) || 1;
+          best = {
+            s: a.s + t * (b.s - a.s),
+            d,
+            lateral: (dx / len) * (y - py) - (dy / len) * (x - px),
+          };
+        }
       }
     }
-    if (!best) return { s: this.s, laps: this.laps, total: this.laps * L + this.s };
+    if (!best)
+      return { s: this.s, laps: this.laps, total: this.laps * L + this.s, distance: Infinity };
+    // The end of a loop is its start.
+    if (closed && best.s > L - 0.5) best.s = 0;
     if (this.s > L * 0.8 && best.s < L * 0.2) this.laps++;
     else if (this.s < L * 0.2 && best.s > L * 0.8 && this.laps > 0) this.laps--;
     this.s = best.s;
-    return { s: this.s, laps: this.laps, total: this.laps * L + this.s, lateral: best.lateral };
+    return {
+      s: this.s,
+      laps: this.laps,
+      total: this.laps * L + this.s,
+      lateral: best.lateral,
+      distance: best.d,
+    };
   }
 }

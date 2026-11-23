@@ -37,6 +37,8 @@ jobs:
       - run: uv sync --locked
         working-directory: apps/vision
       - run: pnpm verify
+      - name: Simulator speed (must stay ≥ 20× real time)
+        run: pnpm bench:sim
 
   e2e:
     name: End-to-end (Playwright)

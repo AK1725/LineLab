@@ -25,7 +25,7 @@ import {
 import type { Chassis, Design, NetEndpoint, Placement } from "@linelab/schema";
 import { create } from "zustand";
 
-export type View = "orbit" | "top" | "side" | "schematic";
+export type View = "orbit" | "top" | "side" | "schematic" | "run";
 export type LeftPanel = "parts" | "wiring";
 
 export const lookup = (id: string) => getComponent(id);

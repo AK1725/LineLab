@@ -19,12 +19,17 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --max-warnings 0",
     "test": "vitest run",
-    "tracks:generate": "tsx scripts/build-tracks.ts"
+    "tracks:generate": "tsx scripts/build-tracks.ts",
+    "db:validate": "tsx scripts/validate-tracks.ts",
+    "sim": "tsx scripts/sim.ts",
+    "bench": "tsx scripts/bench.ts"
   },
   "dependencies": {
-    "@linelab/schema": "workspace:*"
+    "@linelab/schema": "workspace:*",
+    "@linelab/design-core": "workspace:*"
   },
   "devDependencies": {
-    "fast-check": "4.11.0"
+    "fast-check": "4.11.0",
+    "@linelab/component-db": "workspace:*"
   }
 }

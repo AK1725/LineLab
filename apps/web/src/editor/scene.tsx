@@ -37,7 +37,7 @@ import { chassisOf, lookup, newGestureKey, useDesign, useEditor, type View } fro
 
 /** One merged template model per component; instances are cheap clones that share geometry. */
 const templates = new Map<string, Group>();
-function templateFor(c: Component): Group {
+export function templateFor(c: Component): Group {
   let t = templates.get(c.id);
   if (!t) {
     t = mergeByMaterial(buildComponentModel(c));

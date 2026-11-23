@@ -18,7 +18,9 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "verify": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm db:validate && pnpm build",
-    "test:e2e": "pnpm --filter @linelab/e2e test:e2e"
+    "test:e2e": "pnpm --filter @linelab/e2e test:e2e",
+    "sim": "pnpm --filter @linelab/sim-core sim",
+    "bench:sim": "turbo run build --filter=@linelab/sim-core... --output-logs=errors-only && pnpm --filter @linelab/sim-core bench"
   },
   "devDependencies": {
     "@eslint/js": "9.39.5",

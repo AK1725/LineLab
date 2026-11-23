@@ -6,7 +6,7 @@ const phases = [
   ["2", "3D assembly and chassis designer", true],
   ["3", "Wiring and live rules engine", true],
   ["4", "Tracks: library, editor, image import", true],
-  ["5", "Deterministic simulation and run viewer", false],
+  ["5", "Deterministic simulation and run viewer", true],
   ["6", "Run your real firmware (emulated MCU)", false],
   ["7", "Failure detection and static analysis", false],
   ["8", "AI debug agent with verified fixes", false],

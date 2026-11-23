@@ -3,7 +3,6 @@
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { Chassis, Component, Track } from "@linelab/schema";
-import { validateTrackGeometry } from "@linelab/sim-core";
 import { checkCatalog, validateTargets } from "../src/validate/index.js";
 
 const pkgDir = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -26,12 +25,8 @@ const catalog = checkCatalog(components).map((p) => ({
   file: fileOf.get(p.id) ?? p.id,
   message: p.message,
 }));
-const trackProblems = report.valid
-  .filter((v) => v.label === "tracks")
-  .flatMap((v) =>
-    validateTrackGeometry(v.data as Track).map((p) => ({ file: v.file, message: p.message })),
-  );
-const problems = [...report.problems, ...catalog, ...trackProblems];
+// Track geometry (continuity, radii, features) is checked by `@linelab/sim-core`'s db:validate.
+const problems = [...report.problems, ...catalog];
 
 for (const p of problems) console.error(`✗ ${p.file}: ${p.message}`);
 console.log(

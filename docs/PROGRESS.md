@@ -170,4 +170,64 @@
 - No "this line is 19 mm wide" scale calibration (corners or mm/px only). Each track has a single line width.
 - Gaps aren't detected in photos (a dashed line comes back as several pieces with a warning).
 
-## Next: Phase 5 — Simulation core + run viewer
+## Phase 5 — Simulation core and run viewer ✅ (branch `phase-5-sim`)
+
+**Done**
+
+- `sim-core` physics (decisions and assumptions are in [ADR 0006](adr/0006-simulation-model.md)):
+  - a seeded xoshiro128** PRNG;
+  - DC motor model from datasheet numbers;
+  - battery: OCV curve per chemistry, internal resistance, SoC;
+  - driver voltage drop and current limit;
+  - differential drive with tyre slip, a friction circle, caster drag and CoG-based load split;
+  - IR sensor model: footprint, height fall-off, ambient light, noise, quantisation, latency, and analog/digital/RC outputs;
+  - brownout with MCU reset.
+
+  `buildRobotModel` turns a design into all of this, or throws `SimSetupError` listing the missing parts.
+
+- `Simulation` runs at a fixed 1 ms tick with automatic sub-stepping. It records a packed `Float64Array` trace (transferable) and reports the outcome (finished / off track / stuck / timeout), events (laps, brownout, off track, stuck) and metrics (completion, lap time, mean/max lateral error, oscillation, energy, loop rate). `toRunTrace` converts the trace to the schema's `RunTrace`.
+- **Monte Carlo** (`runMonteCarlo`) randomises friction ±20 %, sensor noise, ambient light, battery SoC, motor mismatch ±5 % and start pose, and reports robustness.
+- **Reference PID controller** behind the `Controller` interface that firmware emulation will also implement.
+- Headless runner: `pnpm sim -- --design d.json --track oval --controller ref --seeds 1..50 [--trace run.json] [--json]`.
+- Benchmark: `pnpm bench:sim` fails below 20× real time and runs in CI.
+- Web **Run** tab in the editor. The simulation runs in a Web Worker and the trace comes back as a transferable buffer. The tab has:
+  - track picker (built-in and saved), seed, Monte Carlo 10/25/50, PID gains;
+  - 3D replay with top and follow cameras;
+  - play/pause, 0.1×–4× speed and a scrubber;
+  - plots of lateral error, sensors, PWM L/R and supply voltages (click to seek);
+  - a results panel with clickable events and a Monte Carlo table;
+  - a **ghost** of the previous run on the same track;
+  - a clear message when a design is missing parts.
+- Track-geometry validation moved from `component-db` to `sim-core` (breaks a package cycle; still part of `pnpm db:validate`).
+
+**Verified locally**
+
+- sim-core: 44 tests.
+  - Determinism: same seed → identical trace, plus a golden hash.
+  - Motor: no-load speed and stall torque match the datasheet; property tests for current limit and linear torque.
+  - Battery curve is monotonic; I·R sag.
+  - Sensor contrast, height fall-off, comparator, RC and ambient light.
+  - Physics properties: straight with equal duties, more duty → faster, turns toward the slower wheel, mirror symmetry, stays still at zero duty, reverses, kinetic energy < battery energy, top speed close to the motors' no-load speed.
+  - Robot model from the real component data, and the error listing missing parts.
+- Reference controller:
+  - finishes **every easy track**: 100 % over 8 Monte Carlo seeds each;
+  - finishes every medium track;
+  - fails expert tracks plausibly: on acute angles it loses the line _at a corner_; at maze junctions it averages two branches and stops making progress;
+  - hairpins and the spiral (hard) also fail;
+  - dashed, inverted, right angles (hard) and sprint (expert) pass.
+- `pnpm bench:sim`: 43× real time overall, slowest single run 22×.
+- e2e (3 new tests):
+  - reference robot on the oval finishes in about 4.7 s; playback speed, scrubbing, seek by event, follow camera; a second run shows the first as a ghost; 10-seed Monte Carlo table; no console errors;
+  - an empty design lists what's missing;
+  - acute angles fails with an event.
+
+Screenshots: [top view](screenshots/phase-5-run-top.png), [follow camera](screenshots/phase-5-run-follow.png).
+
+**Deferred / known issues**
+
+- Fan downforce: no thrust data in the database, so it isn't simulated. The run notes say so.
+- Load transfer under acceleration, wheel inertia coupling between wheels, PWM ripple, motor inductance and encoder/IMU outputs aren't modelled yet. Encoders and IMU come with firmware emulation (Phase 6), when code can read them.
+- The ghost is drawn from its own design but only for the same track. Two arbitrary saved runs can't be compared yet (no run storage until the API is used in Phase 8/11).
+- The camera follow is a simple chase camera; no orbit while replaying.
+
+## Next: Phase 6 — Firmware runtime

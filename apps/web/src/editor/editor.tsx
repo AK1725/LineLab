@@ -8,6 +8,11 @@ import ChassisDialog from "./chassis-dialog";
 import Inspector from "./inspector";
 import PartsPanel from "./parts-panel";
 import SchematicView from "./schematic-view";
+
+const RunView = dynamic(() => import("../sim/run-view"), {
+  ssr: false,
+  loading: () => <p className="p-6 text-sm text-muted">Loading simulator…</p>,
+});
 import WiringPanel from "./wiring-panel";
 import { loadDesign, saveDesign } from "./persistence";
 import { useEditor } from "./store";
@@ -185,20 +190,26 @@ export default function Editor() {
           setChassisOpen(true);
         }}
       />
-      <div className="grid min-h-0 flex-1 grid-rows-[minmax(300px,1fr)_auto] lg:grid-cols-[17rem_1fr_19rem] lg:grid-rows-1">
-        <aside className="order-2 flex max-h-80 min-h-0 flex-col border-t border-border lg:order-1 lg:max-h-none lg:border-r lg:border-t-0">
-          <LeftTabs />
-          <div className="min-h-0 flex-1">
-            {leftPanel === "parts" ? <PartsPanel /> : <WiringPanel />}
-          </div>
-        </aside>
-        <div className="order-1 min-h-0 lg:order-2">
-          {view === "schematic" ? <SchematicView /> : <Scene />}
+      {view === "run" ? (
+        <div className="min-h-0 flex-1">
+          <RunView />
         </div>
-        <aside className="order-3 min-h-0 overflow-y-auto border-t border-border lg:border-l lg:border-t-0">
-          <Inspector />
-        </aside>
-      </div>
+      ) : (
+        <div className="grid min-h-0 flex-1 grid-rows-[minmax(300px,1fr)_auto] lg:grid-cols-[17rem_1fr_19rem] lg:grid-rows-1">
+          <aside className="order-2 flex max-h-80 min-h-0 flex-col border-t border-border lg:order-1 lg:max-h-none lg:border-r lg:border-t-0">
+            <LeftTabs />
+            <div className="min-h-0 flex-1">
+              {leftPanel === "parts" ? <PartsPanel /> : <WiringPanel />}
+            </div>
+          </aside>
+          <div className="order-1 min-h-0 lg:order-2">
+            {view === "schematic" ? <SchematicView /> : <Scene />}
+          </div>
+          <aside className="order-3 min-h-0 overflow-y-auto border-t border-border lg:border-l lg:border-t-0">
+            <Inspector />
+          </aside>
+        </div>
+      )}
       {chassisOpen && (
         <ChassisDialog
           onClose={() => {
