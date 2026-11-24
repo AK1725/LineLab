@@ -53,6 +53,9 @@ importers:
       '@linelab/design-core':
         specifier: workspace:*
         version: link:../../packages/design-core
+      '@linelab/photo-design':
+        specifier: workspace:*
+        version: link:../../packages/photo-design
       '@linelab/schema':
         specifier: workspace:*
         version: link:../../packages/schema

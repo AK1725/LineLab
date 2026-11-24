@@ -2,7 +2,7 @@
   "name": "@linelab/photo-design",
   "version": "0.0.0",
   "private": true,
-  "description": "Photo → design: part detection (Claude vision behind an interface), database matching, scale and placement, chassis from the silhouette, proposed netlist.",
+  "description": "Photo \u2192 design: part detection (Claude vision behind an interface), database matching, scale and placement, chassis from the silhouette, proposed netlist.",
   "license": "Apache-2.0",
   "type": "module",
   "exports": {
@@ -20,7 +20,9 @@
     "build": "tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --max-warnings 0",
-    "test": "vitest run"
+    "test": "vitest run",
+    "eval": "tsx scripts/eval.ts",
+    "fixtures:generate": "tsx scripts/make-fixtures.ts && pnpm build && node scripts/render-fixtures.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "1.7.0",

@@ -21,7 +21,8 @@
     "test:e2e": "pnpm --filter @linelab/e2e test:e2e",
     "sim": "pnpm --filter @linelab/sim-core sim",
     "bench:sim": "turbo run build --filter=@linelab/sim-core... --output-logs=errors-only && pnpm --filter @linelab/sim-core bench",
-    "eval:agent": "turbo run build --filter=@linelab/agent... --output-logs=errors-only && pnpm --filter @linelab/agent eval"
+    "eval:agent": "turbo run build --filter=@linelab/agent... --output-logs=errors-only && pnpm --filter @linelab/agent eval",
+    "eval:photos": "turbo run build --filter=@linelab/photo-design... --output-logs=errors-only && pnpm --filter @linelab/photo-design eval"
   },
   "devDependencies": {
     "@eslint/js": "9.39.5",

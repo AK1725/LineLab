@@ -103,11 +103,7 @@ for (const r of ROBOTS) {
   const truth: PhotoSetTruth = {
     id: r.id,
     kind: "render",
-    photos: [
-      { file: "top.png", view: "top" },
-      { file: "bottom.png", view: "bottom" },
-      { file: "side.png", view: "left" },
-    ],
+    photos: [{ file: "top.png", view: "top" }],
     components: r.parts.map(([componentId, count]) => ({ componentId, count })),
   };
   mkdirSync(join(root, r.id), { recursive: true });

@@ -2,7 +2,8 @@
 
 - GET  /health
 - POST /track/from-image: photo or scan of a track -> Track JSON (Phase 4)
-Robot photo detection arrives in Phase 10 (see docs/BUILD_PLAN.md).
+- POST /robot/outline: top-view robot photo -> silhouette polygon (Phase 10). Part detection
+  runs in the API (Claude vision), not here.
 """
 
 import json
@@ -12,6 +13,7 @@ from typing import Annotated, Any, Literal
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from pydantic import BaseModel
 
+from app.robot_outline import OutlineError, robot_outline
 from app.track_image import Calibration, TrackImageError, image_to_track
 
 SERVICE_NAME = "linelab-vision"
@@ -65,3 +67,16 @@ async def track_from_image(
     except TrackImageError as err:
         raise HTTPException(422, str(err)) from err
     return {"track": track, "diagnostics": asdict(diag)}
+
+
+@app.post("/robot/outline")
+async def robot_outline_route(
+    file: Annotated[UploadFile, File(description="PNG or JPEG top-view photo of the robot")],
+) -> dict[str, Any]:
+    data = await file.read()
+    if len(data) > MAX_UPLOAD_BYTES:
+        raise HTTPException(413, "Image is larger than 25 MB.")
+    try:
+        return asdict(robot_outline(data))
+    except OutlineError as err:
+        raise HTTPException(422, str(err)) from err

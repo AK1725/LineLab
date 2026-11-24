@@ -5,7 +5,8 @@ export interface SyntheticTopView {
   widthPx: number;
   heightPx: number;
   mmPerPx: number;
-  /** Silhouette (chassis plate plus wheels) as fractions of the image. */
+  /** Convex hull of the chassis plate and wheels, as fractions of the image (the vision service
+   * returns the true, possibly concave, silhouette; both work for the proposal). */
   outline: Vec2[];
   /** Box per component id (wheels: one box around the pair), as fractions of the image. */
   boxes: Map<string, PhotoBox>;
@@ -77,6 +78,14 @@ export function syntheticTopView(
   }
   const poly = (pts: Vec2[], fill: string) =>
     `<polygon points="${pts.map((q) => `${px(q).x.toFixed(1)},${px(q).y.toFixed(1)}`).join(" ")}" fill="${fill}" stroke="#222" stroke-width="1"/>`;
+  // Plate colours as they photograph: FR4 green, clear acrylic over a dark mat, printed PLA.
+  const PLATE: Record<string, string> = {
+    fr4: "#2f6b3a",
+    acrylic: "#6f8796",
+    pla: "#d9822b",
+    aluminium: "#a7a9ac",
+    plywood: "#c49a6c",
+  };
   const colour: Record<string, string> = {
     mcu: "#1f6fb2",
     motor_driver: "#b3261e",
@@ -87,7 +96,7 @@ export function syntheticTopView(
   const svg = [
     `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">`,
     `<rect width="${W}" height="${H}" fill="#e9e6df"/>`,
-    poly(chassis.outline, "#f4f1ea"),
+    poly(chassis.outline, PLATE[chassis.material] ?? "#9aa7b0"),
     ...parts
       .filter((x) => x.p.mount === "top" || x.c.category === "wheel")
       .map((x) => poly(x.corners, colour[x.c.category] ?? "#777")),
