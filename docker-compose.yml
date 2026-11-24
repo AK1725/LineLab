@@ -9,7 +9,7 @@ services:
     image: pgvector/pgvector:pg16
     environment:
       POSTGRES_USER: linelab
-      POSTGRES_PASSWORD: linelab
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-linelab}
       POSTGRES_DB: linelab
     ports: ["5432:5432"]
     volumes: [postgres-data:/var/lib/postgresql/data]
@@ -59,13 +59,22 @@ services:
     build: { context: ., dockerfile: apps/api/Dockerfile }
     environment:
       API_PORT: "4000"
-      DATABASE_URL: postgres://linelab:linelab@postgres:5432/linelab
+      DATABASE_URL: postgres://linelab:${POSTGRES_PASSWORD:-linelab}@postgres:5432/linelab
       REDIS_URL: redis://redis:6379
       # AI debugger: the server's key (optional; users can bring their own per session).
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       LINELAB_AGENT_MODEL: ${LINELAB_AGENT_MODEL:-claude-opus-5-5}
       COMPILER_URL: http://compiler:8100
       LINELAB_COMPILE_CACHE: /tmp/compile-cache
+      LINELAB_KB_SEED: /app/seed/knowledge-seed.json
+      # Sign-in for the gallery. The default secret is for local use only: set your own
+      # (openssl rand -hex 32) in .env for anything reachable by others.
+      AUTH_SECRET: ${AUTH_SECRET:-local-dev-only-secret-change-me-0123456789abcdef}
+      PUBLIC_URL: ${PUBLIC_URL:-http://localhost:3000}
+      # Email sign-in links are printed in this service's log (docker compose logs api).
+      LINELAB_MAIL: log
+      GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID:-}
+      GITHUB_CLIENT_SECRET: ${GITHUB_CLIENT_SECRET:-}
     ports: ["4000:4000"]
     networks: [default, sandbox]
     depends_on:

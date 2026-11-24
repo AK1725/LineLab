@@ -1,0 +1,11 @@
+# HTTPS for the demo (certificates from Let's Encrypt), proxied to the web app.
+{$DEMO_DOMAIN} {
+	encode zstd gzip
+	header {
+		Strict-Transport-Security "max-age=31536000"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		Permissions-Policy "camera=(), microphone=(), geolocation=()"
+	}
+	reverse_proxy web:3000
+}

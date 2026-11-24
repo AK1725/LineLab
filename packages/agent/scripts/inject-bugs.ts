@@ -127,7 +127,8 @@ const summary = (e: OkEvaluation) =>
       .map((t) => `warning: ${t.replace(/_/g, " ")}`),
   ].join("; ");
 
-const cases: NewCase[] = [];
+/** One case per mutation (the fix is the same diff on every track); symptoms from each track. */
+const cases = new Map<string, NewCase>();
 for (const trackId of ["oval", "s-curves", "right-angles"]) {
   const wb = new Workbench(
     {
@@ -161,13 +162,17 @@ for (const trackId of ["oval", "s-curves", "right-angles"]) {
       console.log(`- ${m.id} on ${trackId}: no failure detected, skipped`);
       continue;
     }
-    cases.push({
-      symptoms: `On the ${trackId} track: ${summary(r)}.`,
-      diagnosis: m.diagnosis,
-      diff: makeUnifiedDiff(mutant, original, FILE),
-      source: "synthetic",
-      parts,
-    });
+    const symptoms = `On the ${trackId} track: ${summary(r)}.`;
+    const prev = cases.get(m.id);
+    if (prev) prev.symptoms = `${prev.symptoms}\n${symptoms}`;
+    else
+      cases.set(m.id, {
+        symptoms,
+        diagnosis: m.diagnosis,
+        diff: makeUnifiedDiff(mutant, original, FILE),
+        source: "synthetic",
+        parts,
+      });
     console.log(
       `✓ ${m.id} on ${trackId}: ${newErrors.join(", ") || "robustness/completion dropped"}`,
     );
@@ -175,5 +180,5 @@ for (const trackId of ["oval", "s-curves", "right-angles"]) {
 }
 const out = join(repo, "examples", "knowledge");
 mkdirSync(out, { recursive: true });
-writeFileSync(join(out, "seed.json"), `${JSON.stringify(cases, null, 2)}\n`);
-console.log(`${String(cases.length)} synthetic cases written to examples/knowledge/seed.json`);
+writeFileSync(join(out, "seed.json"), `${JSON.stringify([...cases.values()], null, 2)}\n`);
+console.log(`${String(cases.size)} synthetic cases written to examples/knowledge/seed.json`);

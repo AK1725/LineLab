@@ -185,12 +185,12 @@ test.describe("assembly editor", () => {
 
     const [dxf] = await Promise.all([
       page.waitForEvent("download"),
-      page.getByRole("button", { name: /as DXF/ }).click(),
+      page.getByRole("button", { name: /^DXF of the chassis plate/ }).click(),
     ]);
     expect(readFileSync(await dxf.path(), "utf8")).toMatch(/AC1009[\s\S]*POLYLINE[\s\S]*EOF/);
     const [stl] = await Promise.all([
       page.waitForEvent("download"),
-      page.getByRole("button", { name: /as STL/ }).click(),
+      page.getByRole("button", { name: /^STL of the chassis plate/ }).click(),
     ]);
     expect(readFileSync(await stl.path(), "utf8")).toMatch(/^solid linelab_chassis/);
   });

@@ -32,7 +32,9 @@ describe("embeddings", () => {
 
 describe("knowledge base with the synthetic seed", () => {
   it("has labelled synthetic cases from the bug-injection generator", () => {
-    expect(seed.length).toBeGreaterThanOrEqual(20);
+    expect(seed.length).toBeGreaterThanOrEqual(8);
+    // One case per fix: the same diff never appears twice.
+    expect(new Set(seed.map((c) => c.diff)).size).toBe(seed.length);
     expect(seed.every((c) => c.source === "synthetic" && c.diff.includes("@@"))).toBe(true);
   });
 

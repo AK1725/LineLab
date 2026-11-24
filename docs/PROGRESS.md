@@ -529,4 +529,73 @@ Screenshots: [parts step](screenshots/phase-10-photo-parts.png), [chassis step](
 - Parts on the bottom of the robot are placed by rule, not from the bottom photo.
 - Chassis thickness, material and deck height are estimated (3 mm acrylic, from wheel and motor size), so the user should check them.
 
-## Next: Phase 11 — Knowledge base, gallery, polish, launch
+## Phase 11 — Knowledge base, gallery, polish, launch ✅ (branch `phase-11-launch`)
+
+**Done** ([ADR 0012](adr/0012-launch-knowledge-gallery-auth.md))
+
+- **Fix knowledge base**:
+  - Postgres + pgvector via Drizzle (HNSW cosine index, one row per diff, confirmations counted), or memory without a database;
+  - a dependency-free hashing embedder behind an `Embedder` interface;
+  - **opt-in sharing**: a "Share this fix" checkbox (off by default) on confirmed fixes; only the diff, diagnosis and part names are stored;
+  - the agent sees each case's provenance (confirmed on N real robots, or synthetic).
+- **Synthetic bug injection** (`pnpm --filter @linelab/agent inject-bugs`): 11 mutation operators on the good sketch × 3 tracks. A case is kept only if LineLab detects a new failure, and the fix is the reverse diff. Result: **9 labelled synthetic cases** that seed an empty base (`LINELAB_KB_SEED`).
+- **Accounts** (no new dependencies):
+  - GitHub OAuth;
+  - email magic links (one-time, hashed, 15 minutes, rate-limited; printed in the API log when self-hosting);
+  - HMAC-signed cookies;
+  - same-site redirects only.
+- **Gallery**: publish (signed in), public or unlisted, versions, delete (author only), search, a view page with outline and BOM, fork into local designs (lineage kept), copy link. Guests keep everything local.
+- **BOM**: grouped parts, mass including the chassis plate, typical prices from the database (all 124 parts have one), editable prices, CSV with formula injection defused.
+- **Learn mode**: three lessons. Two open the reference robot with a real buggy sketch, straight into Run with the sketch as the controller. Step progress is saved locally.
+- **PWA**: manifest, icons, a service worker; the studio works offline after one visit.
+- **i18n scaffolding**: a message catalogue with English (complete) and Spanish (navigation, home, footer); a language switcher.
+- **New home page**: features and entry points; Gallery and Learn added to the navigation.
+- **Accessibility**: contrast (accent `#087a5a`), accessible names, landmarks, focusable scroll regions, labelled status dots.
+- **Docker**:
+  - the web image ships `public/`;
+  - the API image ships the knowledge seed;
+  - compose wires the seed, sign-in (development-only default secret, links in the log) and a shared Postgres password.
+- **`scripts/smoke-compose.sh`**: checks every service, a real sandboxed compile, email sign-in, gallery publish/read/delete on Postgres, and the knowledge seed.
+- **Demo deployment** (`deploy/`): Caddy with automatic HTTPS as the only published service, required secrets, lower AI limits.
+- **README**: hero GIF, a Docker quick start for a clean machine, an architecture diagram.
+
+**Verified locally**
+
+- **Lighthouse** (`pnpm --filter @linelab/e2e lighthouse`, production build), on the home page and the run page (the reference robot opened in the Run view, confirmed from the final screenshot):
+
+  | Page | Form factor | Performance | Accessibility | Best practices |
+  | ---- | ----------- | ----------- | ------------- | -------------- |
+  | Home | mobile      | 100         | 100           | 100            |
+  | Home | desktop     | 100         | 100           | 100            |
+  | Run  | mobile      | 99          | 100           | 100            |
+  | Run  | desktop     | 100         | 100           | 100            |
+
+- **axe** (WCAG 2.1 A/AA, `a11y.spec.ts`): **no critical or serious issues** on 10 pages, the editor, a finished run, and home and editor in dark mode.
+- **`docker compose --profile apps up`** on fresh volumes, with all four app images built from the committed Dockerfiles: `smoke-compose.sh` passes everything, including the 9 seeded cases in Postgres. In a browser against the containers, the reference robot's sketch compiled in the sandboxed compiler and the emulated run finished, with no console errors.
+  - The images were built here with the sandbox's proxy CA added to temporary copies of the Dockerfiles; the committed Dockerfiles need none.
+  - A truly separate clean machine was not available.
+- **Knowledge base**: tested against a real pgvector container (store, deduplicate, confirm, retrieve by meaning). Retrieval on the seed finds the right bug class from symptom text.
+- **API**: sign-in against a fake GitHub (state check, code exchange); the full gallery flow in memory and on Postgres; opt-in sharing.
+- **e2e**:
+  - BOM → email sign-in → publish → gallery search → fork;
+  - lesson run shows the oscillation;
+  - Spanish switch persists;
+  - the editor reloads offline with the design from IndexedDB.
+
+**Deferred / known issues**
+
+- No SMTP mailer: sign-in emails are printed in the API log (fine for self-hosting; a public demo should use GitHub sign-in).
+- The embedder matches words, not meaning (bge-small needs PyTorch, which wasn't added without approval).
+- i18n covers navigation, home and footer only.
+- Lighthouse measures page load, not a running 3D simulation.
+- No learned models (failure predictor, RL tuner; BLUEPRINT §5.9.3): they need collected data.
+
+## After Phase 11
+
+All phases in `docs/BUILD_PLAN.md` are built. Open items that need hardware, data or keys:
+
+- a real-robot telemetry recording (Phase 9);
+- real robot photo sets and a live detection eval (Phase 10);
+- the live AI debugger fix rate (Phase 8);
+- physical-board flashing and Bluetooth tests;
+- an SMTP mailer.

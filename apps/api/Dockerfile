@@ -11,6 +11,8 @@ FROM node:22-alpine
 ENV NODE_ENV=production
 WORKDIR /app
 COPY --from=build /out .
+# Synthetic bug -> fix cases that seed an empty knowledge base (labelled synthetic).
+COPY --from=build /repo/examples/knowledge/seed.json ./seed/knowledge-seed.json
 USER node
 EXPOSE 4000
 CMD ["node", "dist/server.js"]

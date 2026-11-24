@@ -4,11 +4,70 @@
 
 You put together a virtual twin of your real robot from a database of real components, run **your actual firmware** on an emulated microcontroller on a virtual track, and see exactly where and why it fails. An AI debugging agent then proposes a fix that is verified in simulation before you ever see it.
 
-> **Status: Phases 0–10 of 11 done.** Search 124 real components, then assemble a robot in 3D on a chassis template or your own chassis, wire it (or auto-wire it), and get 50 live electrical and mechanical checks with one-click fixes. Pick one of 18 tracks, draw your own, or import one from a photo, then simulate the robot on it with datasheet physics and replay the run, driven by a reference PID or by **your own Arduino sketch** (emulated cycle-accurately on AVR boards). Every run comes with a report: failures detected and explained, tied to the line of your sketch that caused them, plus line-follower lint, cppcheck and clang-tidy. An AI debugger (Claude) finds the cause and proposes a fix that is shown only after LineLab has compiled it and verified it in simulation. The Robot tab connects to your real robot over USB serial or Bluetooth for live telemetry, flashes Uno/Nano/Pro Mini boards from the browser, calibrates the simulator to your recordings and auto-tunes PID gains. You can also start a design from photos of your robot: LineLab suggests the parts, layout and wiring, and you confirm each one. See the [roadmap](#roadmap).
+![LineLab: a robot assembled in 3D, then simulated on a track with live plots and a run report](docs/hero.gif)
+
+> **Status: all 12 build phases (0–11) are done.** Search 124 real components, assemble a robot in 3D on a chassis template or your own outline, wire it (or auto-wire it) with 50 live electrical and mechanical checks, then simulate it on 18 tracks (or your own, or one imported from a photo).
+>
+> The robot runs a reference PID or **your own Arduino sketch**, emulated cycle-accurately on AVR boards. Every run comes with a report: failures tied to the line of your sketch that caused them, line-follower lint, cppcheck and clang-tidy.
+>
+> - **AI debugger** (Claude): finds the cause and proposes a fix, shown only after LineLab has compiled it and verified it in simulation.
+> - **Robot tab**: talks to your real robot over USB or Bluetooth, flashes Uno, Nano and Pro Mini boards, calibrates the simulator to your recordings, and auto-tunes PID gains.
+> - **Photo import**: start a design from photos of your robot.
+> - **Sharing and learning**: publish and fork robots in the gallery, follow guided lessons, and use the studio offline.
+>
+> What is not verified yet is listed honestly in [`docs/PROGRESS.md`](docs/PROGRESS.md).
 
 ---
 
-## Quick start
+## Run it with Docker (any machine with Docker)
+
+You need **Docker** with Compose v2.24 or later, about 8 GB of free disk, and git.
+
+```bash
+git clone https://github.com/AK1725/LineLab.git
+```
+
+```bash
+cd LineLab
+```
+
+```bash
+docker compose --profile apps up -d --build
+```
+
+Open **http://localhost:3000**. The first build takes 15–30 minutes, mostly because the compiler image downloads the Arduino AVR and ESP32 toolchains. Later starts take seconds.
+
+- **Everything except the AI features works without any account or key.** That includes designs, simulation, firmware compile and emulation, the Robot tab, the gallery and lessons. Designs are kept in your browser.
+- **AI debugger and photo detection**: put `ANTHROPIC_API_KEY=…` in a `.env` file next to `docker-compose.yml` and run the command again. Users can also paste their own key in the app; it is used for that request only.
+- **Gallery sign-in**: choose "Email me a sign-in link". On a self-hosted stack the link is printed in the API log (`docker compose logs api`). For GitHub sign-in, set `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET`.
+- **Stop**: `docker compose --profile apps down`. Data lives in Docker volumes; add `-v` to delete it.
+
+To put a public demo online with HTTPS, see [`deploy/README.md`](deploy/README.md).
+
+## How it fits together
+
+```mermaid
+flowchart LR
+  subgraph Browser["Browser (works offline)"]
+    UI["Next.js studio<br/>3D editor · Code · Run · Robot"]
+    SIM["sim-core: 1 kHz physics<br/>+ firmware-runtime: avr8js / WASM HAL<br/>(Web Workers)"]
+    IDB[("IndexedDB<br/>your designs")]
+    UI --- SIM
+    UI --- IDB
+  end
+  UI -- "/api" --> WEB["web server<br/>(proxy)"]
+  WEB --> API["apps/api (Fastify)<br/>AI debugger · gallery · sign-in<br/>photo detection · knowledge base"]
+  WEB --> COMP["apps/compiler<br/>arduino-cli · clang→wasm<br/>no network, 1 GB, 60 s"]
+  WEB --> VIS["apps/vision (FastAPI)<br/>track images · robot outlines"]
+  API --> PG[("Postgres + pgvector")]
+  API --> COMP
+  API -. "optional" .-> CLAUDE["Claude API"]
+  Robot["Your robot<br/>(LineLabTelemetry)"] <-- "Web Serial / Bluetooth" --> UI
+```
+
+The simulator, the emulated microcontroller and your designs all run in the browser. The servers compile firmware in a sandbox, run the AI and vision features, and host the shared gallery and knowledge base.
+
+## Develop
 
 Prerequisites: **Node 22**, **pnpm 10** (`corepack enable`), **[uv](https://docs.astral.sh/uv/)** (Python), **Docker**.
 
@@ -40,6 +99,7 @@ Copy `.env.example` to `.env` for local settings.
 | `pnpm sim -- --track oval --seeds 1..50`        | headless simulation (reference PID) with Monte Carlo; `--design file.json`, `--trace out.json`, `--json` |
 | `pnpm eval:photos`                              | photo-detection eval: major parts in the top 3 (needs `ANTHROPIC_API_KEY` and photo sets; costs money)   |
 | `pnpm eval:agent`                               | AI debugger eval on the 12 buggy fixtures (needs `ANTHROPIC_API_KEY` and a compiler; costs money)        |
+| `pnpm --filter @linelab/e2e lighthouse`         | Lighthouse on the home and run pages (needs a running build on :3100); fails below 90                    |
 | `pnpm bench:sim`                                | simulator speed; fails below 20× real time                                                               |
 | `pnpm --filter @linelab/schema schema:generate` | regenerate the JSON Schema files after a schema change                                                   |
 | `docker compose --profile apps up -d --build`   | run the whole stack in containers                                                                        |
@@ -68,7 +128,8 @@ packages/photo-design  photo → design: detector interface (Claude vision), DB 
 examples/agent         scripted agent transcript (demos, e2e)
 packages/three-models, ui
 tracks/             18 built-in tracks (JSON, generated by sim-core/scripts/build-tracks.ts)
-e2e/                Playwright tests
+e2e/                Playwright tests (incl. axe), Lighthouse script
+deploy/             public demo: Caddy (HTTPS) + compose override
 docs/               blueprint, build plan, progress log, ADRs
 ```
 
@@ -87,13 +148,13 @@ docs/               blueprint, build plan, progress log, ADRs
 | 8     | AI debug agent with a verification gate                                 | ✅     |
 | 9     | Real-robot telemetry, browser flashing, twin calibration, PID auto-tune | ✅     |
 | 10    | Photo to virtual design                                                 | ✅     |
-| 11    | Knowledge base, gallery, polish, launch                                 | ⏳     |
+| 11    | Knowledge base, gallery, polish, launch                                 | ✅     |
 
 Full detail: [`docs/BLUEPRINT.md`](docs/BLUEPRINT.md) (what and why), [`docs/BUILD_PLAN.md`](docs/BUILD_PLAN.md) (order and acceptance criteria), [`docs/PROGRESS.md`](docs/PROGRESS.md) (where we are), [`docs/adr/`](docs/adr) (decisions).
 
 ## Honest limitations
 
-Simulation is not reality. Passing in LineLab means "likely to work", not "will work". Emulation is cycle-accurate only for AVR and RP2040, photo import assists rather than automates, and AI fixes can be wrong (which is why they are verified in simulation first). See [BLUEPRINT §8](docs/BLUEPRINT.md#8-limitations-state-these-in-the-readme).
+Simulation is not reality. Passing in LineLab means "likely to work", not "will work". Emulation is cycle-accurate only for AVR boards (Uno, Nano, Pro Mini); other boards run on an approximate HAL. Photo import assists rather than automates, and AI fixes can be wrong (which is why they are verified in simulation first). See [BLUEPRINT §8](docs/BLUEPRINT.md#8-limitations-state-these-in-the-readme).
 
 ## Contributing
 

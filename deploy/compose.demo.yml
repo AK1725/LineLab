@@ -1,0 +1,56 @@
+# Public demo deployment: docker-compose.yml plus this override.
+#   cp deploy/demo.env.example .env    # fill it in
+#   docker compose -f docker-compose.yml -f deploy/compose.demo.yml --profile apps up -d --build
+# Only Caddy (80/443, automatic HTTPS) is reachable from outside; databases, the API, vision and
+# the compiler stay on internal networks.
+services:
+  caddy:
+    image: caddy:2.10-alpine
+    profiles: [apps]
+    restart: unless-stopped
+    ports: ["80:80", "443:443"]
+    environment:
+      DEMO_DOMAIN: ${DEMO_DOMAIN:?Set DEMO_DOMAIN in .env}
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+    depends_on: [web]
+
+  web:
+    restart: unless-stopped
+    ports: !reset []
+
+  api:
+    restart: unless-stopped
+    ports: !reset []
+    environment:
+      # A real secret is required here (no default).
+      AUTH_SECRET: ${AUTH_SECRET:?Set AUTH_SECRET in .env (openssl rand -hex 32)}
+      PUBLIC_URL: https://${DEMO_DOMAIN:?Set DEMO_DOMAIN in .env}
+      # Tighter limits for a shared demo (AI calls cost money).
+      LINELAB_AGENT_PER_HOUR: ${LINELAB_AGENT_PER_HOUR:-3}
+      LINELAB_PHOTO_PER_HOUR: ${LINELAB_PHOTO_PER_HOUR:-5}
+
+  vision:
+    restart: unless-stopped
+    ports: !reset []
+
+  compiler:
+    restart: unless-stopped
+
+  postgres:
+    restart: unless-stopped
+    ports: !reset []
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+
+  redis:
+    restart: unless-stopped
+    ports: !reset []
+
+  seaweedfs:
+    restart: unless-stopped
+    ports: !reset []
+
+volumes:
+  caddy-data:
