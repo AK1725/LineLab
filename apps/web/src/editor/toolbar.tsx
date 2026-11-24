@@ -3,7 +3,10 @@
 import { chassisToDxf, chassisToStl, designToKicadNetlist } from "@linelab/design-core";
 import Link from "next/link";
 import { useState, type ReactNode } from "react";
+import { PublishDialog } from "../gallery/publish-dialog";
+import { BomTable } from "./bom";
 import { download, exportDesign, slug } from "./files";
+import { Modal } from "./modal";
 import {
   chassisOf,
   lookup,
@@ -57,6 +60,7 @@ export default function Toolbar({
   const canUndo = useCanUndo();
   const canRedo = useCanRedo();
   const [name, setName] = useState<string | null>(null);
+  const [dialog, setDialog] = useState<"bom" | "publish" | null>(null);
   const chassis = chassisOf(design);
   const base = slug(design.name);
 
@@ -152,6 +156,22 @@ export default function Toolbar({
       <div className="ml-auto flex flex-wrap items-center gap-2">
         <Tool onClick={onChassis}>Chassis…</Tool>
         <Tool
+          label="Bill of materials: parts, mass and cost"
+          onClick={() => {
+            setDialog("bom");
+          }}
+        >
+          BOM
+        </Tool>
+        <Tool
+          label="Publish this robot to the gallery"
+          onClick={() => {
+            setDialog("publish");
+          }}
+        >
+          Publish…
+        </Tool>
+        <Tool
           label="Download design as JSON"
           onClick={() => {
             download(`${base}.linelab.json`, exportDesign(design), "application/json");
@@ -188,6 +208,24 @@ export default function Toolbar({
           </>
         )}
       </div>
+      {dialog === "bom" && (
+        <Modal
+          title="Bill of materials"
+          onClose={() => {
+            setDialog(null);
+          }}
+        >
+          <BomTable design={design} lookup={lookup} />
+        </Modal>
+      )}
+      {dialog === "publish" && (
+        <PublishDialog
+          design={design}
+          onClose={() => {
+            setDialog(null);
+          }}
+        />
+      )}
     </div>
   );
 }

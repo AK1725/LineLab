@@ -1,6 +1,8 @@
 import { readFileSync } from "node:fs";
 import { MemoryKnowledge, type FixKnowledge, type NewCase } from "@linelab/agent";
 import { PgKnowledge } from "./db/pg-knowledge.js";
+import { PgStore } from "./db/pg-store.js";
+import { MemoryStore, type Store } from "./store.js";
 
 /**
  * The fix knowledge base: Postgres + pgvector when DATABASE_URL is set (falling back to memory,
@@ -24,4 +26,18 @@ export async function openKnowledge(env: NodeJS.ProcessEnv): Promise<FixKnowledg
     if (empty) for (const c of seed) await kb.add({ ...c, source: "synthetic" });
   }
   return kb;
+}
+
+/** Accounts and the gallery: Postgres when DATABASE_URL is set, else memory (lost on restart). */
+export async function openStore(env: NodeJS.ProcessEnv): Promise<Store> {
+  if (env.DATABASE_URL) {
+    try {
+      return await PgStore.connect(env.DATABASE_URL);
+    } catch (err) {
+      console.warn(
+        `Gallery: can't reach Postgres (${(err as Error).message}); using memory, nothing will persist.`,
+      );
+    }
+  }
+  return new MemoryStore();
 }

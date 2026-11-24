@@ -7,6 +7,7 @@ export * from "./snap.js";
 export * from "./history.js";
 export * from "./defaults.js";
 export * from "./autowire.js";
+export * from "./bom.js";
 export * from "./chassis-builder.js";
 export { chassisToDxf, parseDxfOutline, type ImportedOutline } from "./io/dxf.js";
 export { parseSvgOutline } from "./io/svg.js";

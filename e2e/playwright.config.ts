@@ -40,6 +40,10 @@ export default defineConfig({
         LINELAB_PHOTO_SCRIPT:
           "../packages/photo-design/fixtures/nano-tb6612-qtr8a/detections.boxed.json",
         LINELAB_PHOTO_PER_HOUR: "1000",
+        // Gallery sign-in: test-only secret, and email links returned in the response (dev only).
+        AUTH_SECRET: "e2e-only-secret-not-for-production-0123456789",
+        PUBLIC_URL: `http://localhost:${port}`,
+        LINELAB_AUTH_DEV_LINKS: "1",
       },
     },
   ],

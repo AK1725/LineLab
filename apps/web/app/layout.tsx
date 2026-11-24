@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { UserMenu } from "../src/gallery/user-menu";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -15,7 +16,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <header className="border-b border-border">
           <nav
             aria-label="Main"
-            className="mx-auto flex max-w-5xl items-center gap-6 px-4 py-3 sm:px-6"
+            className="mx-auto flex max-w-5xl flex-wrap items-center gap-x-5 gap-y-1 px-4 py-3 sm:px-6"
           >
             <Link href="/" className="font-semibold tracking-tight">
               LineLab
@@ -29,6 +30,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <Link href="/components" className="text-sm text-muted hover:text-fg">
               Components
             </Link>
+            <Link href="/gallery" className="text-sm text-muted hover:text-fg">
+              Gallery
+            </Link>
+            <UserMenu />
           </nav>
         </header>
         {children}

@@ -1,14 +1,20 @@
 import { agentDepsFromEnv } from "./agent-deps.js";
 import { buildApp } from "./app.js";
-import { openKnowledge } from "./knowledge.js";
+import { authConfigFromEnv } from "./auth.js";
+import { openKnowledge, openStore } from "./knowledge.js";
 import { photoDepsFromEnv } from "./photo-routes.js";
 import { loadConfig } from "./config.js";
 
 const config = loadConfig();
 const knowledge = await openKnowledge(process.env);
+const store = await openStore(process.env);
 const app = buildApp(config, {
   agent: agentDepsFromEnv(process.env, knowledge),
   photo: photoDepsFromEnv(),
+  store,
+  auth: authConfigFromEnv(process.env, (m) => {
+    console.info(m);
+  }),
 });
 
 const shutdown = (signal: string) => {
