@@ -40,6 +40,7 @@ function EventItem({ e }: { e: SimEvent }) {
       <div className="flex items-center gap-2">
         <span
           className={`h-2 w-2 shrink-0 rounded-full ${DOT[e.severity]}`}
+          role="img"
           aria-label={e.severity}
         />
         <button
@@ -96,6 +97,7 @@ export function ReportPanel({ run }: { run: CompletedRun }) {
                 <div className="flex items-center gap-2">
                   <span
                     className={`h-2 w-2 shrink-0 rounded-full ${DOT[f.severity]}`}
+                    role="img"
                     aria-label={f.severity}
                   />
                   <span>{f.message}</span>

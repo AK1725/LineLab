@@ -198,7 +198,7 @@ export default function Editor() {
   if (status === "loading") return <p className="p-6 text-sm text-muted">Loading design…</p>;
 
   return (
-    <div className="flex h-[calc(100dvh-49px)] flex-col">
+    <main className="flex h-[calc(100dvh-49px)] flex-col">
       <Toolbar
         saveState={saveState}
         onChassis={() => {
@@ -232,6 +232,6 @@ export default function Editor() {
           }}
         />
       )}
-    </div>
+    </main>
   );
 }

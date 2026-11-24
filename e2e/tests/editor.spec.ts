@@ -86,7 +86,7 @@ test.describe("assembly editor", () => {
     // Export the design and check it is a valid LineLab document.
     const [download] = await Promise.all([
       page.waitForEvent("download"),
-      page.getByRole("button", { name: "Download design as JSON" }).click(),
+      page.getByRole("button", { name: "Export JSON (download the design)" }).click(),
     ]);
     const file = await download.path();
     const parsed = Design.safeParse(JSON.parse(readFileSync(file, "utf8")));
@@ -213,7 +213,7 @@ test.describe("assembly editor", () => {
     await addPart(page, "nano", "Arduino Nano (ATmega328P)");
     const [download] = await Promise.all([
       page.waitForEvent("download"),
-      page.getByRole("button", { name: "Download design as JSON" }).click(),
+      page.getByRole("button", { name: "Export JSON (download the design)" }).click(),
     ]);
     const path = await download.path();
     await page.goto("/build");

@@ -187,7 +187,7 @@ function Results() {
       <p
         data-testid="run-outcome"
         data-outcome={s.outcome}
-        className={`rounded-md px-2 py-1 font-medium ${s.outcome === "finished" ? "bg-accent/15 text-accent" : "bg-red-500/10 text-red-600"}`}
+        className={`rounded-md px-2 py-1 font-medium ${s.outcome === "finished" ? "bg-accent text-white dark:text-black" : "bg-red-500/10 text-red-700 dark:text-red-400"}`}
       >
         {OUTCOME_TEXT[s.outcome]}
       </p>
@@ -465,7 +465,12 @@ export default function RunView() {
         )}
         {run && <Timeline />}
         {run && (
-          <div className="max-h-[40vh] overflow-y-auto border-t border-border p-3">
+          <div
+            className="max-h-[40vh] overflow-y-auto border-t border-border p-3"
+            role="region"
+            aria-label="Run plots"
+            tabIndex={0}
+          >
             <RunPlots trace={run.trace} endMs={Math.max(1, traceEndMs(run))} />
             {run.summary.firmware?.watch && run.summary.firmware.watch.names.length > 0 && (
               <WatchPlots

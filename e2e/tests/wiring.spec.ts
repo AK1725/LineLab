@@ -82,7 +82,7 @@ test.describe("wiring and checks", () => {
 
     const [net] = await Promise.all([
       page.waitForEvent("download"),
-      page.getByRole("button", { name: "Download the netlist for KiCad" }).click(),
+      page.getByRole("button", { name: "KiCad netlist (download)" }).click(),
     ]);
     const text = readFileSync(await net.path(), "utf8");
     expect(text).toMatch(/^\(export \(version "E"\)/);

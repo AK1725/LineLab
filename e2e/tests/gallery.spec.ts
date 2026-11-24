@@ -30,7 +30,7 @@ test("BOM → sign in by email → publish → gallery → fork", async ({ page 
   );
 
   // Bill of materials: real parts, typical prices from the database.
-  await page.getByRole("button", { name: "Bill of materials: parts, mass and cost" }).click();
+  await page.getByRole("button", { name: "BOM: parts, mass and cost" }).click();
   const bom = page.getByRole("dialog", { name: "Bill of materials" });
   await expect(
     bom.getByRole("cell", { name: "Arduino Nano (ATmega328P)", exact: true }),
@@ -39,7 +39,7 @@ test("BOM → sign in by email → publish → gallery → fork", async ({ page 
   await bom.getByRole("button", { name: "Close" }).click();
 
   // Publishing needs an account: sign in with an emailed link (returned directly in dev).
-  await page.getByRole("button", { name: "Publish this robot to the gallery" }).click();
+  await page.getByRole("button", { name: "Publish to the gallery" }).click();
   await page.getByRole("dialog").getByRole("link", { name: "Sign in" }).click();
   await expect(page.getByRole("heading", { name: "Sign in" })).toBeVisible();
   await page.getByLabel("Email").fill("e2e@example.com");
@@ -48,7 +48,7 @@ test("BOM → sign in by email → publish → gallery → fork", async ({ page 
   await expect(page).toHaveURL(new RegExp(`/build/edit\\?id=${id}`));
   await expect(page.getByText("e2e", { exact: true })).toBeVisible();
 
-  await page.getByRole("button", { name: "Publish this robot to the gallery" }).click();
+  await page.getByRole("button", { name: "Publish to the gallery" }).click();
   const dialog = page.getByRole("dialog", { name: "Publish to the gallery" });
   await expect(dialog.getByLabel("Title")).toHaveValue(title);
   await dialog.getByLabel("Description").fill("Published by the e2e test.");

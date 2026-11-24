@@ -8,10 +8,13 @@
   "scripts": {
     "test:e2e": "playwright test",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint . --max-warnings 0"
+    "lint": "eslint . --max-warnings 0",
+    "lighthouse": "node scripts/lighthouse.mjs"
   },
   "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
+    "@linelab/schema": "workspace:*",
     "@playwright/test": "1.63.0",
-    "@linelab/schema": "workspace:*"
+    "lighthouse": "13.6.0"
   }
 }

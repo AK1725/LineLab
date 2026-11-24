@@ -26,7 +26,7 @@ declare global {
 export function TierBadge({ tier }: { tier: "emulated" | "hal" }) {
   return tier === "emulated" ? (
     <span
-      className="rounded-full bg-accent/15 px-2 py-0.5 text-xs font-medium text-accent"
+      className="rounded-full bg-accent px-2 py-0.5 text-xs font-medium text-white dark:text-black"
       title="The compiled binary runs on an emulated CPU, cycle by cycle (avr8js)."
     >
       Emulated · cycle-accurate

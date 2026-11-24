@@ -316,7 +316,7 @@ export default function AgentPanel({
           <span
             data-testid="agent-status"
             data-status={a.result.status}
-            className={`rounded-full px-2 py-0.5 text-xs ${a.result.status === "fixed" ? "bg-accent/15 text-accent" : "bg-amber-500/15 text-amber-700"}`}
+            className={`rounded-full px-2 py-0.5 text-xs ${a.result.status === "fixed" ? "bg-accent text-white dark:text-black" : "bg-amber-500/15 text-amber-700"}`}
           >
             {STATUS_TEXT[a.result.status]}
             {a.result.model === "scripted" ? " (scripted demo transcript)" : ""}

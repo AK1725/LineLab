@@ -76,7 +76,12 @@ function Plot({
         <span className="ml-auto flex gap-2">
           {series.length <= 3 &&
             series.map((s) => (
-              <span key={s.label} style={{ color: s.color }}>
+              <span key={s.label} className="flex items-center gap-1">
+                <span
+                  aria-hidden="true"
+                  className="inline-block h-0.5 w-3 rounded"
+                  style={{ background: s.color }}
+                />
                 {s.label}
               </span>
             ))}

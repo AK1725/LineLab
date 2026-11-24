@@ -95,7 +95,7 @@ export default function Toolbar({
         }}
         disabled={!canUndo}
       >
-        ↶
+        <span aria-hidden="true">↶</span>
       </Tool>
       <Tool
         label="Redo (Ctrl+Shift+Z)"
@@ -104,7 +104,7 @@ export default function Toolbar({
         }}
         disabled={!canRedo}
       >
-        ↷
+        <span aria-hidden="true">↷</span>
       </Tool>
       <div className="mx-1 h-5 w-px bg-border" />
       {(
@@ -156,7 +156,7 @@ export default function Toolbar({
       <div className="ml-auto flex flex-wrap items-center gap-2">
         <Tool onClick={onChassis}>Chassis…</Tool>
         <Tool
-          label="Bill of materials: parts, mass and cost"
+          label="BOM: parts, mass and cost"
           onClick={() => {
             setDialog("bom");
           }}
@@ -164,15 +164,15 @@ export default function Toolbar({
           BOM
         </Tool>
         <Tool
-          label="Publish this robot to the gallery"
+          label="Publish to the gallery"
           onClick={() => {
             setDialog("publish");
           }}
         >
-          Publish…
+          Publish
         </Tool>
         <Tool
-          label="Download design as JSON"
+          label="Export JSON (download the design)"
           onClick={() => {
             download(`${base}.linelab.json`, exportDesign(design), "application/json");
           }}
@@ -180,7 +180,7 @@ export default function Toolbar({
           Export JSON
         </Tool>
         <Tool
-          label="Download the netlist for KiCad"
+          label="KiCad netlist (download)"
           onClick={() => {
             download(`${base}.net`, designToKicadNetlist(design, lookup), "text/plain");
           }}
@@ -190,7 +190,7 @@ export default function Toolbar({
         {chassis && (
           <>
             <Tool
-              label="Download the chassis plate as DXF (laser cutting)"
+              label="DXF of the chassis plate (laser cutting)"
               onClick={() => {
                 download(`${base}-chassis.dxf`, chassisToDxf(chassis), "application/dxf");
               }}
@@ -198,7 +198,7 @@ export default function Toolbar({
               DXF
             </Tool>
             <Tool
-              label="Download the chassis plate as STL (3D printing)"
+              label="STL of the chassis plate (3D printing)"
               onClick={() => {
                 download(`${base}-chassis.stl`, chassisToStl(chassis), "model/stl");
               }}
