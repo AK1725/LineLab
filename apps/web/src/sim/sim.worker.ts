@@ -1,7 +1,12 @@
 /// <reference lib="webworker" />
 import { getChassis, getComponent } from "@linelab/component-db";
 import { resolveChassis } from "@linelab/design-core";
-import { AvrController, HalRunner, resolveWiring } from "@linelab/firmware-runtime";
+import {
+  AvrController,
+  HalRunner,
+  resolveWiring,
+  type FirmwareRun,
+} from "@linelab/firmware-runtime";
 import {
   buildRobotModel,
   NOMINAL,
@@ -15,10 +20,15 @@ import {
   type RobotModel,
   type SimResult,
 } from "@linelab/sim-core";
+import { buildRunReport } from "@linelab/run-report";
 import type { Design, FirmwareArtifact } from "@linelab/schema";
 import type { FirmwareReport, RunRequest, RunResponse, RunSummary } from "./protocol";
 
 const RECORD_MS = 10;
+
+type DetectData = Pick<FirmwareRun, "sampleTimesMs" | "longCalls" | "stalls" | "wiring"> & {
+  watchSeries?: FirmwareRun["watchSeries"];
+};
 
 function post(msg: RunResponse, transfer: Transferable[] = []) {
   (self as unknown as DedicatedWorkerGlobalScope).postMessage(msg, transfer);
@@ -33,7 +43,7 @@ function runFirmwareSeed(
   config: ConstructorParameters<typeof Simulation>[3],
   detail: boolean,
   alive: (simMs: number) => void,
-): { result: SimResult; report: FirmwareReport } {
+): { result: SimResult; report: FirmwareReport; detect: DetectData } {
   const wiring = resolveWiring(design, getComponent, robot);
   const t0 = performance.now();
   if (artifact.tier === "emulated") {
@@ -54,6 +64,13 @@ function runFirmwareSeed(
     const result = sim.result();
     return {
       result,
+      detect: {
+        sampleTimesMs: c.sampleTimesMs(),
+        longCalls: c.longCalls(),
+        stalls: c.stalls(),
+        watchSeries: { names, samples },
+        wiring,
+      },
       report: {
         tier: "emulated",
         serial: c.serial,
@@ -76,6 +93,12 @@ function runFirmwareSeed(
   const result = runner.run();
   return {
     result,
+    detect: {
+      sampleTimesMs: runner.sampleTimesMs(),
+      longCalls: runner.longCalls(),
+      stalls: [],
+      wiring,
+    },
     report: {
       tier: "hal",
       serial: runner.serial,
@@ -105,6 +128,7 @@ self.onmessage = (e: MessageEvent<RunRequest>) => {
       };
       let r: SimResult;
       let firmware: FirmwareReport | undefined;
+      let detectData: DetectData | undefined;
       if (req.firmware) {
         const out = runFirmwareSeed(
           req.design,
@@ -119,9 +143,24 @@ self.onmessage = (e: MessageEvent<RunRequest>) => {
         );
         r = out.result;
         firmware = out.report;
+        detectData = out.detect;
       } else r = new Simulation(robot, field, new ReferencePid(req.pid), config).run();
       runs.push({ seed, outcome: r.outcome, metrics: r.metrics, hash: r.hash });
       if (i === 0) {
+        const report = buildRunReport({
+          result: r,
+          field,
+          recordEveryMs: RECORD_MS,
+          ...(detectData && req.firmwareSource
+            ? {
+                firmware: {
+                  run: detectData,
+                  source: req.firmwareSource.text,
+                  file: req.firmwareSource.file,
+                },
+              }
+            : {}),
+        });
         main = {
           summary: {
             seed,
@@ -131,7 +170,9 @@ self.onmessage = (e: MessageEvent<RunRequest>) => {
               firmware?.loop && firmware.loop.medianMs > 0
                 ? { ...r.metrics, loopFrequencyHz: 1000 / firmware.loop.medianMs }
                 : r.metrics,
-            events: r.events,
+            events: report.events,
+            lint: report.lint,
+            counts: report.counts,
             notes: r.notes,
             hash: r.hash,
             durationMs: r.durationMs,

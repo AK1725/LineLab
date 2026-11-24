@@ -17,6 +17,10 @@ export const SimEventType = z.enum([
   "control_loop_jitter",
   "checkpoint",
   "lap_complete",
+  /** One wheel turns backwards for a long time while the robot makes no progress. */
+  "wrong_direction",
+  /** The robot steers away from the line (sensor order or steering sign reversed). */
+  "steering_inverted",
 ]);
 export type SimEventType = z.infer<typeof SimEventType>;
 
@@ -25,6 +29,8 @@ export const SourceLoc = z
     file: z.string().min(1),
     line: z.number().int().positive(),
     fn: z.string().optional(),
+    /** True when measured (program counter); false when the line was found by pattern. */
+    exact: z.boolean().optional(),
   })
   .strict();
 export type SourceLoc = z.infer<typeof SourceLoc>;
@@ -35,6 +41,8 @@ export const SimEvent = z
     type: SimEventType,
     severity: z.enum(["error", "warning", "info"]),
     data: z.record(z.string(), z.unknown()),
+    /** Plain-language explanation and what to try. */
+    message: z.string().optional(),
     sourceLoc: SourceLoc.optional(),
   })
   .strict();

@@ -98,3 +98,24 @@ export const CompileResponse = z.discriminatedUnion("ok", [
     .strict(),
 ]);
 export type CompileResponse = z.infer<typeof CompileResponse>;
+
+/** A static-analysis finding on firmware (LineLab's LFR rules, cppcheck or clang-tidy). */
+export const FirmwareFinding = z
+  .object({
+    tool: z.enum(["linelab", "cppcheck", "clang-tidy"]),
+    ruleId: z.string().min(1),
+    severity: z.enum(["error", "warning", "info"]),
+    file: z.string(),
+    line: z.number().int().nonnegative(),
+    column: z.number().int().nonnegative().optional(),
+    message: z.string(),
+    /** Why it matters on a line follower, and what to do. */
+    explanation: z.string().optional(),
+  })
+  .strict();
+export type FirmwareFinding = z.infer<typeof FirmwareFinding>;
+
+export const AnalyzeResponse = z
+  .object({ findings: z.array(FirmwareFinding), log: z.string() })
+  .strict();
+export type AnalyzeResponse = z.infer<typeof AnalyzeResponse>;

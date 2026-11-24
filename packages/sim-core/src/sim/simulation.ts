@@ -78,6 +78,10 @@ export const TRACE_CHANNELS = [
   "currentRightA",
   "wheelLeftRadS",
   "wheelRightRadS",
+  /** How many sensor channels are over the painted line (ground truth, for detectors). */
+  "lineSeen",
+  /** Distance from the sensor array centre to the followed line (mm). */
+  "distanceMm",
 ] as const;
 export type TraceChannel = (typeof TRACE_CHANNELS)[number];
 
@@ -165,6 +169,7 @@ export class Simulation {
   private brownedOut = false;
   private lastReadings: number[] = [];
   private lateralMm = 0;
+  private distanceMm = 0;
   private progressMm = 0;
   private lapsDone = 0;
   private lapTimeMs: number | undefined;
@@ -431,6 +436,7 @@ export class Simulation {
     const atSensors = this.sensorTracker.update(sx, sy);
     const prog = this.tracker.update(p.x, p.y);
     this.lateralMm = clamp(atSensors.lateral ?? this.lateralMm, -300, 300);
+    this.distanceMm = Math.min(atSensors.distance, 999);
     const L = this.field.path.length;
     this.progressMm = this.closed ? prog.total : prog.s;
 
@@ -530,6 +536,15 @@ export class Simulation {
     d[o + 13] = wr.currentA;
     d[o + 14] = wl.omega;
     d[o + 15] = wr.omega;
+    const ct = Math.cos(p.headingRad);
+    const st = Math.sin(p.headingRad);
+    let seen = 0;
+    for (const ch of this.robot.sensors) {
+      if (this.field.onLine(p.x + ch.xMm * ct - ch.yMm * st, p.y + ch.xMm * st + ch.yMm * ct))
+        seen++;
+    }
+    d[o + 16] = seen;
+    d[o + 17] = this.distanceMm;
     this.lastReadings.forEach((v, i) => (d[o + TRACE_CHANNELS.length + i] = v));
     this.count++;
   }

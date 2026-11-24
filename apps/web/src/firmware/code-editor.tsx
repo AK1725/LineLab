@@ -4,6 +4,7 @@ import Editor, { type OnMount } from "@monaco-editor/react";
 import type { CompileDiagnostic } from "@linelab/schema";
 import { useEffect, useRef } from "react";
 import { monaco } from "./monaco-setup";
+import { useFirmware } from "./store";
 
 type Ed = Parameters<OnMount>[0];
 
@@ -17,7 +18,7 @@ export default function CodeEditor({
   value: string;
   onChange: (v: string) => void;
   diagnostics: CompileDiagnostic[];
-  reveal: number | null;
+  reveal: { line: number; seq: number } | null;
 }) {
   const editor = useRef<Ed | null>(null);
   const dark =
@@ -47,10 +48,13 @@ export default function CodeEditor({
     );
   }, [diagnostics]);
 
+  const show = (e: Ed, line: number) => {
+    e.revealLineInCenter(line);
+    e.setPosition({ lineNumber: line, column: 1 });
+  };
   useEffect(() => {
     if (reveal === null || !editor.current) return;
-    editor.current.revealLineInCenter(reveal);
-    editor.current.setPosition({ lineNumber: reveal, column: 1 });
+    show(editor.current, reveal.line);
     editor.current.focus();
   }, [reveal]);
 
@@ -64,6 +68,9 @@ export default function CodeEditor({
       }}
       onMount={(e) => {
         editor.current = e;
+        // A line requested before the editor existed (e.g. from a run report link).
+        const pending = useFirmware.getState().reveal;
+        if (pending) show(e, pending.line);
       }}
       options={{
         minimap: { enabled: false },

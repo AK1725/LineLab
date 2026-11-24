@@ -7,8 +7,9 @@ import dynamic from "next/dynamic";
 import { useEffect, useMemo, useState } from "react";
 import { useDesign } from "../editor/store";
 import { TierBadge } from "../firmware/code-view";
-import { boardOf, useFirmware } from "../firmware/store";
+import { boardOf, SKETCH_FILE, useFirmware } from "../firmware/store";
 import { FirmwarePanel, WatchPlots } from "./firmware-panel";
+import { ReportPanel } from "./report-panel";
 import { listTracks } from "../tracks/storage";
 import { RunPlots } from "./plots";
 import { SPEEDS, traceEndMs, useRun } from "./run-store";
@@ -163,8 +164,6 @@ function Timeline() {
 
 function Results() {
   const run = useRun((s) => s.current);
-  const seek = useRun((s) => s.seek);
-  const setPlaying = useRun((s) => s.setPlaying);
   if (!run) return null;
   const { summary: s } = run;
   const m = s.metrics;
@@ -199,28 +198,7 @@ function Results() {
           </div>
         ))}
       </dl>
-      {s.events.length > 0 && (
-        <div>
-          <h3 className="text-xs font-semibold uppercase text-muted">Events</h3>
-          <ul className="mt-1 space-y-1" data-testid="run-events">
-            {s.events.map((e, i) => (
-              <li key={i}>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setPlaying(false);
-                    seek(e.tMs);
-                  }}
-                  className="text-left hover:text-accent"
-                >
-                  <span className="tabular-nums text-muted">{(e.tMs / 1000).toFixed(2)} s</span>{" "}
-                  {e.type.replace(/_/g, " ")}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      <ReportPanel run={run} />
       {run.runs.length > 1 && (
         <div data-testid="monte-carlo">
           <h3 className="text-xs font-semibold uppercase text-muted">Monte Carlo</h3>
@@ -315,7 +293,10 @@ export default function RunView() {
     const seeds =
       mc > 1 ? [seed, ...Array.from({ length: mc - 1 }, (_, i) => seed + i + 1)] : [seed];
     if (controller === "firmware" && artifact && firmwareReady) {
-      useRun.getState().start(design, track, seeds, pid, `firmware, seed ${seed}`, artifact);
+      useRun.getState().start(design, track, seeds, pid, `firmware, seed ${seed}`, artifact, {
+        text: useFirmware.getState().source,
+        file: SKETCH_FILE,
+      });
     } else {
       useRun
         .getState()

@@ -1,6 +1,7 @@
 import { execFileSync } from "node:child_process";
 import { existsSync } from "node:fs";
 import { describe, expect, it } from "vitest";
+import { analyze, parseClangTidy, parseCppcheck } from "./analyze.js";
 import { compile, tierOf } from "./compile.js";
 import { configFromEnv } from "./config.js";
 import {
@@ -120,6 +121,39 @@ describe("output parsers", () => {
   });
 });
 
+describe("static analysis parsers", () => {
+  it("reads cppcheck's template output and keeps only the sketch", () => {
+    const out =
+      "t.ino:5:3:error:arrayIndexOutOfBounds:Array 'v[3]' accessed at index 3\nArduino.h:10:1:style:foo:bar\n";
+    expect(parseCppcheck(out, "t.ino")).toEqual([
+      {
+        tool: "cppcheck",
+        ruleId: "cppcheck.arrayIndexOutOfBounds",
+        severity: "error",
+        file: "t.ino",
+        line: 5,
+        column: 3,
+        message: "Array 'v[3]' accessed at index 3",
+      },
+    ]);
+  });
+  it("maps clang-tidy's .cpp line numbers back to the sketch", () => {
+    const out =
+      "/tmp/a/t.ino.cpp:9:13: warning: result of integer division used in a floating point context [bugprone-integer-division]\n/x/Arduino.h:3:1: warning: y [z]\n";
+    expect(parseClangTidy(out, "t.ino", 3)).toEqual([
+      {
+        tool: "clang-tidy",
+        ruleId: "clang-tidy.bugprone-integer-division",
+        severity: "warning",
+        file: "t.ino",
+        line: 6,
+        column: 13,
+        message: "result of integer division used in a floating point context",
+      },
+    ]);
+  });
+});
+
 describe("sandboxed jobs", () => {
   const env = { PATH: process.env.PATH ?? "/usr/bin:/bin", HOME: "/tmp" };
   it("kills a job at its time limit", async () => {
@@ -199,7 +233,48 @@ const hasClangWasm = (() => {
   }
 })();
 
+const hasAnalyzers = (() => {
+  try {
+    execFileSync(cfg.cppcheck, ["--version"], { stdio: "ignore" });
+    execFileSync(cfg.clangTidy, ["--version"], { stdio: "ignore" });
+    return true;
+  } catch {
+    return false;
+  }
+})();
+
 describe("real toolchains", () => {
+  it.runIf(hasAnalyzers)(
+    "cppcheck and clang-tidy find bugs at sketch lines",
+    async () => {
+      const r = await analyze(
+        {
+          board: "arduino:avr:nano",
+          files: {
+            "t.ino":
+              "int v[3];\nvoid setup() {}\nvoid loop() {\n  v[3] = 1;\n  float h = 1 / 2;\n  v[0] = (int)h;\n}\n",
+          },
+        },
+        cfg,
+      );
+      expect(r.findings).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            tool: "cppcheck",
+            ruleId: "cppcheck.arrayIndexOutOfBounds",
+            line: 4,
+          }),
+          expect.objectContaining({
+            tool: "clang-tidy",
+            ruleId: "clang-tidy.bugprone-integer-division",
+            line: 5,
+          }),
+        ]),
+      );
+    },
+    120_000,
+  );
+
   it.runIf(hasArduino)(
     "compiles an AVR sketch, with line table and typed symbols, and maps errors to lines",
     async () => {

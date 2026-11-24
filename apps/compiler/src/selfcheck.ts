@@ -4,6 +4,7 @@
 import { mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { analyze } from "./analyze.js";
 import { compile } from "./compile.js";
 import { configFromEnv } from "./config.js";
 import { runJob } from "./sandbox.js";
@@ -83,6 +84,19 @@ results.push([
   "HAL (clang → wasm32) compiles offline",
   hal.ok,
   hal.ok ? `${hal.artifact.sizes.flashBytes} bytes` : hal.log.slice(0, 400),
+]);
+
+const an = await analyze(
+  {
+    board: "arduino:avr:nano",
+    files: { "t.ino": "int v[3];\nvoid setup(){}\nvoid loop(){ v[3] = 1; }\n" },
+  },
+  configFromEnv(),
+);
+results.push([
+  "cppcheck and clang-tidy run offline",
+  an.findings.some((f) => f.tool === "cppcheck"),
+  `${String(an.findings.length)} finding(s)`,
 ]);
 
 for (const [name, pass, detail] of results) console.log(`${pass ? "✓" : "✗"} ${name} (${detail})`);

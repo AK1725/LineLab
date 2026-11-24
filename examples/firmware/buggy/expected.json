@@ -1,0 +1,99 @@
+{
+  "$comment": "Failure-detection acceptance (BUILD_PLAN Phase 7). Each buggy sketch runs on the reference Nano robot on `track` (seed 0) and must produce every listed finding at the listed line; `contains` is text on that line, so a stale line number fails loudly. Kinds: `event` = runtime detector, `lint` = static rule.",
+  "fixtures": {
+    "no_derivative": {
+      "track": "oval",
+      "expect": [
+        { "kind": "lint", "id": "lfr.no-derivative", "line": 18, "contains": "float Kd = 0" },
+        { "kind": "event", "id": "oscillation", "line": 18, "contains": "float Kd = 0" }
+      ]
+    },
+    "p_too_high": {
+      "track": "oval",
+      "expect": [{ "kind": "event", "id": "oscillation", "line": 17, "contains": "float Kp = 0.5" }]
+    },
+    "blocking_delay": {
+      "track": "oval",
+      "expect": [
+        { "kind": "event", "id": "blocking_delay", "line": 69, "contains": "delay(25)" },
+        { "kind": "lint", "id": "lfr.delay-in-loop", "line": 69, "contains": "delay(25)" }
+      ]
+    },
+    "integer_pid": {
+      "track": "oval",
+      "expect": [
+        { "kind": "lint", "id": "lfr.integer-pid-math", "line": 63, "contains": "error / KP_DIV" }
+      ]
+    },
+    "missing_integral_clamp": {
+      "track": "oval",
+      "expect": [
+        {
+          "kind": "lint",
+          "id": "lfr.integral-no-clamp",
+          "line": 65,
+          "contains": "integral += error"
+        }
+      ]
+    },
+    "wrong_pin_numbers": {
+      "track": "oval",
+      "expect": [
+        { "kind": "lint", "id": "lfr.pin-mismatch", "line": 13, "contains": "PWMA = 9" },
+        { "kind": "event", "id": "stuck" }
+      ]
+    },
+    "inverted_motor": {
+      "track": "oval",
+      "expect": [
+        {
+          "kind": "event",
+          "id": "wrong_direction",
+          "line": 68,
+          "contains": "setMotor(PWMB, BIN2, BIN1"
+        }
+      ]
+    },
+    "no_line_lost_recovery": {
+      "track": "right-angles",
+      "expect": [
+        { "kind": "event", "id": "line_lost", "line": 56, "contains": "if (lost) error = 0" }
+      ]
+    },
+    "millis_overflow": {
+      "track": "oval",
+      "expect": [
+        {
+          "kind": "lint",
+          "id": "lfr.millis-overflow",
+          "line": 70,
+          "contains": "millis() > lastPrint + 250"
+        }
+      ]
+    },
+    "saturating_pwm": {
+      "track": "oval",
+      "expect": [
+        {
+          "kind": "lint",
+          "id": "lfr.analogwrite-range",
+          "line": 28,
+          "contains": "analogWrite(pwm, abs(speed))"
+        }
+      ]
+    },
+    "wrong_sensor_order": {
+      "track": "oval",
+      "expect": [
+        { "kind": "event", "id": "steering_inverted", "line": 52, "contains": "1000L * i - 3500" }
+      ]
+    },
+    "uncalibrated_thresholds": {
+      "track": "oval",
+      "expect": [
+        { "kind": "lint", "id": "lfr.hardcoded-threshold", "line": 50, "contains": "v[i] > 900" }
+      ]
+    }
+  },
+  "clean": { "sketch": "good_pid", "tracks": ["oval", "figure-eight", "right-angles"] }
+}

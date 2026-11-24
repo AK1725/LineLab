@@ -6,3 +6,4 @@ export { compile, tierOf, EMULATED_FQBN, type CompilerConfig } from "./compile.j
 export { configFromEnv } from "./config.js";
 export { runJob, DEFAULT_LIMITS, type JobLimits, type JobResult } from "./sandbox.js";
 export * from "./parse.js";
+export { analyze, parseClangTidy, parseCppcheck, TIDY_CHECKS } from "./analyze.js";

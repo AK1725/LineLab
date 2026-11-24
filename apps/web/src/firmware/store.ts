@@ -3,9 +3,11 @@
 import { getComponent } from "@linelab/component-db";
 import { EMULATED_BOARDS } from "@linelab/firmware-runtime";
 import {
+  AnalyzeResponse,
   Board,
   CompileResponse,
   FirmwareArtifact,
+  type FirmwareFinding,
   type CompileDiagnostic,
   type Design,
 } from "@linelab/schema";
@@ -20,6 +22,9 @@ const Saved = z.object({
   artifact: FirmwareArtifact.optional(),
   updatedAt: z.number(),
 });
+
+/** The name the sketch is compiled under (line numbers in reports refer to it). */
+export const SKETCH_FILE = "sketch.ino";
 
 let idb: UseStore | undefined;
 const db = () => (idb ??= createStore("linelab-firmware", "sketches"));
@@ -50,6 +55,13 @@ interface FirmwareState {
   diagnostics: CompileDiagnostic[];
   log: string;
   message: string;
+  /** cppcheck / clang-tidy findings for the last compiled source. */
+  analysis: FirmwareFinding[];
+  analysisStatus: "idle" | "running" | "ok" | "unavailable";
+  /** A line to show in the Code tab (set from a run report); `seq` makes repeats re-trigger. */
+  reveal: { line: number; seq: number } | null;
+  requestReveal: (line: number) => void;
+  analyze: () => Promise<void>;
   load: (design: Design) => Promise<void>;
   setSource: (source: string) => void;
   compile: () => Promise<void>;
@@ -80,6 +92,33 @@ export const useFirmware = create<FirmwareState>()((setState, getState) => {
     diagnostics: [],
     log: "",
     message: "",
+    analysis: [],
+    analysisStatus: "idle",
+    reveal: null,
+    requestReveal: (line) => {
+      setState({ reveal: { line, seq: (getState().reveal?.seq ?? 0) + 1 } });
+    },
+    analyze: async () => {
+      const { board, source } = getState();
+      if (!board) return;
+      setState({ analysisStatus: "running" });
+      try {
+        const res = await fetch("/api/analyze", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ board, files: { [SKETCH_FILE]: source } }),
+        });
+        const parsed = AnalyzeResponse.safeParse(await res.json());
+        if (getState().source !== source) return;
+        setState(
+          parsed.success
+            ? { analysis: parsed.data.findings, analysisStatus: "ok" }
+            : { analysis: [], analysisStatus: "unavailable" },
+        );
+      } catch {
+        setState({ analysis: [], analysisStatus: "unavailable" });
+      }
+    },
     load: async (design) => {
       const b = boardOf(design);
       if (getState().designId === design.id && getState().board === (b?.board ?? null)) return;
@@ -127,6 +166,8 @@ export const useFirmware = create<FirmwareState>()((setState, getState) => {
         artifact: prebuilt ?? null,
         status: prebuilt ? "ok" : "idle",
         message: prebuilt ? "Prebuilt example: ready to run." : "",
+        analysis: [],
+        analysisStatus: "idle",
       });
       persist();
     },
@@ -138,7 +179,7 @@ export const useFirmware = create<FirmwareState>()((setState, getState) => {
         const res = await fetch("/api/compile", {
           method: "POST",
           headers: { "content-type": "application/json" },
-          body: JSON.stringify({ board, files: { "sketch.ino": source } }),
+          body: JSON.stringify({ board, files: { [SKETCH_FILE]: source } }),
         });
         const body: unknown = await res.json();
         const parsed = CompileResponse.safeParse(body);
@@ -161,6 +202,7 @@ export const useFirmware = create<FirmwareState>()((setState, getState) => {
             log: parsed.data.log,
             message: `Compiled: ${a.sizes.flashBytes} bytes${a.sizes.ramBytes ? `, ${a.sizes.ramBytes} bytes of RAM` : ""}.`,
           });
+          void getState().analyze();
         } else
           setState({
             status: "error",

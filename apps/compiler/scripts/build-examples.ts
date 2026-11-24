@@ -14,14 +14,25 @@ const BOARDS: Record<string, Board[]> = {
   blink: ["arduino:avr:nano"],
   esp32_pid: ["esp32:esp32:esp32"],
 };
+const NANO: Board = "arduino:avr:nano";
 const cfg = configFromEnv();
 let failed = 0;
-for (const name of readdirSync(root)) {
-  for (const board of BOARDS[name] ?? []) {
+// examples/firmware/<name>, plus the failure-detection fixtures in examples/firmware/buggy/<name>
+// (all of which target the reference Nano robot).
+const sketches = [
+  ...readdirSync(root)
+    .filter((n) => BOARDS[n])
+    .map((n) => ({ name: n, dir: join(root, n), boards: BOARDS[n] ?? [] })),
+  ...readdirSync(join(root, "buggy"), { withFileTypes: true })
+    .filter((d) => d.isDirectory())
+    .map((d) => ({ name: d.name, dir: join(root, "buggy", d.name), boards: [NANO] })),
+];
+for (const { name, dir, boards } of sketches) {
+  for (const board of boards) {
     const files = Object.fromEntries(
-      readdirSync(join(root, name))
+      readdirSync(dir)
         .filter((f) => /\.(ino|h|cpp)$/.test(f))
-        .map((f) => [f, readFileSync(join(root, name, f), "utf8")]),
+        .map((f) => [f, readFileSync(join(dir, f), "utf8")]),
     );
     const r = await compile({ board, files }, cfg);
     if (!r.ok) {
@@ -29,7 +40,7 @@ for (const name of readdirSync(root)) {
       console.error(`✗ ${name} (${board})\n${r.log}`);
       continue;
     }
-    const out = join(root, name, `${name}.${board.split(":").pop() ?? board}.artifact.json`);
+    const out = join(dir, `${name}.${board.split(":").pop() ?? board}.artifact.json`);
     writeFileSync(out, `${JSON.stringify(r.artifact)}\n`);
     console.log(
       `✓ ${name} (${board}): ${r.artifact.sizes.flashBytes} bytes, ${r.artifact.lines.length} line rows, ${r.artifact.symbols.length} symbols`,

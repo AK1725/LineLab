@@ -15,3 +15,4 @@ export * from "./sim/variation.js";
 export * from "./sim/hash.js";
 export * from "./sim/simulation.js";
 export * from "./sim/run.js";
+export * from "./detect/detectors.js";

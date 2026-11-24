@@ -288,4 +288,60 @@ Screenshots: [Code tab](screenshots/phase-6-code.png), [firmware run](screenshot
 - Emulated firmware runs at about 2.8× real time, so a 50-seed Monte Carlo with firmware takes minutes. The ≥ 20× benchmark applies to the reference controller.
 - Library support on the emulated tier is whatever arduino:avr ships. No third-party libraries are installed in the compiler image yet (e.g. QTRSensors).
 
-## Next: Phase 7 — Failure detection, static analysis, run report
+## Phase 7 — Failure detection, static analysis and run report ✅ (branch `phase-7-report`)
+
+**Done** ([ADR 0008](adr/0008-failure-detection-and-run-report.md))
+
+- **Detectors** (`sim-core/src/detect`): pure functions over the trace, each with an explanation:
+  - line lost/reacquired;
+  - oscillation (dominant frequency; P-too-high vs D-too-low);
+  - PWM saturation;
+  - missed turn;
+  - blocking delay;
+  - loop jitter;
+  - infinite loop;
+  - integrator windup;
+  - wrong motor direction;
+  - inverted steering;
+  - brownout, off track and stuck explained.
+
+  New trace channels: `lineSeen`, `distanceMm`.
+
+- **Source lines**: the emulator records calls from the sketch into the Arduino core that block ≥ 5 ms (call site from the program counter), and stalls without sensor reads. Other events get a "likely" line by pattern.
+- **`packages/firmware-lint`**: 11 line-follower rules, including pin-vs-netlist mismatches through helper parameters. They run live in the Code tab.
+- **Compiler `/analyze`**: cppcheck + clang-tidy in the sandbox, mapped to sketch lines; shown in the Code tab after each compile.
+- **`packages/run-report`**: one report per run (events + lines + lint + metrics).
+- **12 buggy fixtures** in `examples/firmware/buggy/` with artifacts compiled by the real toolchain and an `expected.json`: no derivative, P too high, blocking delay, integer PID maths, missing integral clamp, wrong pin numbers, inverted motor, no line-lost recovery, millis overflow, saturating PWM, wrong sensor order, uncalibrated thresholds.
+- Web:
+  - **Run report** in the Run tab:
+    - error/warning counts;
+    - events with explanation, time (click to seek) and source line (click to open the Code tab at that line; "(likely)" when found by pattern);
+    - the sketch's lint findings;
+    - Markdown download.
+  - **Static analysis** panel in the Code tab (LineLab rules live, cppcheck/clang-tidy after a build) with editor markers.
+
+**Verified locally**
+
+- **Acceptance**: every one of the 12 buggy fixtures triggers its expected event or rule at the right line. Each line is also checked by a fragment of its text, e.g. `delay(25)` at 69, `setMotor(PWMB, BIN2, BIN1` at 68, `PWMA = 9` at 13.
+- **`good_pid.ino` has no error-level events and no findings on the oval, figure-8 and right-angles.** On right-angles it loses the line 5 times and recovers each time (warnings).
+- Tests:
+  - sim-core: 62, including 18 detector tests (trigger/non-trigger each);
+  - firmware-lint: 16;
+  - run-report: 16 (the fixture harness);
+  - compiler: 16 (with cppcheck/clang-tidy parsers and a real run where installed);
+  - firmware-runtime: 19.
+- Real cppcheck 2.13 and clang-tidy 18 find an out-of-bounds index, an uninitialised variable and an integer division at the right sketch lines. good_pid and esp32_pid come out clean.
+- e2e (2 new tests):
+  - the blocking-delay sketch is flagged live by the lint, compiled (mocked compiler serving the real artifact), and run; the report shows the error with its line; the Markdown export names `sketch.ino:69`; the line link opens the Code tab at line 69;
+  - a reference run on acute angles gets explained events.
+
+Screenshots: [run report](screenshots/phase-7-run-report.png), [static analysis](screenshots/phase-7-static-analysis.png). The compiler image (with cppcheck and clang-tidy) passes all 6 sandbox self-checks, including offline analysis.
+
+**Deferred / known issues**
+
+- `wdt_reset` isn't detected (no watchdog model). Infinite loops on the HAL tier are caught only by the worker watchdog, not with a line.
+- Pattern-based lines are heuristics, labelled "(likely)". The lint isn't a C++ parser.
+- The "Approximate" HAL tier has no exact source lines (no line table for WebAssembly yet).
+- Smoothness score from the blueprint's metric list isn't computed.
+
+## Next: Phase 8 — AI debug agent

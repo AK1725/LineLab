@@ -2,6 +2,7 @@
 // Run it in its container (apps/compiler/Dockerfile): no internet, CPU/memory limits, non-root.
 import Fastify from "fastify";
 import { CompileRequest } from "@linelab/schema";
+import { analyze } from "./analyze.js";
 import { compile } from "./compile.js";
 import { configFromEnv } from "./config.js";
 
@@ -38,6 +39,19 @@ export function buildServer(cfg = configFromEnv()) {
     await slot();
     try {
       return await compile(parsed.data, cfg);
+    } finally {
+      release();
+    }
+  });
+  app.post("/analyze", async (req, reply) => {
+    const parsed = CompileRequest.safeParse(req.body);
+    if (!parsed.success)
+      return reply.code(400).send({ error: parsed.error.issues.map((i) => i.message).join("; ") });
+    if (queue.length >= MAX_QUEUED)
+      return reply.code(429).send({ error: "The compiler is busy; try again in a few seconds." });
+    await slot();
+    try {
+      return await analyze(parsed.data, cfg);
     } finally {
       release();
     }

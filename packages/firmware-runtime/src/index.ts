@@ -6,7 +6,7 @@
  */
 import type { Lookup } from "@linelab/design-core";
 import { Simulation, type RobotModel, type SimConfig, type SimResult } from "@linelab/sim-core";
-import type { Design, FirmwareArtifact, Track } from "@linelab/schema";
+import type { Design, FirmwareArtifact, SourceLoc, Track } from "@linelab/schema";
 import { AvrController } from "./avr-controller.js";
 import type { periodStats } from "./debug.js";
 import { HalRunner } from "./hal.js";
@@ -32,6 +32,12 @@ export interface FirmwareRun {
   hotFiles?: ReturnType<AvrController["hotFiles"]>;
   /** Emulated tier only: the sketch's globals at the end of the run. */
   watch?: Record<string, number>;
+  /** For the detectors. */
+  sampleTimesMs: number[];
+  longCalls: { atMs: number; durationMs: number; loc?: SourceLoc }[];
+  stalls: { atMs: number; durationMs: number; loc?: SourceLoc }[];
+  /** Emulated tier: globals sampled every `watchEveryMs`. */
+  watchSeries?: { names: string[]; samples: number[][] };
 }
 
 /** Simulate a robot running compiled firmware on a track. */
@@ -43,6 +49,8 @@ export function runFirmware(args: {
   artifact: FirmwareArtifact;
   config?: Partial<SimConfig>;
   profile?: boolean;
+  /** Watch sampling period (ms), emulated tier. */
+  watchEveryMs?: number;
   /** Called every ms with the emulated controller (emulated tier), e.g. to sample watches. */
   onTick?: (c: AvrController, sim: Simulation) => void;
 }): FirmwareRun {
@@ -50,8 +58,17 @@ export function runFirmware(args: {
   if (args.artifact.tier === "emulated") {
     const c = new AvrController(args.artifact, wiring, { profile: args.profile ?? false });
     const sim = new Simulation(args.robot, args.track, c, args.config);
+    const every = args.watchEveryMs ?? 10;
+    const names = c.watchList().map((w) => w.name);
+    const samples: number[][] = names.map(() => []);
+    const sample = () => {
+      const w = c.watch();
+      names.forEach((n, i) => samples[i]?.push(w[n] ?? 0));
+    };
+    sample();
     while (!sim.done) {
       sim.step();
+      if (sim.tMs % every === 0) sample();
       args.onTick?.(c, sim);
     }
     return {
@@ -63,10 +80,23 @@ export function runFirmware(args: {
       hotLines: c.hotLines(25),
       hotFiles: c.hotFiles(),
       watch: c.watch(),
+      sampleTimesMs: c.sampleTimesMs(),
+      longCalls: c.longCalls(),
+      stalls: c.stalls(),
+      watchSeries: { names, samples },
     };
   }
   const sim = new Simulation(args.robot, args.track, HalRunner.controllerFor(wiring), args.config);
   const runner = new HalRunner(sim, args.artifact, wiring);
   const result = runner.run();
-  return { result, serial: runner.serial, resets: runner.resets, wiring, loop: runner.loopStats() };
+  return {
+    result,
+    serial: runner.serial,
+    resets: runner.resets,
+    wiring,
+    loop: runner.loopStats(),
+    sampleTimesMs: runner.sampleTimesMs(),
+    longCalls: runner.longCalls(),
+    stalls: [],
+  };
 }

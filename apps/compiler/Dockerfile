@@ -14,7 +14,7 @@ FROM node:22-bookworm-slim
 ARG ARDUINO_CLI_VERSION=1.3.1
 ARG ARDUINO_AVR_VERSION=1.8.8
 RUN apt-get update \
- && apt-get install -y --no-install-recommends ca-certificates curl clang lld util-linux \
+ && apt-get install -y --no-install-recommends ca-certificates curl clang lld clang-tidy cppcheck util-linux \
  && curl -fsSL "https://downloads.arduino.cc/arduino-cli/arduino-cli_${ARDUINO_CLI_VERSION}_Linux_64bit.tar.gz" | tar xz -C /usr/local/bin arduino-cli \
  && apt-get purge -y curl && apt-get autoremove -y && rm -rf /var/lib/apt/lists/*
 ENV ARDUINO_DATA_DIR=/opt/arduino ARDUINO_DIRECTORIES_DATA=/opt/arduino ARDUINO_DIRECTORIES_DOWNLOADS=/tmp/arduino-dl

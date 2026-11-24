@@ -162,5 +162,6 @@ describe("run trace export", () => {
   });
 });
 
-const GOLDEN_OVAL_HASH = "019f419db8f89e";
+// Re-pinned in Phase 7: two trace columns added (lineSeen, distanceMm); physics unchanged (same lap time).
+const GOLDEN_OVAL_HASH = "07f2e015a2df24";
 const GOLDEN_OVAL_LAP_MS = 4676;

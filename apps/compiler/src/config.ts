@@ -14,7 +14,9 @@ function findAvrTools(dataDir: string): string {
 }
 
 /** Configuration from the environment (all paths absolute). */
-export function configFromEnv(env: NodeJS.ProcessEnv = process.env): CompilerConfig {
+export function configFromEnv(
+  env: NodeJS.ProcessEnv = process.env,
+): CompilerConfig & { cppcheck: string; clangTidy: string } {
   const here = dirname(fileURLToPath(import.meta.url));
   const dataDir = env.ARDUINO_DATA_DIR ?? join(env.HOME ?? "/root", ".arduino15");
   return {
@@ -22,6 +24,8 @@ export function configFromEnv(env: NodeJS.ProcessEnv = process.env): CompilerCon
     arduinoDataDir: dataDir,
     avrToolsBin: env.AVR_TOOLS_BIN ?? findAvrTools(dataDir),
     clang: env.CLANG ?? "clang++",
+    cppcheck: env.CPPCHECK ?? "cppcheck",
+    clangTidy: env.CLANG_TIDY ?? "clang-tidy",
     halDir: resolve(env.LFR_HAL_DIR ?? join(here, "..", "..", "..", "packages", "lfr-hal")),
     workRoot: env.COMPILER_WORK_DIR ?? tmpdir(),
     limits: {

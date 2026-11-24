@@ -1,5 +1,5 @@
 import type { Controller, ControllerInput, MotorCommand } from "@linelab/sim-core";
-import type { FirmwareArtifact } from "@linelab/schema";
+import type { FirmwareArtifact, LineEntry, SourceLoc } from "@linelab/schema";
 import { AvrMcu } from "./avr.js";
 import { ATMEGA328P_PINS, avrBoardFor } from "./boards.js";
 import {
@@ -11,6 +11,23 @@ import {
   type WatchType,
 } from "./debug.js";
 import { motorCommand, type FirmwareWiring } from "./wiring.js";
+
+/** Calls into the core at least this long are recorded (blocking_delay detector). */
+const LONG_CALL_MS = 5;
+/** No sensor read for this long while in the sketch's own code = a stall (infinite_loop). */
+const STALL_MS = 300;
+
+/** Word addresses (1 = sketch code) from the rows of the line table that belong to .ino files. */
+export function sketchMask(lines: readonly LineEntry[], flashWords = 16384): Uint8Array {
+  const mask = new Uint8Array(flashWords);
+  const rows = [...lines].sort((a, b) => a.address - b.address);
+  rows.forEach((r, i) => {
+    if (!r.file.endsWith(".ino")) return;
+    const end = rows[i + 1]?.address ?? r.address + 2;
+    for (let a = r.address >> 1; a < end >> 1 && a < flashWords; a++) mask[a] = 1;
+  });
+  return mask;
+}
 
 /**
  * Runs the user's compiled AVR firmware as the robot's controller: each simulated millisecond it
@@ -45,17 +62,23 @@ export class AvrController implements Controller {
       type: s.valueType ?? defaultWatchType(s.size),
     }));
     this.profile = opts.profile ?? false;
+    this.mask = sketchMask(artifact.lines);
     this.mcu = this.boot();
   }
 
   private readonly profile: boolean;
   private resets = 0;
+  /** Stretches with no sensor reads while the CPU stayed in the sketch (infinite loops). */
+  private readonly stallList: { atMs: number; durationMs: number; pc: number }[] = [];
+  private readonly mask: Uint8Array;
 
   private boot(): AvrMcu {
     const mcu = new AvrMcu(this.artifact.hex ?? "", {
       ...this.board,
       sampleEvery: this.profile ? 61 : 0,
     });
+    mcu.sketchMask = this.mask;
+    mcu.longCallCycles = (LONG_CALL_MS / 1000) * this.board.clockHz;
     const first = this.wiring.sensors.find((s) => s.mcuPin !== undefined)?.mcuPin;
     mcu.watchAdcChannel = first ? ATMEGA328P_PINS[first]?.adc : undefined;
     return mcu;
@@ -82,7 +105,46 @@ export class AvrController implements Controller {
       else mcu.setRcDecay(s.mcuPin, v);
     }
     mcu.run(Math.round(this.board.clockHz / 1000));
+    this.checkStall(input.tMs);
     return motorCommand(wiring, (pin) => mcu.outputLevel(pin));
+  }
+
+  private checkStall(tMs: number) {
+    const last = this.mcu.sampleCycles.at(-1);
+    if (last === undefined || this.mcu.inCore) return;
+    const gapMs = ((this.mcu.cpu.cycles - last) / this.board.clockHz) * 1000;
+    const cur = this.stallList.at(-1);
+    const startMs = tMs - gapMs;
+    if (gapMs >= STALL_MS) {
+      if (cur && Math.abs(cur.atMs - startMs) < 2) cur.durationMs = gapMs;
+      else this.stallList.push({ atMs: startMs, durationMs: gapMs, pc: this.mcu.lastSketchPc });
+    }
+  }
+
+  private locOf(pc: number): SourceLoc | undefined {
+    const l = pc >= 0 ? this.lines.lookup(pc * 2) : undefined;
+    return l ? { file: l.file, line: l.line, exact: true } : undefined;
+  }
+
+  /** Calls from the sketch into the Arduino core that blocked ≥ 5 ms, with the calling line. */
+  longCalls() {
+    const toMs = (c: number) => (c / this.board.clockHz) * 1000;
+    return this.mcu.longCalls.map((c) => {
+      const loc = this.locOf(c.fromPc);
+      return { atMs: toMs(c.startCycle), durationMs: toMs(c.cycles), ...(loc ? { loc } : {}) };
+    });
+  }
+
+  stalls() {
+    return this.stallList.map((s) => {
+      const loc = this.locOf(s.pc);
+      return { atMs: s.atMs, durationMs: s.durationMs, ...(loc ? { loc } : {}) };
+    });
+  }
+
+  /** Times (ms) the first wired sensor was sampled. */
+  sampleTimesMs(): number[] {
+    return this.mcu.sampleCycles.map((c) => (c / this.board.clockHz) * 1000);
   }
 
   /** Values of the sketch's small globals (4-byte ones read as float by default). */

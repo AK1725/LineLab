@@ -1,5 +1,12 @@
 import type { MonteCarloRun, Outcome, PackedTrace, ReferencePidOptions } from "@linelab/sim-core";
-import type { Design, FirmwareArtifact, RunMetrics, SimEvent, Track } from "@linelab/schema";
+import type {
+  Design,
+  FirmwareArtifact,
+  FirmwareFinding,
+  RunMetrics,
+  SimEvent,
+  Track,
+} from "@linelab/schema";
 
 export interface RunRequest {
   id: number;
@@ -11,6 +18,8 @@ export interface RunRequest {
   laps: number;
   /** Run this firmware instead of the reference PID. */
   firmware?: FirmwareArtifact;
+  /** The sketch, for source-line attribution and lint in the run report. */
+  firmwareSource?: { text: string; file: string };
 }
 
 export interface LoopStats {
@@ -50,6 +59,9 @@ export interface RunSummary {
   sensorsMm: { x: number; y: number }[];
   controller: "reference" | "firmware";
   firmware?: FirmwareReport;
+  /** LineLab lint findings on the sketch that ran (firmware runs). */
+  lint: FirmwareFinding[];
+  counts: { errors: number; warnings: number };
 }
 
 export type RunResponse =

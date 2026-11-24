@@ -1,10 +1,16 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
+import { getComponent } from "@linelab/component-db";
+import { lintSketch } from "@linelab/firmware-lint";
+import { resolveWiring } from "@linelab/firmware-runtime";
+import { pinContextFor } from "@linelab/run-report";
+import { buildRobotModel } from "@linelab/sim-core";
+import { useDeferredValue, useEffect, useMemo } from "react";
+import { chassisOf } from "../editor/store";
 import { useDesign } from "../editor/store";
 import { EXAMPLES } from "./examples";
-import { boardOf, useFirmware } from "./store";
+import { boardOf, SKETCH_FILE, useFirmware } from "./store";
 
 const CodeEditor = dynamic(() => import("./code-editor"), {
   ssr: false,
@@ -33,8 +39,45 @@ export function TierBadge({ tier }: { tier: "emulated" | "hal" }) {
 export default function CodeView() {
   const design = useDesign();
   const fw = useFirmware();
-  const [reveal, setReveal] = useState<number | null>(null);
+  const reveal = useFirmware((s) => s.reveal);
+  const setReveal = (line: number) => {
+    useFirmware.getState().requestReveal(line);
+  };
   const b = boardOf(design);
+  const pins = useMemo(() => {
+    try {
+      const chassis = chassisOf(design);
+      if (!chassis) return undefined;
+      return pinContextFor(
+        resolveWiring(design, getComponent, buildRobotModel(design, chassis, getComponent)),
+      );
+    } catch {
+      return undefined; // incomplete design: lint without wiring checks
+    }
+  }, [design]);
+  const lint = useDeferredValue(
+    useMemo(
+      () => lintSketch(fw.source, { file: SKETCH_FILE, ...(pins ? { pins } : {}) }),
+      [fw.source, pins],
+    ),
+  );
+  const findings = useMemo(
+    () => [...lint, ...fw.analysis].sort((x, y) => x.line - y.line),
+    [lint, fw.analysis],
+  );
+  const markers = useMemo(
+    () => [
+      ...fw.diagnostics,
+      ...findings.map((f) => ({
+        file: f.file,
+        line: f.line,
+        column: f.column ?? 1,
+        severity: f.severity === "info" ? ("note" as const) : f.severity,
+        message: `${f.message} (${f.ruleId})`,
+      })),
+    ],
+    [fw.diagnostics, findings],
+  );
   useEffect(() => {
     void useFirmware.getState().load(design);
   }, [design]);
@@ -97,7 +140,7 @@ export default function CodeView() {
             onChange={(v) => {
               fw.setSource(v);
             }}
-            diagnostics={fw.diagnostics}
+            diagnostics={markers}
             reveal={reveal}
           />
         </div>
@@ -148,6 +191,58 @@ export default function CodeView() {
             </ul>
           </details>
         )}
+        <section aria-labelledby="analysis-heading">
+          <h2 id="analysis-heading" className="font-semibold">
+            Static analysis
+          </h2>
+          <p className="text-xs text-muted">
+            LineLab&apos;s line-follower rules check as you type
+            {fw.analysisStatus === "ok"
+              ? "; cppcheck and clang-tidy ran on the last build."
+              : fw.analysisStatus === "running"
+                ? "; cppcheck and clang-tidy are running…"
+                : fw.analysisStatus === "unavailable"
+                  ? "; cppcheck and clang-tidy need the compiler service."
+                  : "; cppcheck and clang-tidy run when you compile."}
+          </p>
+          {findings.length === 0 ? (
+            <p className="mt-1 text-accent" data-testid="analysis-clean">
+              No findings.
+            </p>
+          ) : (
+            <ul className="mt-1 space-y-2" data-testid="analysis">
+              {findings.map((f, i) => (
+                <li key={`${f.ruleId}:${String(f.line)}:${String(i)}`} data-rule={f.ruleId}>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setReveal(f.line);
+                    }}
+                    className="text-left hover:underline"
+                  >
+                    <span
+                      className={
+                        f.severity === "error"
+                          ? "text-red-600"
+                          : f.severity === "warning"
+                            ? "text-amber-600"
+                            : "text-muted"
+                      }
+                    >
+                      Line {f.line}: {f.message}
+                    </span>
+                  </button>
+                  {f.explanation && <p className="text-xs text-muted">{f.explanation}</p>}
+                  <p className="text-[11px] text-muted">
+                    {f.tool === "linelab"
+                      ? f.ruleId
+                      : `${f.tool}: ${f.ruleId.replace(/^[a-z-]+\./, "")}`}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
         {fw.log && (
           <details>
             <summary className="cursor-pointer text-muted">Compiler log</summary>

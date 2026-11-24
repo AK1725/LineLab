@@ -114,11 +114,51 @@ export class AvrMcu {
 
   private readonly sampleEvery: number;
 
+  /** Word addresses that belong to the sketch's own code (from the line table); see trackCalls. */
+  sketchMask: Uint8Array | undefined;
+  /** Last program counter inside the sketch's code. */
+  lastSketchPc = -1;
+  /** Cycle at which execution left the sketch for the core (−1 while in the sketch). */
+  private coreSince = -1;
+  /** Calls from the sketch into the core that took at least `longCallCycles`. */
+  readonly longCalls: { startCycle: number; cycles: number; fromPc: number }[] = [];
+  longCallCycles = Number.POSITIVE_INFINITY;
+
+  /** True while executing core code entered from the sketch. */
+  get inCore(): boolean {
+    return this.coreSince >= 0;
+  }
+
   /** Run for `cycles` CPU cycles. */
   run(cycles: number): void {
     const cpu = this.cpu;
     const end = cpu.cycles + cycles;
     const every = this.sampleEvery;
+    const mask = this.sketchMask;
+    if (mask) {
+      while (cpu.cycles < end) {
+        avrInstruction(cpu);
+        cpu.tick();
+        if (mask[cpu.pc] === 1) {
+          if (this.coreSince >= 0) {
+            const dur = cpu.cycles - this.coreSince;
+            if (dur >= this.longCallCycles)
+              this.longCalls.push({
+                startCycle: this.coreSince,
+                cycles: dur,
+                fromPc: this.lastSketchPc,
+              });
+            this.coreSince = -1;
+          }
+          this.lastSketchPc = cpu.pc;
+        } else if (this.coreSince < 0 && this.lastSketchPc >= 0) this.coreSince = cpu.cycles;
+        if (every > 0 && ++this.sinceSample >= every) {
+          this.sinceSample = 0;
+          this.pcSamples.set(cpu.pc, (this.pcSamples.get(cpu.pc) ?? 0) + 1);
+        }
+      }
+      return;
+    }
     while (cpu.cycles < end) {
       avrInstruction(cpu);
       cpu.tick();

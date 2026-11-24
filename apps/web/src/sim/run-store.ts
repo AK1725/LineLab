@@ -42,6 +42,7 @@ interface RunState {
     pid: Partial<ReferencePidOptions>,
     label: string,
     firmware?: FirmwareArtifact,
+    firmwareSource?: { text: string; file: string },
   ) => void;
   seek: (tMs: number) => void;
   setPlaying: (p: boolean) => void;
@@ -67,7 +68,7 @@ export const useRun = create<RunState>()((set, get) => ({
   playing: false,
   speed: 1,
   camera: "top",
-  start: (design, track, seeds, pid, label, firmware) => {
+  start: (design, track, seeds, pid, label, firmware, firmwareSource) => {
     worker ??= new Worker(new URL("./sim.worker.ts", import.meta.url), { type: "module" });
     const id = ++nextId;
     set({ status: "running", progress: null, error: null, playing: false });
@@ -126,6 +127,7 @@ export const useRun = create<RunState>()((set, get) => ({
       pid,
       laps: 1,
       ...(firmware ? { firmware } : {}),
+      ...(firmwareSource ? { firmwareSource } : {}),
     };
     worker.postMessage(req);
   },

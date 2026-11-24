@@ -16,8 +16,10 @@
   "dependencies": {
     "@linelab/component-db": "workspace:*",
     "@linelab/design-core": "workspace:*",
+    "@linelab/firmware-lint": "workspace:*",
     "@linelab/firmware-runtime": "workspace:*",
     "@linelab/rules-engine": "workspace:*",
+    "@linelab/run-report": "workspace:*",
     "@linelab/schema": "workspace:*",
     "@linelab/sim-core": "workspace:*",
     "@linelab/three-models": "workspace:*",

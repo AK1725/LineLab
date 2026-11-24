@@ -43,6 +43,25 @@ typedef unsigned int word;
 #define LINELAB_ADC_BITS 10
 #endif
 
+// Analog pin names.
+#if defined(LINELAB_BOARD_ESP32)
+#define A0 36
+#define A3 39
+#define A4 32
+#define A5 33
+#define A6 34
+#define A7 35
+#elif !defined(LINELAB_BOARD_STM32)
+#define A0 14
+#define A1 15
+#define A2 16
+#define A3 17
+#define A4 18
+#define A5 19
+#define A6 20
+#define A7 21
+#endif
+
 #if defined(LINELAB_BOARD_STM32)
 // STM32 pin names: port × 16 + pin (PA0 = 0, PB0 = 16, PC13 = 45, ...).
 #define PA0 0

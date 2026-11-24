@@ -70,12 +70,18 @@ importers:
       '@linelab/design-core':
         specifier: workspace:*
         version: link:../../packages/design-core
+      '@linelab/firmware-lint':
+        specifier: workspace:*
+        version: link:../../packages/firmware-lint
       '@linelab/firmware-runtime':
         specifier: workspace:*
         version: link:../../packages/firmware-runtime
       '@linelab/rules-engine':
         specifier: workspace:*
         version: link:../../packages/rules-engine
+      '@linelab/run-report':
+        specifier: workspace:*
+        version: link:../../packages/run-report
       '@linelab/schema':
         specifier: workspace:*
         version: link:../../packages/schema
@@ -187,6 +193,12 @@ importers:
         specifier: 0.187.0
         version: 0.187.0
 
+  packages/firmware-lint:
+    dependencies:
+      '@linelab/schema':
+        specifier: workspace:*
+        version: link:../schema
+
   packages/firmware-runtime:
     dependencies:
       '@linelab/design-core':
@@ -220,6 +232,31 @@ importers:
       '@linelab/component-db':
         specifier: workspace:*
         version: link:../component-db
+
+  packages/run-report:
+    dependencies:
+      '@linelab/firmware-lint':
+        specifier: workspace:*
+        version: link:../firmware-lint
+      '@linelab/firmware-runtime':
+        specifier: workspace:*
+        version: link:../firmware-runtime
+      '@linelab/schema':
+        specifier: workspace:*
+        version: link:../schema
+      '@linelab/sim-core':
+        specifier: workspace:*
+        version: link:../sim-core
+      zod:
+        specifier: 4.6.7
+        version: 4.6.7
+    devDependencies:
+      '@linelab/component-db':
+        specifier: workspace:*
+        version: link:../component-db
+      '@linelab/design-core':
+        specifier: workspace:*
+        version: link:../design-core
 
   packages/schema:
     dependencies:

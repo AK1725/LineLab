@@ -156,6 +156,7 @@ export class HalRunner {
       hal_millis: () => Math.floor(this.tUs / 1000),
       hal_micros: () => Math.floor(this.tUs),
       hal_delay: (ms: number) => {
+        if (ms >= 5) this.longCallList.push({ atMs: this.tUs / 1000, durationMs: ms });
         this.advance(Math.max(0, ms) * 1000);
       },
       hal_delay_us: (us: number) => {
@@ -244,6 +245,16 @@ export class HalRunner {
 
   loopStats() {
     return periodStats(this.sampleStampsMs);
+  }
+
+  /** delay() calls of 5 ms or more (no source line on the HAL tier). */
+  readonly longCallList: { atMs: number; durationMs: number }[] = [];
+  longCalls() {
+    return this.longCallList;
+  }
+
+  sampleTimesMs(): number[] {
+    return [...this.sampleStampsMs];
   }
 }
 

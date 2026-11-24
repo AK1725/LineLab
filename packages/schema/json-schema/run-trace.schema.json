@@ -142,7 +142,9 @@
               "blocking_delay",
               "control_loop_jitter",
               "checkpoint",
-              "lap_complete"
+              "lap_complete",
+              "wrong_direction",
+              "steering_inverted"
             ]
           },
           "severity": {
@@ -160,6 +162,9 @@
             },
             "additionalProperties": {}
           },
+          "message": {
+            "type": "string"
+          },
           "sourceLoc": {
             "type": "object",
             "properties": {
@@ -174,6 +179,9 @@
               },
               "fn": {
                 "type": "string"
+              },
+              "exact": {
+                "type": "boolean"
               }
             },
             "required": [
