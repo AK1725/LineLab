@@ -46,6 +46,24 @@
         "$TURBO_ROOT$/tracks/**",
         "$TURBO_ROOT$/packages/sim-core/fixtures/**"
       ]
+    },
+    "@linelab/vision#test": {
+      "dependsOn": ["^build"],
+      "env": ["LINELAB_REQUIRE_EMBED_MODEL"],
+      "passThroughEnv": [
+        "HTTPS_PROXY",
+        "HTTP_PROXY",
+        "https_proxy",
+        "http_proxy",
+        "NO_PROXY",
+        "SSL_CERT_FILE",
+        "REQUESTS_CA_BUNDLE",
+        "CURL_CA_BUNDLE",
+        "FASTEMBED_CACHE_PATH",
+        "HF_HOME",
+        "HF_TOKEN",
+        "HF_HUB_OFFLINE"
+      ]
     }
   }
 }

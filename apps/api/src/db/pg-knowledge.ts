@@ -8,7 +8,7 @@ import {
   type KnowledgeCase,
   type NewCase,
 } from "@linelab/agent";
-import { cosineDistance, eq, sql } from "drizzle-orm";
+import { cosineDistance, eq, ne, sql } from "drizzle-orm";
 import { drizzle, type PostgresJsDatabase } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import { fixCases, MIGRATIONS } from "./schema.js";
@@ -38,11 +38,30 @@ export class PgKnowledge implements FixKnowledge {
   ): Promise<PgKnowledge> {
     const client = postgres(url, { max: 5, onnotice: () => undefined });
     for (const m of MIGRATIONS) await client.unsafe(m);
-    return new PgKnowledge(client, drizzle(client), embedder);
+    const kb = new PgKnowledge(client, drizzle(client), embedder);
+    await kb.reembed();
+    return kb;
+  }
+
+  /** Re-embeds rows stored with another model (after switching embedders). Returns how many. */
+  async reembed(): Promise<number> {
+    const stale = await this.db
+      .select()
+      .from(fixCases)
+      .where(ne(fixCases.embeddingModel, this.embedder.model));
+    for (const r of stale)
+      await this.db
+        .update(fixCases)
+        .set({
+          embeddingModel: this.embedder.model,
+          embedding: await this.embedder.embed(caseText(r), "passage"),
+        })
+        .where(eq(fixCases.id, r.id));
+    return stale.length;
   }
 
   async search(query: string, k = 3): Promise<KnowledgeCase[]> {
-    const q = this.embedder.embed(query);
+    const q = await this.embedder.embed(query, "query");
     const distance = cosineDistance(fixCases.embedding, q);
     // Nearest 4k by vector, then re-ranked by similarity weighted by confirmations.
     const rows = await this.db
@@ -73,7 +92,7 @@ export class PgKnowledge implements FixKnowledge {
         source,
         parts: c.parts ?? [],
         embeddingModel: this.embedder.model,
-        embedding: this.embedder.embed(caseText(c)),
+        embedding: await this.embedder.embed(caseText(c), "passage"),
       })
       .onConflictDoUpdate({
         target: fixCases.diffHash,

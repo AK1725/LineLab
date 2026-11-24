@@ -25,22 +25,30 @@ Acceptance: Lighthouse ≥ 90 (performance, accessibility, best practices) on th
 1. **The knowledge base stores only what's needed to help someone else.** That is a diff, a diagnosis, symptoms and the board/driver/sensor ids: never the sketch, never who sent it. A fix is stored only when the user ticks "Share this fix" (off by default).
    - It lives in Postgres + pgvector (Drizzle, HNSW cosine index), one row per diff, with confirmations counted.
    - Synthetic cases are labelled `synthetic` everywhere, rank below user-confirmed ones, and are presented to the agent as "verified in simulation only".
-2. **Embeddings: a dependency-free hashing embedder for now.** BLUEPRINT §5.9 suggests bge-small via sentence-transformers. That needs PyTorch and a model download (hundreds of MB) in the vision image, which CLAUDE.md says to ask about first.
-   - Signed feature hashing of words, identifier parts and word pairs is deterministic and good enough to retrieve the right bug class from short symptom text (tested on the seed set).
-   - The `Embedder` interface and the model id stored with each row let a neural embedder replace it; rows are then re-embedded.
+2. **Embeddings: bge-small-en-v1.5 on ONNX Runtime (fastembed) in the vision service, not PyTorch.** BLUEPRINT §5.9 suggests bge-small via sentence-transformers, which would put PyTorch in the image. fastembed runs the same model on ONNX Runtime.
+   - It adds about 65 MB of model, downloaded when the image is built, so it runs offline. There is no PyTorch.
+   - It produces 384-dimension vectors, the size the database column already holds.
+   - The API calls `POST /embed` (`EMBEDDINGS_URL`): queries and stored cases are embedded the way bge expects.
+   - Every row records its model, and on startup the store re-embeds rows from a different model, so switching is automatic.
+   - Without the service, a dependency-free word-hashing embedder is used, with a warning.
+   - Tested: a paraphrase that shares no words with the stored case ("my bot wobbles side to side" against "Kp is too high … oscillates") is not found by word-hashing, and is found after re-embedding with bge.
 3. **Synthetic seed by mutation, kept only when LineLab detects it** (`inject-bugs`):
    - 11 mutation operators (gains, delays, inverted motor or steering, sensor order, speed, line-lost handling, wrong pin) run on the known-good sketch over 3 tracks.
    - A mutant is kept only if the simulator and detectors find a new failure.
    - The fix is the reverse diff to the verified original.
    - Each case groups one mutation's symptoms from every track where it was detected.
    - Result: 9 cases (2 of the 11 operators, Kd = 0 and a 15 ms delay, weren't detected on these tracks) in `examples/knowledge/seed.json`, loaded into an empty base (`LINELAB_KB_SEED`).
-4. **Sign-in is built in, not Auth.js.** Auth.js v5 (the version for Next 16) is still a beta, and with nodemailer it would add more than 3 MB of runtime dependencies, which CLAUDE.md asks to avoid without approval. What's needed is small and lives in the API:
+4. **Sign-in is built in, not Auth.js.** Auth.js v5 (the version for Next 16) is still a beta, and what's needed is small and lives in the API:
    - HMAC-signed session cookies (HttpOnly, SameSite=Lax, Secure over HTTPS);
    - GitHub OAuth (state cookie, code exchange);
    - email magic links (hashed one-time tokens, 15 minutes, per-IP and per-address limits);
    - same-site redirects only.
 
-   Emails go through a `Mailer` interface. The built-in mailer writes the link to the server log, which works for self-hosting; an SMTP mailer is "coming soon". Development-only link return (`LINELAB_AUTH_DEV_LINKS=1`) is refused in production.
+   Emails go through a `Mailer` interface:
+   - **SMTP** via nodemailer (`SMTP_URL`, `MAIL_FROM`; any provider), with the connection checked at startup;
+   - **log**, which writes the link to the server log, for self-hosting without a mail server.
+
+   Development-only link return (`LINELAB_AUTH_DEV_LINKS=1`) is refused in production.
 
 5. **Guest-first gallery.** Designs stay in the browser (IndexedDB) and never need an account. Publishing needs sign-in and sends only the design JSON.
    - Items are public or unlisted (link only), versioned, and deletable by the author.
@@ -64,6 +72,6 @@ Acceptance: Lighthouse ≥ 90 (performance, accessibility, best practices) on th
 
 ## Consequences
 
-- No SMTP: on a public demo, use GitHub sign-in, or read email links from the log.
-- The hashing embedder matches words, not meaning. Paraphrases with no shared words won't match until a neural embedder is plugged in.
+- nodemailer (MIT-0, about 1.8 MB) is a runtime dependency of the API only. The ONNX runtime and the bge model are in the vision image only. Nothing is added to the browser bundle.
+- Retrieval uses meaning when the vision service runs. A deployment without it still works, matching words, and says so in the log.
 - Lighthouse measures page load. The 3D scene and a running simulation are heavier, but they load on demand.

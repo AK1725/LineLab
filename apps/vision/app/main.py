@@ -2,7 +2,8 @@
 
 - GET  /health
 - POST /track/from-image: photo or scan of a track -> Track JSON (Phase 4)
-- POST /robot/outline: top-view robot photo -> silhouette polygon (Phase 10). Part detection
+- POST /robot/outline: top-view robot photo -> silhouette polygon (Phase 10).
+- POST /embed: texts -> bge-small embeddings for the fix knowledge base (Phase 11). Part detection
   runs in the API (Claude vision), not here.
 """
 
@@ -13,6 +14,7 @@ from typing import Annotated, Any, Literal
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from pydantic import BaseModel
 
+from app import embed as embedding
 from app.robot_outline import OutlineError, robot_outline
 from app.track_image import Calibration, TrackImageError, image_to_track
 
@@ -80,3 +82,23 @@ async def robot_outline_route(
         return asdict(robot_outline(data))
     except OutlineError as err:
         raise HTTPException(422, str(err)) from err
+
+
+class EmbedRequest(BaseModel):
+    texts: list[str]
+    kind: Literal["query", "passage"] = "passage"
+
+
+class EmbedResponse(BaseModel):
+    model: str
+    dim: int
+    vectors: list[list[float]]
+
+
+@app.post("/embed")
+def embed_route(req: EmbedRequest) -> EmbedResponse:
+    if not 1 <= len(req.texts) <= embedding.MAX_TEXTS:
+        raise HTTPException(422, f"Send 1 to {embedding.MAX_TEXTS} texts.")
+    return EmbedResponse(
+        model=embedding.MODEL, dim=embedding.DIM, vectors=embedding.embed(req.texts, req.kind)
+    )

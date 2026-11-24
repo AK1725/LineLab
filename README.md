@@ -39,7 +39,7 @@ Open **http://localhost:3000**. The first build takes 15–30 minutes, mostly be
 
 - **Everything except the AI features works without any account or key.** That includes designs, simulation, firmware compile and emulation, the Robot tab, the gallery and lessons. Designs are kept in your browser.
 - **AI debugger and photo detection**: put `ANTHROPIC_API_KEY=…` in a `.env` file next to `docker-compose.yml` and run the command again. Users can also paste their own key in the app; it is used for that request only.
-- **Gallery sign-in**: choose "Email me a sign-in link". On a self-hosted stack the link is printed in the API log (`docker compose logs api`). For GitHub sign-in, set `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET`.
+- **Gallery sign-in**: choose "Email me a sign-in link". To send real emails, set `SMTP_URL` (e.g. `smtps://user:pass@smtp.example.com:465`) and `MAIL_FROM` in `.env`. Without them, the link is printed in the API log (`docker compose logs api`). For GitHub sign-in, set `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET`.
 - **Stop**: `docker compose --profile apps down`. Data lives in Docker volumes; add `-v` to delete it.
 
 To put a public demo online with HTTPS, see [`deploy/README.md`](deploy/README.md).
@@ -58,9 +58,10 @@ flowchart LR
   UI -- "/api" --> WEB["web server<br/>(proxy)"]
   WEB --> API["apps/api (Fastify)<br/>AI debugger · gallery · sign-in<br/>photo detection · knowledge base"]
   WEB --> COMP["apps/compiler<br/>arduino-cli · clang→wasm<br/>no network, 1 GB, 60 s"]
-  WEB --> VIS["apps/vision (FastAPI)<br/>track images · robot outlines"]
+  WEB --> VIS["apps/vision (FastAPI)<br/>track images · robot outlines<br/>text embeddings (bge-small)"]
   API --> PG[("Postgres + pgvector")]
   API --> COMP
+  API --> VIS
   API -. "optional" .-> CLAUDE["Claude API"]
   Robot["Your robot<br/>(LineLabTelemetry)"] <-- "Web Serial / Bluetooth" --> UI
 ```

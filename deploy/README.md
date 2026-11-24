@@ -19,5 +19,6 @@ This is the whole stack from `docker-compose.yml` behind [Caddy](https://caddyse
 Notes:
 
 - The AI debugger and photo detection call the Anthropic API with the server's key, so they cost money. The demo override lowers the per-IP limits (3 debugger sessions and 5 photo analyses per hour); adjust them in `.env`. Users can always use their own key instead.
-- Email sign-in links are printed in the API log (`docker compose logs api`). A public demo should offer GitHub sign-in: create an OAuth app whose callback is `https://<DEMO_DOMAIN>/api/auth/github/callback`. Sending emails needs an SMTP mailer, which is not built yet (ADR 0012).
+- Email sign-in links are sent by SMTP: set `SMTP_URL` and `MAIL_FROM`. The API checks the connection at startup and logs a warning if it fails. Without `SMTP_URL`, the links only appear in the API log.
+- For GitHub sign-in, create an OAuth app whose callback is `https://<DEMO_DOMAIN>/api/auth/github/callback`.
 - Back up the `postgres-data` volume: it holds the gallery and the shared fix knowledge base.

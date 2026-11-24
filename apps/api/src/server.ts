@@ -2,19 +2,27 @@ import { agentDepsFromEnv } from "./agent-deps.js";
 import { buildApp } from "./app.js";
 import { authConfigFromEnv } from "./auth.js";
 import { openKnowledge, openStore } from "./knowledge.js";
+import { SmtpMailer } from "./mailer.js";
 import { photoDepsFromEnv } from "./photo-routes.js";
 import { loadConfig } from "./config.js";
 
 const config = loadConfig();
 const knowledge = await openKnowledge(process.env);
 const store = await openStore(process.env);
+const auth = authConfigFromEnv(process.env, (m) => {
+  console.info(m);
+});
+if (auth?.mailer instanceof SmtpMailer)
+  await auth.mailer.verify().catch((err: unknown) => {
+    console.warn(
+      `Email sign-in: SMTP check failed (${(err as Error).message}); links won't arrive.`,
+    );
+  });
 const app = buildApp(config, {
   agent: agentDepsFromEnv(process.env, knowledge),
   photo: photoDepsFromEnv(),
   store,
-  auth: authConfigFromEnv(process.env, (m) => {
-    console.info(m);
-  }),
+  ...(auth ? { auth } : {}),
 });
 
 const shutdown = (signal: string) => {

@@ -2,6 +2,7 @@ import { createHash, createHmac, randomBytes, timingSafeEqual } from "node:crypt
 import type { SessionUser } from "@linelab/schema";
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
+import { SmtpMailer } from "./mailer.js";
 import type { Store, UserRow } from "./store.js";
 
 /** Sends a sign-in link. `LogMailer` prints it to the server log (self-hosting, development). */
@@ -51,8 +52,12 @@ export function authConfigFromEnv(
           },
         }
       : {}),
-    // Email sign-in: links go to the log until an SMTP mailer is configured (see ADR 0012).
-    ...(env.LINELAB_MAIL === "log" || devLinks ? { mailer: new LogMailer(log) } : {}),
+    // Email sign-in: by SMTP when configured, else (self-hosting, development) to the log.
+    ...(env.SMTP_URL
+      ? { mailer: new SmtpMailer(env.SMTP_URL, env.MAIL_FROM ?? "LineLab <no-reply@localhost>") }
+      : env.LINELAB_MAIL === "log" || devLinks
+        ? { mailer: new LogMailer(log) }
+        : {}),
     devLinks,
     secureCookies: publicUrl.startsWith("https://"),
   };

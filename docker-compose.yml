@@ -71,8 +71,13 @@ services:
       # (openssl rand -hex 32) in .env for anything reachable by others.
       AUTH_SECRET: ${AUTH_SECRET:-local-dev-only-secret-change-me-0123456789abcdef}
       PUBLIC_URL: ${PUBLIC_URL:-http://localhost:3000}
-      # Email sign-in links are printed in this service's log (docker compose logs api).
+      # Email sign-in: sent by SMTP when SMTP_URL is set (e.g. smtps://user:pass@smtp.host:465),
+      # otherwise printed in this service's log (docker compose logs api).
+      SMTP_URL: ${SMTP_URL:-}
+      MAIL_FROM: ${MAIL_FROM:-LineLab <no-reply@localhost>}
       LINELAB_MAIL: log
+      # Knowledge-base search by meaning (bge-small in the vision service).
+      EMBEDDINGS_URL: http://vision:8000
       GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID:-}
       GITHUB_CLIENT_SECRET: ${GITHUB_CLIENT_SECRET:-}
     ports: ["4000:4000"]
@@ -81,6 +86,7 @@ services:
       postgres: { condition: service_healthy }
       redis: { condition: service_healthy }
       compiler: { condition: service_started }
+      vision: { condition: service_started }
 
   vision:
     profiles: [apps]

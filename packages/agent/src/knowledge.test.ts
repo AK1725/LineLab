@@ -17,15 +17,14 @@ describe("embeddings", () => {
     expect(tokens("lastError PWM_A delay(25)")).toEqual(
       expect.arrayContaining(["lasterror", "last", "error", "pwm_a", "pwm", "delay", "25"]),
     );
-    expect(cosine(e.embed("motor runs backwards"), e.embed("motor runs backwards"))).toBeCloseTo(
-      1,
-      9,
-    );
+    expect(
+      cosine(e.embedSync("motor runs backwards"), e.embedSync("motor runs backwards")),
+    ).toBeCloseTo(1, 9);
   });
   it("puts related text closer than unrelated text", () => {
-    const q = e.embed("the loop is blocked by a delay");
-    expect(cosine(q, e.embed("delay(30) in loop blocks the controller"))).toBeGreaterThan(
-      cosine(q, e.embed("left motor direction pins swapped")),
+    const q = e.embedSync("the loop is blocked by a delay");
+    expect(cosine(q, e.embedSync("delay(30) in loop blocks the controller"))).toBeGreaterThan(
+      cosine(q, e.embedSync("left motor direction pins swapped")),
     );
   });
 });

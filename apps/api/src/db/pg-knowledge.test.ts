@@ -1,3 +1,4 @@
+import { HttpEmbedder } from "@linelab/agent";
 import { describe, expect, it } from "vitest";
 import { PgKnowledge } from "./pg-knowledge.js";
 
@@ -35,6 +36,43 @@ describe.skipIf(!url)("PgKnowledge (Postgres + pgvector)", () => {
       );
     } finally {
       await kb.close();
+    }
+  });
+});
+
+// Also needs the vision service's /embed (EMBEDDINGS_URL), e.g. `uvicorn app.main:app` in apps/vision.
+const embeddings = process.env.EMBEDDINGS_URL;
+
+describe.skipIf(!url || !embeddings)("PgKnowledge with bge-small embeddings", () => {
+  it("re-embeds cases stored with another model and finds a paraphrase by meaning", async () => {
+    const hashing = await PgKnowledge.connect(url ?? "");
+    await (hashing as unknown as { client: { unsafe(s: string): Promise<unknown> } }).client.unsafe(
+      "TRUNCATE fix_cases",
+    );
+    await hashing.add({
+      symptoms: "the steering overcorrects on every curve",
+      diagnosis: "Kp is too high, so the robot oscillates around the line",
+      diff: "-float Kp = 0.4;\n+float Kp = 0.08;\n",
+      source: "synthetic",
+    });
+    await hashing.add({
+      symptoms: "never moves",
+      diagnosis: "PWMA is defined as pin 6 but wired to D3",
+      diff: "-const uint8_t PWMA = 6;\n+const uint8_t PWMA = 3;\n",
+      source: "synthetic",
+    });
+    // No words in common with the Kp case: word matching can't find it.
+    const query = "my bot wobbles side to side";
+    expect(await hashing.search(query, 1)).toEqual([]);
+    await hashing.close();
+
+    const bge = await PgKnowledge.connect(url ?? "", new HttpEmbedder(embeddings ?? ""));
+    try {
+      expect(await bge.reembed()).toBe(0); // connect already re-embedded both rows
+      const [top] = await bge.search(query, 1);
+      expect(top?.diagnosis).toMatch(/Kp is too high/);
+    } finally {
+      await bge.close();
     }
   });
 });

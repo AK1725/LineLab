@@ -535,13 +535,13 @@ Screenshots: [parts step](screenshots/phase-10-photo-parts.png), [chassis step](
 
 - **Fix knowledge base**:
   - Postgres + pgvector via Drizzle (HNSW cosine index, one row per diff, confirmations counted), or memory without a database;
-  - a dependency-free hashing embedder behind an `Embedder` interface;
+  - search by meaning: bge-small-en-v1.5 embeddings from the vision service (`/embed`, ONNX Runtime via fastembed, no PyTorch), with automatic re-embedding when the model changes; a word-hashing fallback when the service isn't there;
   - **opt-in sharing**: a "Share this fix" checkbox (off by default) on confirmed fixes; only the diff, diagnosis and part names are stored;
   - the agent sees each case's provenance (confirmed on N real robots, or synthetic).
 - **Synthetic bug injection** (`pnpm --filter @linelab/agent inject-bugs`): 11 mutation operators on the good sketch × 3 tracks. A case is kept only if LineLab detects a new failure, and the fix is the reverse diff. Result: **9 labelled synthetic cases** that seed an empty base (`LINELAB_KB_SEED`).
 - **Accounts** (no new dependencies):
   - GitHub OAuth;
-  - email magic links (one-time, hashed, 15 minutes, rate-limited; printed in the API log when self-hosting);
+  - email magic links (one-time, hashed, 15 minutes, rate-limited), sent by SMTP (`SMTP_URL`, nodemailer) or printed in the API log when self-hosting without mail;
   - HMAC-signed cookies;
   - same-site redirects only.
 - **Gallery**: publish (signed in), public or unlisted, versions, delete (author only), search, a view page with outline and BOM, fork into local designs (lineage kept), copy link. Guests keep everything local.
@@ -574,7 +574,8 @@ Screenshots: [parts step](screenshots/phase-10-photo-parts.png), [chassis step](
 - **`docker compose --profile apps up`** on fresh volumes, with all four app images built from the committed Dockerfiles: `smoke-compose.sh` passes everything, including the 9 seeded cases in Postgres. In a browser against the containers, the reference robot's sketch compiled in the sandboxed compiler and the emulated run finished, with no console errors.
   - The images were built here with the sandbox's proxy CA added to temporary copies of the Dockerfiles; the committed Dockerfiles need none.
   - A truly separate clean machine was not available.
-- **Knowledge base**: tested against a real pgvector container (store, deduplicate, confirm, retrieve by meaning). Retrieval on the seed finds the right bug class from symptom text.
+- **Knowledge base**: tested against a real pgvector container (store, deduplicate, confirm, retrieve). With the bge service, cases stored by word-hashing are re-embedded on startup. A paraphrase that shares no words with the stored case ("my bot wobbles side to side") finds it; word-hashing can't.
+- **Email sign-in by SMTP**: the API sends the link through nodemailer (tested against a fake SMTP server). In the compose stack, a sign-in email delivered through SMTP carried a link that signed the user in.
 - **API**: sign-in against a fake GitHub (state check, code exchange); the full gallery flow in memory and on Postgres; opt-in sharing.
 - **e2e**:
   - BOM → email sign-in → publish → gallery search → fork;
@@ -584,8 +585,6 @@ Screenshots: [parts step](screenshots/phase-10-photo-parts.png), [chassis step](
 
 **Deferred / known issues**
 
-- No SMTP mailer: sign-in emails are printed in the API log (fine for self-hosting; a public demo should use GitHub sign-in).
-- The embedder matches words, not meaning (bge-small needs PyTorch, which wasn't added without approval).
 - i18n covers navigation, home and footer only.
 - Lighthouse measures page load, not a running 3D simulation.
 - No learned models (failure predictor, RL tuner; BLUEPRINT §5.9.3): they need collected data.
@@ -597,5 +596,4 @@ All phases in `docs/BUILD_PLAN.md` are built. Open items that need hardware, dat
 - a real-robot telemetry recording (Phase 9);
 - real robot photo sets and a live detection eval (Phase 10);
 - the live AI debugger fix rate (Phase 8);
-- physical-board flashing and Bluetooth tests;
-- an SMTP mailer.
+- physical-board flashing and Bluetooth tests.

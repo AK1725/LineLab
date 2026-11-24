@@ -43,20 +43,20 @@ export class MemoryKnowledge implements FixKnowledge {
   private readonly cases: { c: KnowledgeCase; v: number[] }[] = [];
   constructor(private readonly embedder: Embedder = new HashingEmbedder()) {}
 
-  search(query: string, k = 3): Promise<KnowledgeCase[]> {
-    const q = this.embedder.embed(query);
+  async search(query: string, k = 3): Promise<KnowledgeCase[]> {
+    const q = await this.embedder.embed(query, "query");
     const scored = this.cases
       .map(({ c, v }) => ({ c, sim: cosine(q, v) }))
       .filter((x) => x.sim > 0.1)
       .sort((a, b) => rankScore(b.sim, b.c) - rankScore(a.sim, a.c));
-    return Promise.resolve(scored.slice(0, k).map((x) => x.c));
+    return scored.slice(0, k).map((x) => x.c);
   }
 
-  add(c: NewCase): Promise<KnowledgeCase> {
+  async add(c: NewCase): Promise<KnowledgeCase> {
     const existing = this.cases.find((x) => x.c.diff === c.diff);
     if (existing) {
       if ((c.source ?? "user") === "user") existing.c.confirmations++;
-      return Promise.resolve(existing.c);
+      return existing.c;
     }
     const source = c.source ?? "user";
     const added: KnowledgeCase = {
@@ -66,7 +66,7 @@ export class MemoryKnowledge implements FixKnowledge {
       source,
       parts: c.parts ?? [],
     };
-    this.cases.push({ c: added, v: this.embedder.embed(caseText(added)) });
-    return Promise.resolve(added);
+    this.cases.push({ c: added, v: await this.embedder.embed(caseText(added), "passage") });
+    return added;
   }
 }

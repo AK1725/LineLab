@@ -1,14 +1,16 @@
 /**
- * Text embeddings for the fix knowledge base. `HashingEmbedder` is a dependency-free stand-in:
- * signed feature hashing of words, identifier parts and word pairs into 384 dimensions, L2
- * normalised, so cosine similarity ≈ weighted word overlap. It is deterministic and needs no model
- * download. A neural embedder (BLUEPRINT §5.9: bge-small) can replace it behind the same
- * interface; stored vectors must then be re-embedded (the `model` id is stored with each row).
+ * Text embeddings for the fix knowledge base (384 dimensions, unit length).
+ * - `HttpEmbedder`: bge-small-en-v1.5 served by apps/vision (/embed). Matches meaning, so a
+ *   paraphrase with no words in common still finds the right case.
+ * - `HashingEmbedder`: dependency-free fallback (tests, no vision service): signed feature hashing
+ *   of words, identifier parts and word pairs, so similarity ≈ weighted word overlap.
+ * Each stored vector records its model; stores re-embed when the model changes.
  */
 export interface Embedder {
   readonly model: string;
   readonly dim: number;
-  embed(text: string): number[];
+  /** "query": a search; "passage": a stored case (bge embeds them slightly differently). */
+  embed(text: string, kind?: "query" | "passage"): Promise<number[]>;
 }
 
 /** FNV-1a 32-bit. */
@@ -43,7 +45,11 @@ export class HashingEmbedder implements Embedder {
   readonly model = "hashing-384-v1";
   readonly dim = 384;
 
-  embed(text: string): number[] {
+  embed(text: string): Promise<number[]> {
+    return Promise.resolve(this.embedSync(text));
+  }
+
+  embedSync(text: string): number[] {
     const v = new Array<number>(this.dim).fill(0);
     const t = tokens(text);
     const add = (f: string, w: number) => {
@@ -59,3 +65,28 @@ export class HashingEmbedder implements Embedder {
 
 export const cosine = (a: readonly number[], b: readonly number[]) =>
   a.reduce((s, x, i) => s + x * (b[i] ?? 0), 0);
+
+/** bge-small-en-v1.5 from the vision service (POST {url}/embed). */
+export class HttpEmbedder implements Embedder {
+  readonly model = "bge-small-en-v1.5";
+  readonly dim = 384;
+  constructor(
+    private readonly url: string,
+    private readonly timeoutMs = 15_000,
+  ) {}
+
+  async embed(text: string, kind: "query" | "passage" = "passage"): Promise<number[]> {
+    const res = await fetch(`${this.url.replace(/\/$/, "")}/embed`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ texts: [text], kind }),
+      signal: AbortSignal.timeout(this.timeoutMs),
+    });
+    if (!res.ok) throw new Error(`embedding service: HTTP ${String(res.status)}`);
+    const body = (await res.json()) as { dim?: number; vectors?: number[][] };
+    const v = body.vectors?.[0];
+    if (body.dim !== this.dim || v?.length !== this.dim)
+      throw new Error("embedding service: unexpected vector size");
+    return v;
+  }
+}

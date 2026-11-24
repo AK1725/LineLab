@@ -36,5 +36,7 @@ curl -sf -b "$JAR" -X DELETE "$BASE/api/gallery/$ID" >/dev/null && pass "gallery
 # Knowledge base seeded with the synthetic cases (Postgres).
 N=$(docker compose exec -T postgres psql -U linelab -d linelab -tAc "select count(*) from fix_cases where source='synthetic'")
 [ "${N:-0}" -ge 8 ] && pass "knowledge base: $N synthetic cases" || fail "knowledge base: seed (got ${N:-0})"
+M=$(docker compose exec -T postgres psql -U linelab -d linelab -tAc "select distinct embedding_model from fix_cases")
+[ "$M" = "bge-small-en-v1.5" ] && pass "knowledge base: searched by meaning ($M)" || fail "knowledge base: embedding model is '$M'"
 rm -f "$JAR"
 echo "All good."
