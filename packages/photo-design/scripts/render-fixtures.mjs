@@ -30,6 +30,14 @@ for (const id of ids) {
     join(root, id, "top.view.json"),
     `${JSON.stringify({ widthPx: view.widthPx, heightPx: view.heightPx, mmPerPx: view.mmPerPx, outline: view.outline, boxes: Object.fromEntries(view.boxes) }, null, 1)}\n`,
   );
+  // The scripted detector output with each part's box in this render (e2e / demo replay).
+  const scripted = JSON.parse(readFileSync(join(root, id, "detections.scripted.json"), "utf8"));
+  const truth = JSON.parse(readFileSync(join(root, id, "truth.json"), "utf8"));
+  scripted.detections = scripted.detections.map((d, i) => {
+    const box = view.boxes.get(truth.components[i].componentId);
+    return box ? { ...d, topBox: box } : d;
+  });
+  writeFileSync(join(root, id, "detections.boxed.json"), `${JSON.stringify(scripted, null, 2)}\n`);
   console.log(id, view.widthPx, view.heightPx);
 }
 await browser.close();

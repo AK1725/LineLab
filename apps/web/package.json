@@ -20,6 +20,7 @@
     "@linelab/design-core": "workspace:*",
     "@linelab/firmware-lint": "workspace:*",
     "@linelab/firmware-runtime": "workspace:*",
+    "@linelab/photo-design": "workspace:*",
     "@linelab/rules-engine": "workspace:*",
     "@linelab/run-report": "workspace:*",
     "@linelab/schema": "workspace:*",

@@ -1,0 +1,87 @@
+{
+  "detector": "scripted",
+  "frontInTop": "up",
+  "notes": ["Scripted: hand-written descriptions of the parts, not a model's output."],
+  "detections": [
+    {
+      "id": "d1",
+      "category": "wheel",
+      "description": "two yellow-hub 65 mm rubber wheels for TT motors",
+      "markings": [],
+      "count": 2,
+      "confidence": 0.8,
+      "topBox": {
+        "x": 0.10101010101010101,
+        "y": 0.2818627450980392,
+        "w": 0.797979797979798,
+        "h": 0.31862745098039214
+      }
+    },
+    {
+      "id": "d2",
+      "category": "motor",
+      "description": "two yellow TT gear motors (plastic gearbox), dual shaft",
+      "markings": [],
+      "count": 2,
+      "confidence": 0.8
+    },
+    {
+      "id": "d3",
+      "category": "caster",
+      "description": "ball caster with a 3/4 inch metal ball",
+      "markings": [],
+      "count": 1,
+      "confidence": 0.8
+    },
+    {
+      "id": "d4",
+      "category": "line_sensor",
+      "description": "5-channel TCRT5000 IR tracking module, blue board with 5 sensors in a row",
+      "markings": ["TCRT5000"],
+      "count": 1,
+      "confidence": 0.8
+    },
+    {
+      "id": "d5",
+      "category": "motor_driver",
+      "description": "small red dual motor driver module with two SOP-8 chips and two screw terminals",
+      "markings": ["L9110S"],
+      "count": 1,
+      "confidence": 0.8,
+      "topBox": {
+        "x": 0.44191919191919193,
+        "y": 0.3700980392156863,
+        "w": 0.11616161616161613,
+        "h": 0.14215686274509798
+      }
+    },
+    {
+      "id": "d6",
+      "category": "mcu",
+      "description": "Arduino Uno R3 board, teal PCB, USB-B and barrel jack, DIP chip in a socket",
+      "markings": ["UNO", "ATMEGA328P-PU"],
+      "count": 1,
+      "confidence": 0.8,
+      "topBox": {
+        "x": 0.3772727272727272,
+        "y": 0.1019607843137254,
+        "w": 0.3464646464646466,
+        "h": 0.2617647058823531
+      }
+    },
+    {
+      "id": "d7",
+      "category": "battery",
+      "description": "battery holder with 4 AA cells",
+      "markings": ["4xAA"],
+      "count": 1,
+      "confidence": 0.8,
+      "topBox": {
+        "x": 0.35353535353535354,
+        "y": 0.5196078431372549,
+        "w": 0.292929292929293,
+        "h": 0.3039215686274509
+      }
+    }
+  ]
+}

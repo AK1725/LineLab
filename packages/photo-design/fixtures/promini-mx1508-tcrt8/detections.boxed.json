@@ -1,0 +1,101 @@
+{
+  "detector": "scripted",
+  "frontInTop": "up",
+  "notes": ["Scripted: hand-written descriptions of the parts, not a model's output."],
+  "detections": [
+    {
+      "id": "d1",
+      "category": "wheel",
+      "description": "two black rubber wheels about 34 mm for N20 D-shaft",
+      "markings": [],
+      "count": 2,
+      "confidence": 0.8,
+      "topBox": {
+        "x": 0.14492753623188406,
+        "y": 0.6607142857142857,
+        "w": 0.7101449275362319,
+        "h": 0.1517857142857143
+      }
+    },
+    {
+      "id": "d2",
+      "category": "motor",
+      "description": "two small N20 gearmotors, 300 rpm",
+      "markings": ["N20 300RPM"],
+      "count": 2,
+      "confidence": 0.8
+    },
+    {
+      "id": "d3",
+      "category": "caster",
+      "description": "white nylon skid pad under the front",
+      "markings": [],
+      "count": 1,
+      "confidence": 0.8
+    },
+    {
+      "id": "d4",
+      "category": "line_sensor",
+      "description": "8 channel analog TCRT5000 line sensor array board",
+      "markings": ["TCRT5000"],
+      "count": 1,
+      "confidence": 0.8
+    },
+    {
+      "id": "d5",
+      "category": "battery",
+      "description": "small 2S LiPo pack 7.4V 300mAh with JST plug",
+      "markings": ["7.4V", "300mAh"],
+      "count": 1,
+      "confidence": 0.8,
+      "topBox": {
+        "x": 0.43478260869565216,
+        "y": 0.6383928571428571,
+        "w": 0.13043478260869562,
+        "h": 0.2008928571428572
+      }
+    },
+    {
+      "id": "d6",
+      "category": "motor_driver",
+      "description": "tiny red dual DC motor driver module, 2 motor outputs",
+      "markings": ["MX1508"],
+      "count": 1,
+      "confidence": 0.8,
+      "topBox": {
+        "x": 0.5688405797101449,
+        "y": 0.59375,
+        "w": 0.15217391304347827,
+        "h": 0.1071428571428571
+      }
+    },
+    {
+      "id": "d7",
+      "category": "mcu",
+      "description": "small blue Pro Mini board without USB, 16 MHz crystal",
+      "markings": ["Pro Mini", "ATMEGA328P", "16MHz"],
+      "count": 1,
+      "confidence": 0.8,
+      "topBox": {
+        "x": 0.43478260869565216,
+        "y": 0.23094981527093594,
+        "w": 0.13043478260869562,
+        "h": 0.14732142857142855
+      }
+    },
+    {
+      "id": "d8",
+      "category": "regulator",
+      "description": "tiny green Pololu 5V step-down regulator board",
+      "markings": ["D24V10F5"],
+      "count": 1,
+      "confidence": 0.8,
+      "topBox": {
+        "x": 0.4355072463768116,
+        "y": 0.3878694581280788,
+        "w": 0.1289855072463768,
+        "h": 0.05669642857142854
+      }
+    }
+  ]
+}

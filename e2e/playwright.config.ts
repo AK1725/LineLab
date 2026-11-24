@@ -36,6 +36,10 @@ export default defineConfig({
         LOG_LEVEL: "warn",
         LINELAB_AGENT_SCRIPT: "../examples/agent/blocking_delay.scripted.json",
         LINELAB_AGENT_PER_HOUR: "1000",
+        // Photo import: replay the scripted detections of a fixture robot (no API key in tests).
+        LINELAB_PHOTO_SCRIPT:
+          "../packages/photo-design/fixtures/nano-tb6612-qtr8a/detections.boxed.json",
+        LINELAB_PHOTO_PER_HOUR: "1000",
       },
     },
   ],

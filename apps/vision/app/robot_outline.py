@@ -93,7 +93,7 @@ def robot_outline(data: bytes) -> Outline:
     # near the largest and bridge the gaps between them.
     main = max(blobs, key=cv2.contourArea)
     rect = cv2.boundingRect(main)
-    near = [c for c in blobs if close_to(c, rect, 0.6 * max(rect[2], rect[3]))]
+    near = [c for c in blobs if close_to(c, rect, 0.12 * max(rect[2], rect[3]))]
     union = np.zeros_like(mask)
     cv2.drawContours(union, near, -1, 255, cv2.FILLED)
     bridge = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (6 * r + 1, 6 * r + 1))

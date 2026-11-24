@@ -100,6 +100,9 @@ importers:
       '@linelab/firmware-runtime':
         specifier: workspace:*
         version: link:../../packages/firmware-runtime
+      '@linelab/photo-design':
+        specifier: workspace:*
+        version: link:../../packages/photo-design
       '@linelab/rules-engine':
         specifier: workspace:*
         version: link:../../packages/rules-engine

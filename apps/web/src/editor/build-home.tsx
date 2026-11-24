@@ -2,6 +2,7 @@
 
 import { CHASSIS, getChassis } from "@linelab/component-db";
 import { newDesign } from "@linelab/design-core";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { parseDesignFile } from "./files";
@@ -48,6 +49,11 @@ export default function BuildHome() {
       <h1 className="text-3xl font-bold tracking-tight">Build a robot</h1>
       <p className="mt-2 text-muted">
         Pick a chassis to start from. You can switch chassis or draw your own at any time.
+      </p>
+      <p className="mt-2">
+        <Link href="/build/from-photos" className="text-sm font-medium text-accent underline">
+          Or start from photos of your robot →
+        </Link>
       </p>
 
       <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3" aria-label="Chassis templates">

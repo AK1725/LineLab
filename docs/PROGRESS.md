@@ -462,4 +462,71 @@ Screenshot: [Robot tab](screenshots/phase-9-robot-tab.png). It shows the fake se
 - Motor strength and driver drop trade off against each other in calibration. Encoder counts are in the protocol but not yet in the objective.
 - Calibration runs in a browser worker; the BullMQ worker version (BLUEPRINT §3) is not wired up.
 
-## Next: Phase 10 — Photo → design
+## Phase 10 — Photo → design ✅ with the live detection metric not measured (branch `phase-10-photo-design`)
+
+**Done** ([ADR 0011](adr/0011-photo-to-design.md))
+
+- **Schema**: `PhotoView`, `PhotoBox`, `PhotoDetection`, `DetectionResult`, `PhotoSetTruth`.
+- **`packages/photo-design`**:
+  - **`PhotoDetector` interface**, with three detectors:
+    - `ClaudeVisionDetector`: SDK, images and structured JSON output, adaptive thinking, model and effort from env, refusal and truncation handling, Zod re-validation;
+    - `ScriptedDetector`;
+    - a YOLO slot.
+  - **`matchDetections`**: top-3 database parts per detection.
+  - **`proposeDesign`**:
+    - scale from parts of known size;
+    - the axle frame;
+    - a custom chassis from the silhouette, clipped inside the wheels, with the caster behind the sensor; or the nearest template;
+    - photo positions for parts on the deck;
+    - an auto-wired netlist to confirm.
+  - **`syntheticTopView`**: an ideal overhead camera for tests and fixture renders.
+- **`apps/vision` `POST /robot/outline`**: robot silhouette with OpenCV. The background is taken from the image border; nearby regions are merged; the outline is simplified to a polygon.
+- **`apps/api` `POST /photo/detect`**:
+  - up to 8 photos; a top view is required;
+  - base64 validated;
+  - per-IP limit;
+  - the user's own key, or the server key;
+  - `LINELAB_PHOTO_SCRIPT` replay.
+- **Web**: "Start from photos" on the Build page, then the `/build/from-photos` wizard:
+  - **Photos**: guided-capture tips, a view per photo, and an own-key field.
+  - **Parts**: the top 3 plus "not on my robot", and a count, shown beside the top photo with the outline and boxes. Non-model detections carry a banner.
+  - **Chassis & layout**: from the photo or a template, with explained notes.
+  - **Wiring**: Confirm or Skip per net, with live rule-check errors.
+  - **Create design**, which opens the editor, where every part can be dragged.
+- **Five fixture robots** (real parts, rules-clean): Nano/TB6612/QTR-8A, Uno/L9110S/TT, ESP32/DRV8833/QTR-8RC, Pico/DRV8835/QTR-MD, Pro Mini/MX1508/TCRT5000×8. Each has truth, scripted descriptions and a top-view **render** (labelled as not a photo).
+- **`pnpm eval:photos`**: the live detection metric per photo-set kind; fails below 80 %.
+
+**Verified locally**
+
+- **Matching**: from the scripted descriptions (written from each part's real appearance and markings, never its database name), **39/39 major components of the 5 fixture robots are in the top 3**.
+- **Layout**: from an ideal top view, all five robots get:
+  - the right parts;
+  - scale within 5 %;
+  - deck parts within 6 mm of where they really are;
+  - **0 rule-check errors after confirming the proposed nets**.
+
+  The same holds with the **vision service's actual silhouettes** of the renders, with the photo rotated (front to the right), and without a silhouette (template fallback).
+
+- **Vision**: silhouette IoU > 0.93 on synthetic photos with a lighting gradient and noise, and > 0.9 on the five renders; clear errors for an empty frame or a non-image.
+- **API**: 4 tests (detections, top view required, base64 validation, own key / no key, rate limit). Claude detector: request shape (images, views, JSON schema, adaptive thinking, model) plus refusal, truncation and invalid-JSON handling, with a mocked SDK.
+- **e2e** (`photos.spec.ts`), against the real API with the scripted detector and the vision service's answer replayed:
+  - upload the top render;
+  - every real part is among the 3 choices and is selected;
+  - chassis from the silhouette; 10 parts placed;
+  - confirm each net, with 0 errors;
+  - create the design, and the editor holds exactly the robot's parts, the confirmed nets and a custom chassis;
+  - no console errors.
+
+Screenshots: [parts step](screenshots/phase-10-photo-parts.png), [chassis step](screenshots/phase-10-photo-chassis.png). Both show a scripted replay over a render.
+
+**Not verified: "≥ 80 % of major components identified in the top 3 on 5 fixture photo sets" with a live detector.** This environment has no Anthropic API key and no real robot photos. The committed sets are LineLab renders with no chip markings, which say little about real photos. To measure: add real photo sets (`photos + truth.json`, kind `"real"`) and run `ANTHROPIC_API_KEY=… pnpm eval:photos`.
+
+**Deferred / known issues**
+
+- No trained YOLO detector yet (it needs a labelled dataset; the interface is ready).
+- Multi-view reconstruction (BLUEPRINT §5.10 step 7) is not started.
+- Silhouettes need a plain, contrasting background.
+- Parts on the bottom of the robot are placed by rule, not from the bottom photo.
+- Chassis thickness, material and deck height are estimated (3 mm acrylic, from wheel and motor size), so the user should check them.
+
+## Next: Phase 11 — Knowledge base, gallery, polish, launch

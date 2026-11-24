@@ -1,5 +1,8 @@
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { COMPONENTS, createSearchIndex } from "@linelab/component-db";
 import { runRules } from "@linelab/rules-engine";
+import { DetectionResult } from "@linelab/schema";
 import { describe, expect, it } from "vitest";
 import { matchDetections, modelTokens } from "./match.js";
 import { estimateScale, proposeDesign, type Pick } from "./propose.js";
@@ -178,4 +181,41 @@ describe("design proposal from a (synthetic) top view", () => {
       ),
     ).toBeLessThan(6);
   });
+});
+
+describe("design proposal from the vision service's outline of the fixture renders", () => {
+  for (const id of FIXTURES) {
+    it(`${id}: valid design from the recorded silhouette and boxed detections`, () => {
+      const dir = join(import.meta.dirname, "..", "fixtures", id);
+      const read = (f: string): unknown => JSON.parse(readFileSync(join(dir, f), "utf8"));
+      const outline = read("outline.vision.json") as {
+        polygon: [number, number][];
+        width_px: number;
+        height_px: number;
+      };
+      const dets = DetectionResult.parse(read("detections.boxed.json"));
+      const p = proposeDesign({
+        id: "v1",
+        name: id,
+        detections: dets.detections,
+        picks: truthPicks(id),
+        top: {
+          widthPx: outline.width_px,
+          heightPx: outline.height_px,
+          outline: outline.polygon.map(([x, y]) => ({ x, y })),
+        },
+        frontInTop: "up",
+        lookup: getComponent,
+        getChassis,
+        templates: CHASSIS,
+      });
+      expect(p.chassisSource).toBe("photo");
+      const design = { ...p.design, netlist: p.proposedNets };
+      const ch = design.chassis.kind === "custom" ? design.chassis.chassis : undefined;
+      const errors = ch
+        ? runRules(design, ch, getComponent).filter((x) => x.severity === "error")
+        : ["no chassis"];
+      expect(errors).toEqual([]);
+    });
+  }
 });

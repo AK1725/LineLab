@@ -51,12 +51,14 @@ export function syntheticTopView(
   const b = bounds(silhouette);
   const W = Math.round((b.maxY - b.minY + 2 * marginMm) / mmPerPx);
   const H = Math.round((b.maxX - b.minX + 2 * marginMm) / mmPerPx);
+  // A caption strip below the view, so the label never touches the robot.
+  const LABEL_PX = 28;
   // Front up: image u grows to the robot's right (−y), v grows backwards (−x).
   const px = (q: Vec2): Vec2 => ({
     x: (b.maxY + marginMm - q.y) / mmPerPx,
     y: (b.maxX + marginMm - q.x) / mmPerPx,
   });
-  const frac = (q: Vec2): Vec2 => ({ x: px(q).x / W, y: px(q).y / H });
+  const frac = (q: Vec2): Vec2 => ({ x: px(q).x / W, y: px(q).y / (H + LABEL_PX) });
   const boxOf = (pts: Vec2[]): PhotoBox => {
     const f = pts.map(frac);
     const xs = f.map((q) => q.x);
@@ -94,16 +96,17 @@ export function syntheticTopView(
     wheel: "#111",
   };
   const svg = [
-    `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">`,
-    `<rect width="${W}" height="${H}" fill="#e9e6df"/>`,
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H + LABEL_PX}" viewBox="0 0 ${W} ${H + LABEL_PX}">`,
+    `<rect width="${W}" height="${H + LABEL_PX}" fill="#e9e6df"/>`,
     poly(chassis.outline, PLATE[chassis.material] ?? "#9aa7b0"),
     ...parts
       .filter((x) => x.p.mount === "top" || x.c.category === "wheel")
       .map((x) => poly(x.corners, colour[x.c.category] ?? "#777")),
-    `<text x="8" y="${H - 8}" font-family="sans-serif" font-size="14" fill="#555">LineLab render (not a photo)</text>`,
+    `<rect y="${H}" width="${W}" height="${LABEL_PX}" fill="#ffffff"/>`,
+    `<text x="6" y="${H + 19}" font-family="sans-serif" font-size="13" fill="#555">LineLab render (not a photo)</text>`,
     "</svg>",
   ].join("");
-  return { widthPx: W, heightPx: H, mmPerPx, outline: silhouette.map(frac), boxes, svg };
+  return { widthPx: W, heightPx: H + LABEL_PX, mmPerPx, outline: silhouette.map(frac), boxes, svg };
 }
 
 /** Attach the synthetic camera's boxes to detections (by their chosen component). */
