@@ -1,0 +1,11 @@
+--- a/sketch.ino
++++ b/sketch.ino
+@@ -53,7 +53,7 @@
+   }
+   long error;
+   bool lost = sum < 300;
+-  if (lost) error = 0;  // nothing seen: go straight
++  if (lost) error = lastError >= 0 ? 3500 : -3500;  // turn towards where the line was
+   else error = weighted / sum;
+ 
+   unsigned long now = micros();

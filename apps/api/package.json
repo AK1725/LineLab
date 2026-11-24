@@ -15,6 +15,11 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "1.7.0",
+    "@linelab/agent": "workspace:*",
+    "@linelab/component-db": "workspace:*",
+    "@linelab/design-core": "workspace:*",
+    "@linelab/schema": "workspace:*",
     "fastify": "5.12.8",
     "zod": "4.6.7"
   }

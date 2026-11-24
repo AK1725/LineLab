@@ -61,10 +61,17 @@ services:
       API_PORT: "4000"
       DATABASE_URL: postgres://linelab:linelab@postgres:5432/linelab
       REDIS_URL: redis://redis:6379
+      # AI debugger: the server's key (optional; users can bring their own per session).
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      LINELAB_AGENT_MODEL: ${LINELAB_AGENT_MODEL:-claude-opus-5-5}
+      COMPILER_URL: http://compiler:8100
+      LINELAB_COMPILE_CACHE: /tmp/compile-cache
     ports: ["4000:4000"]
+    networks: [default, sandbox]
     depends_on:
       postgres: { condition: service_healthy }
       redis: { condition: service_healthy }
+      compiler: { condition: service_started }
 
   vision:
     profiles: [apps]
@@ -78,6 +85,7 @@ services:
     environment:
       VISION_URL: http://vision:8000
       COMPILER_URL: http://compiler:8100
+      API_URL: http://api:4000
     networks: [default, sandbox]
     depends_on: [api, vision, compiler]
 

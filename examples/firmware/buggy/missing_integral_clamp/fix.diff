@@ -1,0 +1,10 @@
+--- a/sketch.ino
++++ b/sketch.ino
+@@ -63,6 +63,7 @@
+   lastMicros = now;
+   if (dtMs <= 0) dtMs = 1;
+   integral += error * dtMs;
++  integral = constrain(integral, -40000.0, 40000.0);  // limit windup
+   float turn = Ki * integral + Kp * error + Kd * (error - lastError) / dtMs;
+   lastError = error;
+ 

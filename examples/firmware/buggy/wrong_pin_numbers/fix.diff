@@ -1,0 +1,11 @@
+--- a/sketch.ino
++++ b/sketch.ino
+@@ -10,7 +10,7 @@
+ //          STBY tied to 5 V
+ 
+ const uint8_t SENSORS[8] = {A0, A1, A2, A3, A4, A5, A6, A7};
+-const uint8_t PWMA = 9, AIN1 = 2, AIN2 = 4;  // "PWM is on 9 on my other robot"
++const uint8_t PWMA = 3, AIN1 = 2, AIN2 = 4;  // as wired
+ const uint8_t PWMB = 5, BIN1 = 7, BIN2 = 8;
+ 
+ // Error is -3500..3500 (line under sensor 8 .. sensor 1); positive = line to the left.

@@ -1,0 +1,11 @@
+--- a/sketch.ino
++++ b/sketch.ino
+@@ -47,7 +47,7 @@
+   int span = hi - lo;
+   long sum = 0, weighted = 0;
+   for (uint8_t i = 0; i < 8; i++) {
+-    long dark = v[i] > 900 ? 900 : 0;  // black reads above 900 on my desk
++    long dark = span > 150 ? constrain((long)(v[i] - lo) * 1000 / span - 100, 0, 900) : 0;
+     sum += dark;
+     weighted += dark * (3500 - 1000L * i);
+   }

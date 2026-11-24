@@ -9,7 +9,7 @@ const phases = [
   ["5", "Deterministic simulation and run viewer", true],
   ["6", "Run your real firmware (emulated MCU)", true],
   ["7", "Failure detection and static analysis", true],
-  ["8", "AI debug agent with verified fixes", false],
+  ["8", "AI debug agent with verified fixes", true],
   ["9", "Real-robot telemetry, flashing, calibration", false],
   ["10", "Photo to virtual design", false],
   ["11", "Knowledge base, gallery, launch", false],

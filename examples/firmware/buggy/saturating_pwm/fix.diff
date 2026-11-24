@@ -1,0 +1,18 @@
+--- a/sketch.ino
++++ b/sketch.ino
+@@ -16,13 +16,14 @@
+ // Error is -3500..3500 (line under sensor 8 .. sensor 1); positive = line to the left.
+ float Kp = 0.08;          // PWM counts per error unit
+ float Kd = 2.5;           // PWM counts per (error unit per ms)
+-int baseSpeed = 230;      // "full speed ahead"
++int baseSpeed = 150;      // of 255, leaves room for corrections
+ 
+ int lo = 1023, hi = 0;    // running calibration
+ long lastError = 0;
+ unsigned long lastMicros = 0, lastPrint = 0;
+ 
+ void setMotor(uint8_t pwm, uint8_t in1, uint8_t in2, int speed) {
++  speed = constrain(speed, -255, 255);
+   digitalWrite(in1, speed >= 0 ? HIGH : LOW);
+   digitalWrite(in2, speed >= 0 ? LOW : HIGH);
+   analogWrite(pwm, abs(speed));

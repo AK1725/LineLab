@@ -17,6 +17,12 @@ const CodeEditor = dynamic(() => import("./code-editor"), {
   loading: () => <p className="p-4 text-sm text-muted">Loading editor…</p>,
 });
 
+declare global {
+  interface Window {
+    __linelabFirmware?: typeof useFirmware;
+  }
+}
+
 export function TierBadge({ tier }: { tier: "emulated" | "hal" }) {
   return tier === "emulated" ? (
     <span
@@ -81,6 +87,9 @@ export default function CodeView() {
   useEffect(() => {
     void useFirmware.getState().load(design);
   }, [design]);
+  useEffect(() => {
+    window.__linelabFirmware = useFirmware; // test & debugging hook
+  }, []);
 
   if (!b) {
     return (

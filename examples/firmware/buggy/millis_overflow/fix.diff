@@ -1,0 +1,11 @@
+--- a/sketch.ino
++++ b/sketch.ino
+@@ -67,7 +67,7 @@
+   setMotor(PWMA, AIN1, AIN2, base - (int)turn);
+   setMotor(PWMB, BIN1, BIN2, base + (int)turn);
+ 
+-  if (millis() > lastPrint + 250) {
++  if (millis() - lastPrint >= 250) {
+     lastPrint = millis();
+     Serial.print(F("err "));
+     Serial.println(error);

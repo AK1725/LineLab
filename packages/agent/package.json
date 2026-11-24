@@ -18,6 +18,23 @@
     "build": "tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --max-warnings 0",
-    "test": "vitest run --passWithNoTests"
+    "test": "vitest run",
+    "eval": "tsx scripts/eval.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "1.7.0",
+    "@linelab/component-db": "workspace:*",
+    "@linelab/design-core": "workspace:*",
+    "@linelab/firmware-lint": "workspace:*",
+    "@linelab/firmware-runtime": "workspace:*",
+    "@linelab/run-report": "workspace:*",
+    "@linelab/schema": "workspace:*",
+    "@linelab/sim-core": "workspace:*",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@linelab/compiler": "workspace:*",
+    "fast-check": "4.11.0",
+    "tsx": "4.23.15"
   }
 }

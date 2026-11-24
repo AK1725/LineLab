@@ -1,0 +1,20 @@
+--- a/sketch.ino
++++ b/sketch.ino
+@@ -14,7 +14,7 @@
+ const uint8_t PWMB = 5, BIN1 = 7, BIN2 = 8;
+ 
+ // Error is -3500..3500 (line under sensor 8 .. sensor 1); positive = line to the left.
+-int KP_DIV = 12;          // turn = error / 12 (integer)
++float Kp = 0.08;          // PWM counts per error unit
+ float Kd = 2.5;           // PWM counts per (error unit per ms)
+ int baseSpeed = 115;      // of 255
+ 
+@@ -60,7 +60,7 @@
+   float dtMs = (now - lastMicros) / 1000.0;
+   lastMicros = now;
+   if (dtMs <= 0) dtMs = 1;
+-  long turn = error / KP_DIV + (long)(Kd * (error - lastError) / dtMs);
++  float turn = Kp * error + Kd * (error - lastError) / dtMs;
+   lastError = error;
+ 
+   int base = lost ? 38 : baseSpeed - (int)(baseSpeed / 2 * min(abs(error), 3500L) / 3500);

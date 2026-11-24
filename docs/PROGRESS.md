@@ -344,4 +344,59 @@ Screenshots: [run report](screenshots/phase-7-run-report.png), [static analysis]
 - The "Approximate" HAL tier has no exact source lines (no line table for WebAssembly yet).
 - Smoothness score from the blueprint's metric list isn't computed.
 
-## Next: Phase 8 — AI debug agent
+## Phase 8 — AI debug agent ✅ with one acceptance item not measured (branch `phase-8-agent`)
+
+**Done** ([ADR 0009](adr/0009-ai-debug-agent.md))
+
+- **`packages/agent`**: a streaming Messages API tool loop with `@anthropic-ai/sdk` 1.7:
+  - model `claude-opus-5-5` from config;
+  - adaptive thinking with summaries; effort `high` from config;
+  - prompt caching (system + tools, and the conversation);
+  - strict tools with eager input streaming, validated with Zod;
+  - server-side refusal fallback;
+  - stop-reason handling (refusal, max_tokens, context window, pause);
+  - iteration cap 5, token budget, turn cap.
+- **Tools**: get_firmware, get_design_summary, get_netlist, get_run_report, get_trace_window, static_analysis, compile, simulate, search_fix_knowledge, propose_patch.
+- **Verification gate in code**:
+  - the patch applies cleanly and compiles;
+  - robustness and completion don't drop on the user's seeds + 2 fresh seeds;
+  - no new error event type on any seed and no new lint rule;
+  - and something measurably improves.
+
+  The user sees only accepted patches: the regenerated diff, the full file, before/after on every seed, and the compiled firmware. Code in the model's text is removed.
+
+- **`apps/api`**: `POST /agent/sessions`, `GET …/events` (server-sent events), `GET …/:id`, `POST …/stop`, `POST …/feedback`. Per-IP rate limits, bring-your-own key (never stored), compiler service + compile cache. Feedback: "worked" stores a confirmed case; "didn't work" starts a new round from the fixed sketch with the observations.
+- **Web**: "Debug with AI" in the Run tab, shown for firmware runs:
+  - streamed reasoning summary and tool activity;
+  - rejected attempts with the gate's reasons;
+  - the diagnosis;
+  - the verified fix (before/after table, coloured diff, full file);
+  - "Use this version and re-run", where the previous run becomes the ghost;
+  - the real-track feedback form;
+  - an own-key field.
+- `pnpm eval:agent`: live-model eval over all 12 fixtures (fix rate, attempts, tokens, `--record` transcripts). A reference fix (`fix.diff`) for every buggy fixture. A compile cache of real compiler output (`examples/firmware/.compile-cache`).
+
+**Verified locally**
+
+- **Gate**: the reference fix for **all 12 fixtures passes the gate**. It rejects a patch that doesn't compile, a no-op patch, and a patch that reverses a working motor (naming the new errors).
+- **No unverified patch is ever shown** (mocked model): a bad patch (`delay(25)` → `delay(20)`) is rejected ("nothing measurably improved"), the session ends `not_fixed`, there is no `verified` event, and the code the model put in its final text is removed.
+- Also tested:
+  - iteration cap;
+  - refusal (tools of the refused turn not run);
+  - token budget stop;
+  - invalid tool input;
+  - the exact SDK request (model, caching breakpoints, adaptive thinking, effort, fallbacks, strict + eager tools).
+- API (8 tests): SSE session to a verified patch; 503 with no key and a user's own key passed through; rate limit; feedback storing a confirmed case and restarting a round.
+- **e2e** (`agent.spec.ts`): build → code → run → fail (blocking delay) → AI fix verified → re-run with ghost and 0 errors → "didn't work" feedback → round 2 honestly ends "No verified fix found". The model side is a **scripted transcript** (`examples/agent`, labelled in the UI); the API, compile outputs, simulator and gate are real.
+
+Screenshot: [AI debugger with a verified fix](screenshots/phase-8-ai-debugger.png) (scripted transcript).
+
+**Not verified: the "≥ 80 % of fixture bugs fixed through the gate within 5 iterations" criterion.** This environment has no Anthropic API key, so the live-model eval has not been run. To measure it: `ANTHROPIC_API_KEY=… ARDUINO_CLI=… pnpm eval:agent`. The script exits non-zero below 80 %. What is shown is that every fixture is fixable within the gate's rules (12/12 reference fixes accepted).
+
+**Deferred / known issues**
+
+- Sessions and the fix knowledge are in API memory (lost on restart); pgvector retrieval and persistence come in Phase 11.
+- `simulate` runs on the user's track only (not other tracks).
+- The scripted transcript is hand-written. Record real ones with `pnpm eval:agent -- --record`.
+
+## Next: Phase 9 — Real-world loop

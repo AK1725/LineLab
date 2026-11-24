@@ -1,0 +1,11 @@
+--- a/sketch.ino
++++ b/sketch.ino
+@@ -49,7 +49,7 @@
+   for (uint8_t i = 0; i < 8; i++) {
+     long dark = span > 150 ? constrain((long)(v[i] - lo) * 1000 / span - 100, 0, 900) : 0;
+     sum += dark;
+-    weighted += dark * (1000L * i - 3500);  // sensor 1 is on the right... isn't it?
++    weighted += dark * (3500 - 1000L * i);  // sensor 1 (A0) is on the left
+   }
+   long error;
+   bool lost = sum < 300;

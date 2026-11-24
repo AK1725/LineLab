@@ -10,6 +10,7 @@ import { TierBadge } from "../firmware/code-view";
 import { boardOf, SKETCH_FILE, useFirmware } from "../firmware/store";
 import { FirmwarePanel, WatchPlots } from "./firmware-panel";
 import { ReportPanel } from "./report-panel";
+import AgentPanel from "../agent/agent-panel";
 import { listTracks } from "../tracks/storage";
 import { RunPlots } from "./plots";
 import { SPEEDS, traceEndMs, useRun } from "./run-store";
@@ -288,6 +289,17 @@ export default function RunView() {
   const tracks = useMemo(() => [...TRACKS, ...saved], [saved]);
   const track = tracks.find((t) => t.id === trackId);
 
+  /** Run the firmware now in the editor (e.g. a verified fix); the previous run becomes the ghost. */
+  const rerunFirmware = (d: typeof design, t: Track, s: number) => {
+    const fw = useFirmware.getState();
+    if (!fw.artifact) return;
+    setController("firmware");
+    useRun.getState().start(d, t, [s], pid, "after the AI fix", fw.artifact, {
+      text: fw.source,
+      file: SKETCH_FILE,
+    });
+  };
+
   const start = () => {
     if (!track) return;
     const seeds =
@@ -461,6 +473,18 @@ export default function RunView() {
                 recordEveryMs={run.summary.recordEveryMs}
                 endMs={Math.max(1, traceEndMs(run))}
               />
+            )}
+            {run.summary.controller === "firmware" && (
+              <div className="mt-3">
+                <AgentPanel
+                  design={run.design}
+                  track={run.track}
+                  seed={run.summary.seed}
+                  onRerun={() => {
+                    rerunFirmware(run.design, run.track, run.summary.seed);
+                  }}
+                />
+              </div>
             )}
           </div>
         )}

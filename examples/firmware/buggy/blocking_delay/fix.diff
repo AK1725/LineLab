@@ -1,0 +1,10 @@
+--- a/sketch.ino
++++ b/sketch.ino
+@@ -66,7 +66,6 @@
+   int base = lost ? 38 : baseSpeed - (int)(baseSpeed / 2 * min(abs(error), 3500L) / 3500);
+   setMotor(PWMA, AIN1, AIN2, base - (int)turn);
+   setMotor(PWMB, BIN1, BIN2, base + (int)turn);
+-  delay(25);  // "give the motors time to react"
+ 
+   if (millis() - lastPrint >= 250) {
+     lastPrint = millis();
