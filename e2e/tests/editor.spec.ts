@@ -195,6 +195,19 @@ test.describe("assembly editor", () => {
     expect(readFileSync(await stl.path(), "utf8")).toMatch(/^solid linelab_chassis/);
   });
 
+  test("an edit made just before leaving the editor is saved (no lost changes)", async ({
+    page,
+  }) => {
+    await startFrom(page, /Starter 2WD/);
+    const name = `Quick exit ${String(Date.now())}`;
+    // Rename and leave at once, well inside the autosave debounce.
+    await page.getByLabel("Design name").fill(name);
+    await page.getByLabel("Design name").press("Enter");
+    await page.getByRole("link", { name: "← Designs" }).click();
+    await expect(page.getByRole("heading", { name: "Build a robot" })).toBeVisible();
+    await expect(page.getByText(name)).toBeVisible();
+  });
+
   test("switching templates keeps parts and re-seats them on the new deck", async ({ page }) => {
     await startFrom(page, /Starter 2WD/);
     await addPart(page, "nano", "Arduino Nano (ATmega328P)");

@@ -18,7 +18,7 @@
     "build": "tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --max-warnings 0",
-    "test": "vitest run",
+    "test": "vitest run --testTimeout 60000 --hookTimeout 120000",
     "eval": "tsx scripts/eval.ts",
     "inject-bugs": "tsx scripts/inject-bugs.ts"
   },

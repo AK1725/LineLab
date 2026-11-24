@@ -3,7 +3,8 @@
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import type { Design } from "@linelab/schema";
+import { useEffect, useRef, useState } from "react";
 import ChassisDialog from "./chassis-dialog";
 import Inspector from "./inspector";
 import PartsPanel from "./parts-panel";
@@ -152,10 +153,15 @@ export default function Editor() {
     };
   }, [id, initialView]);
 
-  // Autosave (debounced) whenever the design changes.
+  // Autosave (debounced) whenever the design changes. A change still waiting for its save is
+  // written immediately when the editor unmounts (a link to another page) or the page is hidden
+  // (reload, tab close), so leaving right after an edit never loses it.
+  const pending = useRef<Design | null>(null);
   useEffect(() => {
     if (status !== "ready" || design.id !== id) return;
+    pending.current = design;
     const t = setTimeout(() => {
+      pending.current = null;
       saveDesign(design).then(
         () => {
           setSaved({ design, ok: true });
@@ -169,6 +175,18 @@ export default function Editor() {
       clearTimeout(t);
     };
   }, [design, status, id]);
+  useEffect(() => {
+    const flush = () => {
+      const d = pending.current;
+      pending.current = null;
+      if (d) void saveDesign(d).catch(() => undefined);
+    };
+    window.addEventListener("pagehide", flush);
+    return () => {
+      window.removeEventListener("pagehide", flush);
+      flush();
+    };
+  }, []);
 
   const saveState =
     saved?.ok === false

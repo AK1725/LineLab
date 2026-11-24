@@ -28,6 +28,7 @@ test("BOM → sign in by email → publish → gallery → fork", async ({ page 
     },
     { ...reference, id, name: title },
   );
+  await expect(page.getByText("Saved")).toBeVisible();
 
   // Bill of materials: real parts, typical prices from the database.
   await page.getByRole("button", { name: "BOM: parts, mass and cost" }).click();

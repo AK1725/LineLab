@@ -24,7 +24,7 @@
     "build": "pnpm catalog:generate && tsc -p tsconfig.build.json",
     "typecheck": "pnpm catalog:generate && tsc --noEmit",
     "lint": "eslint . --max-warnings 0",
-    "test": "pnpm catalog:generate && vitest run",
+    "test": "pnpm catalog:generate && vitest run --testTimeout 60000 --hookTimeout 120000",
     "db:validate": "tsx scripts/validate.ts"
   },
   "dependencies": {

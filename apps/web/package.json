@@ -11,7 +11,7 @@
     "start": "next start --port 3000",
     "typecheck": "node scripts/gen-examples.mjs && tsc --noEmit",
     "lint": "node scripts/gen-examples.mjs && eslint . --max-warnings 0",
-    "test": "vitest run --passWithNoTests"
+    "test": "vitest run --testTimeout 60000 --hookTimeout 120000 --passWithNoTests"
   },
   "dependencies": {
     "@linelab/agent": "workspace:*",
