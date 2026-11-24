@@ -1,0 +1,71 @@
+{
+  "detector": "scripted",
+  "frontInTop": "up",
+  "notes": ["Scripted: hand-written descriptions of the parts, not a model's output."],
+  "detections": [
+    {
+      "id": "d1",
+      "category": "wheel",
+      "description": "two yellow-hub 65 mm rubber wheels for TT motors",
+      "markings": [],
+      "count": 2,
+      "confidence": 0.8
+    },
+    {
+      "id": "d2",
+      "category": "motor",
+      "description": "two yellow TT gearmotors, 1:120 gearbox",
+      "markings": ["1:120"],
+      "count": 2,
+      "confidence": 0.8
+    },
+    {
+      "id": "d3",
+      "category": "caster",
+      "description": "ball caster with a 3/4 inch metal ball",
+      "markings": [],
+      "count": 1,
+      "confidence": 0.8
+    },
+    {
+      "id": "d4",
+      "category": "line_sensor",
+      "description": "Pololu QTR MD 8-channel reflectance sensor, 8 mm pitch, analog",
+      "markings": ["QTR-MD-08A"],
+      "count": 1,
+      "confidence": 0.8
+    },
+    {
+      "id": "d5",
+      "category": "battery",
+      "description": "2S lipo battery 450mAh, 7.4 V",
+      "markings": ["450mAh", "2S"],
+      "count": 1,
+      "confidence": 0.8
+    },
+    {
+      "id": "d6",
+      "category": "motor_driver",
+      "description": "tiny purple Pololu dual motor driver carrier, 14 pins",
+      "markings": ["DRV8835"],
+      "count": 1,
+      "confidence": 0.8
+    },
+    {
+      "id": "d7",
+      "category": "mcu",
+      "description": "Raspberry Pi Pico, green board with castellated edges and micro-USB",
+      "markings": ["RP2040", "Raspberry Pi Pico"],
+      "count": 1,
+      "confidence": 0.8
+    },
+    {
+      "id": "d8",
+      "category": "regulator",
+      "description": "tiny green Pololu 5V step-down regulator board",
+      "markings": ["D24V10F5"],
+      "count": 1,
+      "confidence": 0.8
+    }
+  ]
+}

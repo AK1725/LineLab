@@ -1,0 +1,52 @@
+{
+  "id": "promini-mx1508-tcrt8",
+  "kind": "render",
+  "photos": [
+    {
+      "file": "top.png",
+      "view": "top"
+    },
+    {
+      "file": "bottom.png",
+      "view": "bottom"
+    },
+    {
+      "file": "side.png",
+      "view": "left"
+    }
+  ],
+  "components": [
+    {
+      "componentId": "wheel.n20-34mm",
+      "count": 2
+    },
+    {
+      "componentId": "motor.n20-6v-300rpm",
+      "count": 2
+    },
+    {
+      "componentId": "caster.nylon-skid",
+      "count": 1
+    },
+    {
+      "componentId": "sensor.tcrt5000-8ch-analog",
+      "count": 1
+    },
+    {
+      "componentId": "battery.lipo-2s-300mah",
+      "count": 1
+    },
+    {
+      "componentId": "driver.mx1508-module",
+      "count": 1
+    },
+    {
+      "componentId": "mcu.arduino-pro-mini-5v",
+      "count": 1
+    },
+    {
+      "componentId": "regulator.pololu-d24v10f5",
+      "count": 1
+    }
+  ]
+}

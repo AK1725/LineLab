@@ -1,0 +1,497 @@
+{
+  "id": "fixture-esp32-drv8833-qtr8rc",
+  "name": "esp32-drv8833-qtr8rc",
+  "version": 1,
+  "chassis": {
+    "kind": "template",
+    "chassisId": "chassis.downforce-racer"
+  },
+  "placements": [
+    {
+      "instanceId": "wheel1",
+      "componentId": "wheel.n20-34mm",
+      "position": {
+        "x": 0,
+        "y": 46,
+        "z": 0
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+      },
+      "deck": 0,
+      "mount": "top",
+      "standoffMm": 0
+    },
+    {
+      "instanceId": "wheel2",
+      "componentId": "wheel.n20-34mm",
+      "position": {
+        "x": 0,
+        "y": -46,
+        "z": 0
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+      },
+      "deck": 0,
+      "mount": "top",
+      "standoffMm": 0
+    },
+    {
+      "instanceId": "motor1",
+      "componentId": "motor.n20-6v-500rpm",
+      "position": {
+        "x": 0,
+        "y": 34.5,
+        "z": 11
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0.7071067811865475,
+        "w": 0.7071067811865476
+      },
+      "deck": 0,
+      "mount": "bottom",
+      "standoffMm": 0
+    },
+    {
+      "instanceId": "motor2",
+      "componentId": "motor.n20-6v-500rpm",
+      "position": {
+        "x": 0,
+        "y": -34.5,
+        "z": 11
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": -0.7071067811865475,
+        "w": 0.7071067811865476
+      },
+      "deck": 0,
+      "mount": "bottom",
+      "standoffMm": 0
+    },
+    {
+      "instanceId": "caster1",
+      "componentId": "caster.nylon-skid",
+      "position": {
+        "x": 97,
+        "y": 0,
+        "z": 16
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+      },
+      "deck": 0,
+      "mount": "bottom",
+      "standoffMm": 0
+    },
+    {
+      "instanceId": "line-sensor1",
+      "componentId": "sensor.pololu-qtr-8rc",
+      "position": {
+        "x": 112.65,
+        "y": 0,
+        "z": 17.8
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+      },
+      "deck": 0,
+      "mount": "bottom",
+      "standoffMm": 0
+    },
+    {
+      "instanceId": "battery1",
+      "componentId": "battery.lipo-2s-450mah",
+      "position": {
+        "x": -5,
+        "y": 0,
+        "z": 22.6
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+      },
+      "deck": 0,
+      "mount": "top",
+      "standoffMm": 0
+    },
+    {
+      "instanceId": "motor-driver1",
+      "componentId": "driver.drv8833-pololu",
+      "position": {
+        "x": -22.5,
+        "y": -22.5,
+        "z": 22.6
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0.7071067811865475,
+        "w": 0.7071067811865476
+      },
+      "deck": 0,
+      "mount": "top",
+      "standoffMm": 0
+    },
+    {
+      "instanceId": "mcu1",
+      "componentId": "mcu.esp32-devkitc",
+      "position": {
+        "x": 81.25,
+        "y": 0,
+        "z": 22.6
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+      },
+      "deck": 0,
+      "mount": "top",
+      "standoffMm": 0
+    },
+    {
+      "instanceId": "regulator1",
+      "componentId": "regulator.pololu-d24v10f5",
+      "position": {
+        "x": 58.75,
+        "y": -22.5,
+        "z": 22.6
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0.7071067811865475,
+        "w": 0.7071067811865476
+      },
+      "deck": 0,
+      "mount": "top",
+      "standoffMm": 0
+    }
+  ],
+  "netlist": [
+    {
+      "id": "n1",
+      "name": "GND",
+      "connections": [
+        {
+          "instanceId": "mcu1",
+          "pinId": "GND"
+        },
+        {
+          "instanceId": "mcu1",
+          "pinId": "GND2"
+        },
+        {
+          "instanceId": "mcu1",
+          "pinId": "GND3"
+        },
+        {
+          "instanceId": "motor-driver1",
+          "pinId": "GND"
+        },
+        {
+          "instanceId": "line-sensor1",
+          "pinId": "GND"
+        },
+        {
+          "instanceId": "battery1",
+          "pinId": "BAT-"
+        },
+        {
+          "instanceId": "regulator1",
+          "pinId": "GND"
+        }
+      ]
+    },
+    {
+      "id": "n2",
+      "name": "VBAT",
+      "connections": [
+        {
+          "instanceId": "battery1",
+          "pinId": "BAT+"
+        },
+        {
+          "instanceId": "motor-driver1",
+          "pinId": "VIN"
+        },
+        {
+          "instanceId": "regulator1",
+          "pinId": "VIN"
+        }
+      ]
+    },
+    {
+      "id": "n3",
+      "name": "5V_REG",
+      "connections": [
+        {
+          "instanceId": "regulator1",
+          "pinId": "VOUT"
+        },
+        {
+          "instanceId": "mcu1",
+          "pinId": "5V"
+        }
+      ]
+    },
+    {
+      "id": "n4",
+      "name": "AIN1",
+      "connections": [
+        {
+          "instanceId": "mcu1",
+          "pinId": "GPIO16"
+        },
+        {
+          "instanceId": "motor-driver1",
+          "pinId": "AIN1"
+        }
+      ]
+    },
+    {
+      "id": "n5",
+      "name": "AIN2",
+      "connections": [
+        {
+          "instanceId": "mcu1",
+          "pinId": "GPIO17"
+        },
+        {
+          "instanceId": "motor-driver1",
+          "pinId": "AIN2"
+        }
+      ]
+    },
+    {
+      "id": "n6",
+      "name": "BIN1",
+      "connections": [
+        {
+          "instanceId": "mcu1",
+          "pinId": "GPIO18"
+        },
+        {
+          "instanceId": "motor-driver1",
+          "pinId": "BIN1"
+        }
+      ]
+    },
+    {
+      "id": "n7",
+      "name": "BIN2",
+      "connections": [
+        {
+          "instanceId": "mcu1",
+          "pinId": "GPIO19"
+        },
+        {
+          "instanceId": "motor-driver1",
+          "pinId": "BIN2"
+        }
+      ]
+    },
+    {
+      "id": "n8",
+      "name": "motor1+",
+      "connections": [
+        {
+          "instanceId": "motor1",
+          "pinId": "M+"
+        },
+        {
+          "instanceId": "motor-driver1",
+          "pinId": "AOUT1"
+        }
+      ]
+    },
+    {
+      "id": "n9",
+      "name": "motor1-",
+      "connections": [
+        {
+          "instanceId": "motor1",
+          "pinId": "M-"
+        },
+        {
+          "instanceId": "motor-driver1",
+          "pinId": "AOUT2"
+        }
+      ]
+    },
+    {
+      "id": "n10",
+      "name": "motor2+",
+      "connections": [
+        {
+          "instanceId": "motor2",
+          "pinId": "M+"
+        },
+        {
+          "instanceId": "motor-driver1",
+          "pinId": "BOUT1"
+        }
+      ]
+    },
+    {
+      "id": "n11",
+      "name": "motor2-",
+      "connections": [
+        {
+          "instanceId": "motor2",
+          "pinId": "M-"
+        },
+        {
+          "instanceId": "motor-driver1",
+          "pinId": "BOUT2"
+        }
+      ]
+    },
+    {
+      "id": "n12",
+      "name": "3.3V",
+      "connections": [
+        {
+          "instanceId": "mcu1",
+          "pinId": "3V3"
+        },
+        {
+          "instanceId": "line-sensor1",
+          "pinId": "VCC"
+        }
+      ]
+    },
+    {
+      "id": "n13",
+      "name": "line-sensor1.OUT1",
+      "connections": [
+        {
+          "instanceId": "mcu1",
+          "pinId": "GPIO36"
+        },
+        {
+          "instanceId": "line-sensor1",
+          "pinId": "OUT1"
+        }
+      ]
+    },
+    {
+      "id": "n14",
+      "name": "line-sensor1.OUT2",
+      "connections": [
+        {
+          "instanceId": "mcu1",
+          "pinId": "GPIO39"
+        },
+        {
+          "instanceId": "line-sensor1",
+          "pinId": "OUT2"
+        }
+      ]
+    },
+    {
+      "id": "n15",
+      "name": "line-sensor1.OUT3",
+      "connections": [
+        {
+          "instanceId": "mcu1",
+          "pinId": "GPIO34"
+        },
+        {
+          "instanceId": "line-sensor1",
+          "pinId": "OUT3"
+        }
+      ]
+    },
+    {
+      "id": "n16",
+      "name": "line-sensor1.OUT4",
+      "connections": [
+        {
+          "instanceId": "mcu1",
+          "pinId": "GPIO35"
+        },
+        {
+          "instanceId": "line-sensor1",
+          "pinId": "OUT4"
+        }
+      ]
+    },
+    {
+      "id": "n17",
+      "name": "line-sensor1.OUT5",
+      "connections": [
+        {
+          "instanceId": "mcu1",
+          "pinId": "GPIO32"
+        },
+        {
+          "instanceId": "line-sensor1",
+          "pinId": "OUT5"
+        }
+      ]
+    },
+    {
+      "id": "n18",
+      "name": "line-sensor1.OUT6",
+      "connections": [
+        {
+          "instanceId": "mcu1",
+          "pinId": "GPIO33"
+        },
+        {
+          "instanceId": "line-sensor1",
+          "pinId": "OUT6"
+        }
+      ]
+    },
+    {
+      "id": "n19",
+      "name": "line-sensor1.OUT7",
+      "connections": [
+        {
+          "instanceId": "mcu1",
+          "pinId": "GPIO25"
+        },
+        {
+          "instanceId": "line-sensor1",
+          "pinId": "OUT7"
+        }
+      ]
+    },
+    {
+      "id": "n20",
+      "name": "line-sensor1.OUT8",
+      "connections": [
+        {
+          "instanceId": "mcu1",
+          "pinId": "GPIO26"
+        },
+        {
+          "instanceId": "line-sensor1",
+          "pinId": "OUT8"
+        }
+      ]
+    }
+  ]
+}

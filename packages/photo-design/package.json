@@ -1,0 +1,35 @@
+{
+  "name": "@linelab/photo-design",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Photo → design: part detection (Claude vision behind an interface), database matching, scale and placement, chassis from the silhouette, proposed netlist.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./fixtures/*": "./fixtures/*"
+  },
+  "files": [
+    "dist",
+    "fixtures"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --max-warnings 0",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "1.7.0",
+    "@linelab/component-db": "workspace:*",
+    "@linelab/design-core": "workspace:*",
+    "@linelab/schema": "workspace:*",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@linelab/rules-engine": "workspace:*"
+  }
+}

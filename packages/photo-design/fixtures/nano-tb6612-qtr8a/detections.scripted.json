@@ -1,0 +1,71 @@
+{
+  "detector": "scripted",
+  "frontInTop": "up",
+  "notes": ["Scripted: hand-written descriptions of the parts, not a model's output."],
+  "detections": [
+    {
+      "id": "d1",
+      "category": "wheel",
+      "description": "two small black Pololu wheels about 32 mm with thin silicone tyres",
+      "markings": [],
+      "count": 2,
+      "confidence": 0.8
+    },
+    {
+      "id": "d2",
+      "category": "motor",
+      "description": "two micro metal gearmotors, Pololu style, gearbox label 30:1 HP",
+      "markings": ["30:1 HP"],
+      "count": 2,
+      "confidence": 0.8
+    },
+    {
+      "id": "d3",
+      "category": "caster",
+      "description": "white nylon skid pad under the front",
+      "markings": [],
+      "count": 1,
+      "confidence": 0.8
+    },
+    {
+      "id": "d4",
+      "category": "line_sensor",
+      "description": "long thin line sensor array with 8 IR emitter/detector pairs, analog",
+      "markings": ["QTR-8A"],
+      "count": 1,
+      "confidence": 0.8
+    },
+    {
+      "id": "d5",
+      "category": "battery",
+      "description": "small 2S LiPo pack 7.4V 300mAh with JST plug",
+      "markings": ["7.4V", "300mAh"],
+      "count": 1,
+      "confidence": 0.8
+    },
+    {
+      "id": "d6",
+      "category": "motor_driver",
+      "description": "small purple motor driver carrier with a TB6612FNG chip, 16 pins",
+      "markings": ["TB6612FNG"],
+      "count": 1,
+      "confidence": 0.8
+    },
+    {
+      "id": "d7",
+      "category": "mcu",
+      "description": "Arduino Nano style board, blue PCB, mini-USB connector, two rows of 15 pins",
+      "markings": ["ATMEGA328P", "NANO"],
+      "count": 1,
+      "confidence": 0.8
+    },
+    {
+      "id": "d8",
+      "category": "regulator",
+      "description": "tiny green Pololu 5V step-down regulator board",
+      "markings": ["D24V10F5"],
+      "count": 1,
+      "confidence": 0.8
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "id": "pico-drv8835-qtrmd",
+  "kind": "render",
+  "photos": [
+    {
+      "file": "top.png",
+      "view": "top"
+    },
+    {
+      "file": "bottom.png",
+      "view": "bottom"
+    },
+    {
+      "file": "side.png",
+      "view": "left"
+    }
+  ],
+  "components": [
+    {
+      "componentId": "wheel.tt-65mm",
+      "count": 2
+    },
+    {
+      "componentId": "motor.tt-1-120",
+      "count": 2
+    },
+    {
+      "componentId": "caster.pololu-ball-3-4-metal",
+      "count": 1
+    },
+    {
+      "componentId": "sensor.pololu-qtr-md-08a",
+      "count": 1
+    },
+    {
+      "componentId": "battery.lipo-2s-450mah",
+      "count": 1
+    },
+    {
+      "componentId": "driver.drv8835-pololu",
+      "count": 1
+    },
+    {
+      "componentId": "mcu.raspberry-pi-pico",
+      "count": 1
+    },
+    {
+      "componentId": "regulator.pololu-d24v10f5",
+      "count": 1
+    }
+  ]
+}

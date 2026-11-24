@@ -1,0 +1,48 @@
+{
+  "id": "uno-l9110s-tt",
+  "kind": "render",
+  "photos": [
+    {
+      "file": "top.png",
+      "view": "top"
+    },
+    {
+      "file": "bottom.png",
+      "view": "bottom"
+    },
+    {
+      "file": "side.png",
+      "view": "left"
+    }
+  ],
+  "components": [
+    {
+      "componentId": "wheel.tt-65mm",
+      "count": 2
+    },
+    {
+      "componentId": "motor.tt-1-48",
+      "count": 2
+    },
+    {
+      "componentId": "caster.pololu-ball-3-4-metal",
+      "count": 1
+    },
+    {
+      "componentId": "sensor.tcrt5000-5ch",
+      "count": 1
+    },
+    {
+      "componentId": "driver.l9110s-module",
+      "count": 1
+    },
+    {
+      "componentId": "mcu.arduino-uno-r3",
+      "count": 1
+    },
+    {
+      "componentId": "battery.aa-4x-alkaline",
+      "count": 1
+    }
+  ]
+}

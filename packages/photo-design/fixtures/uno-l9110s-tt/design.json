@@ -1,0 +1,411 @@
+{
+  "id": "fixture-uno-l9110s-tt",
+  "name": "uno-l9110s-tt",
+  "version": 1,
+  "chassis": {
+    "kind": "template",
+    "chassisId": "chassis.starter-2wd"
+  },
+  "placements": [
+    {
+      "instanceId": "wheel1",
+      "componentId": "wheel.tt-65mm",
+      "position": {
+        "x": 0,
+        "y": 66,
+        "z": 0
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+      },
+      "deck": 0,
+      "mount": "top",
+      "standoffMm": 0
+    },
+    {
+      "instanceId": "wheel2",
+      "componentId": "wheel.tt-65mm",
+      "position": {
+        "x": 0,
+        "y": -66,
+        "z": 0
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+      },
+      "deck": 0,
+      "mount": "top",
+      "standoffMm": 0
+    },
+    {
+      "instanceId": "motor1",
+      "componentId": "motor.tt-1-48",
+      "position": {
+        "x": -21,
+        "y": 41.5,
+        "z": 21.25
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+      },
+      "deck": 0,
+      "mount": "bottom",
+      "standoffMm": 0
+    },
+    {
+      "instanceId": "motor2",
+      "componentId": "motor.tt-1-48",
+      "position": {
+        "x": -21,
+        "y": -41.5,
+        "z": 21.25
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+      },
+      "deck": 0,
+      "mount": "bottom",
+      "standoffMm": 0
+    },
+    {
+      "instanceId": "caster1",
+      "componentId": "caster.pololu-ball-3-4-metal",
+      "position": {
+        "x": -65,
+        "y": 0,
+        "z": 18.75
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+      },
+      "deck": 0,
+      "mount": "bottom",
+      "standoffMm": 0
+    },
+    {
+      "instanceId": "line-sensor1",
+      "componentId": "sensor.tcrt5000-5ch",
+      "position": {
+        "x": 63,
+        "y": 0,
+        "z": 32.75
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+      },
+      "deck": 0,
+      "mount": "bottom",
+      "standoffMm": 0
+    },
+    {
+      "instanceId": "motor-driver1",
+      "componentId": "driver.l9110s-module",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 46.75
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+      },
+      "deck": 0,
+      "mount": "top",
+      "standoffMm": 0
+    },
+    {
+      "instanceId": "mcu1",
+      "componentId": "mcu.arduino-uno-r3",
+      "position": {
+        "x": 42.5,
+        "y": -10,
+        "z": 46.75
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0.7071067811865475,
+        "w": 0.7071067811865476
+      },
+      "deck": 0,
+      "mount": "top",
+      "standoffMm": 0
+    },
+    {
+      "instanceId": "battery1",
+      "componentId": "battery.aa-4x-alkaline",
+      "position": {
+        "x": -47,
+        "y": 0,
+        "z": 46.75
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+      },
+      "deck": 0,
+      "mount": "top",
+      "standoffMm": 0
+    }
+  ],
+  "netlist": [
+    {
+      "id": "n1",
+      "name": "GND",
+      "connections": [
+        {
+          "instanceId": "mcu1",
+          "pinId": "GND"
+        },
+        {
+          "instanceId": "mcu1",
+          "pinId": "GND2"
+        },
+        {
+          "instanceId": "motor-driver1",
+          "pinId": "GND"
+        },
+        {
+          "instanceId": "line-sensor1",
+          "pinId": "GND"
+        },
+        {
+          "instanceId": "battery1",
+          "pinId": "BAT-"
+        }
+      ]
+    },
+    {
+      "id": "n2",
+      "name": "VBAT",
+      "connections": [
+        {
+          "instanceId": "battery1",
+          "pinId": "BAT+"
+        },
+        {
+          "instanceId": "motor-driver1",
+          "pinId": "VCC"
+        }
+      ]
+    },
+    {
+      "id": "n3",
+      "name": "A-IA",
+      "connections": [
+        {
+          "instanceId": "mcu1",
+          "pinId": "D3"
+        },
+        {
+          "instanceId": "motor-driver1",
+          "pinId": "A-IA"
+        }
+      ]
+    },
+    {
+      "id": "n4",
+      "name": "A-IB",
+      "connections": [
+        {
+          "instanceId": "mcu1",
+          "pinId": "D5"
+        },
+        {
+          "instanceId": "motor-driver1",
+          "pinId": "A-IB"
+        }
+      ]
+    },
+    {
+      "id": "n5",
+      "name": "B-IA",
+      "connections": [
+        {
+          "instanceId": "mcu1",
+          "pinId": "D6"
+        },
+        {
+          "instanceId": "motor-driver1",
+          "pinId": "B-IA"
+        }
+      ]
+    },
+    {
+      "id": "n6",
+      "name": "B-IB",
+      "connections": [
+        {
+          "instanceId": "mcu1",
+          "pinId": "D9"
+        },
+        {
+          "instanceId": "motor-driver1",
+          "pinId": "B-IB"
+        }
+      ]
+    },
+    {
+      "id": "n7",
+      "name": "motor1+",
+      "connections": [
+        {
+          "instanceId": "motor1",
+          "pinId": "M+"
+        },
+        {
+          "instanceId": "motor-driver1",
+          "pinId": "MA1"
+        }
+      ]
+    },
+    {
+      "id": "n8",
+      "name": "motor1-",
+      "connections": [
+        {
+          "instanceId": "motor1",
+          "pinId": "M-"
+        },
+        {
+          "instanceId": "motor-driver1",
+          "pinId": "MA2"
+        }
+      ]
+    },
+    {
+      "id": "n9",
+      "name": "motor2+",
+      "connections": [
+        {
+          "instanceId": "motor2",
+          "pinId": "M+"
+        },
+        {
+          "instanceId": "motor-driver1",
+          "pinId": "MB1"
+        }
+      ]
+    },
+    {
+      "id": "n10",
+      "name": "motor2-",
+      "connections": [
+        {
+          "instanceId": "motor2",
+          "pinId": "M-"
+        },
+        {
+          "instanceId": "motor-driver1",
+          "pinId": "MB2"
+        }
+      ]
+    },
+    {
+      "id": "n11",
+      "name": "5V",
+      "connections": [
+        {
+          "instanceId": "mcu1",
+          "pinId": "5V"
+        },
+        {
+          "instanceId": "line-sensor1",
+          "pinId": "VCC"
+        }
+      ]
+    },
+    {
+      "id": "n12",
+      "name": "line-sensor1.OUT1",
+      "connections": [
+        {
+          "instanceId": "mcu1",
+          "pinId": "D2"
+        },
+        {
+          "instanceId": "line-sensor1",
+          "pinId": "OUT1"
+        }
+      ]
+    },
+    {
+      "id": "n13",
+      "name": "line-sensor1.OUT2",
+      "connections": [
+        {
+          "instanceId": "mcu1",
+          "pinId": "D4"
+        },
+        {
+          "instanceId": "line-sensor1",
+          "pinId": "OUT2"
+        }
+      ]
+    },
+    {
+      "id": "n14",
+      "name": "line-sensor1.OUT3",
+      "connections": [
+        {
+          "instanceId": "mcu1",
+          "pinId": "D7"
+        },
+        {
+          "instanceId": "line-sensor1",
+          "pinId": "OUT3"
+        }
+      ]
+    },
+    {
+      "id": "n15",
+      "name": "line-sensor1.OUT4",
+      "connections": [
+        {
+          "instanceId": "mcu1",
+          "pinId": "D8"
+        },
+        {
+          "instanceId": "line-sensor1",
+          "pinId": "OUT4"
+        }
+      ]
+    },
+    {
+      "id": "n16",
+      "name": "line-sensor1.OUT5",
+      "connections": [
+        {
+          "instanceId": "mcu1",
+          "pinId": "D12"
+        },
+        {
+          "instanceId": "line-sensor1",
+          "pinId": "OUT5"
+        }
+      ]
+    }
+  ]
+}

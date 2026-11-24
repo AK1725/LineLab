@@ -301,6 +301,28 @@ importers:
 
   packages/lfr-hal: {}
 
+  packages/photo-design:
+    dependencies:
+      '@anthropic-ai/sdk':
+        specifier: 1.7.0
+        version: 1.7.0(zod@4.6.7)
+      '@linelab/component-db':
+        specifier: workspace:*
+        version: link:../component-db
+      '@linelab/design-core':
+        specifier: workspace:*
+        version: link:../design-core
+      '@linelab/schema':
+        specifier: workspace:*
+        version: link:../schema
+      zod:
+        specifier: 4.6.7
+        version: 4.6.7
+    devDependencies:
+      '@linelab/rules-engine':
+        specifier: workspace:*
+        version: link:../rules-engine
+
   packages/rules-engine:
     dependencies:
       '@linelab/design-core':

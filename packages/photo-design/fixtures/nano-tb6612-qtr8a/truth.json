@@ -1,0 +1,52 @@
+{
+  "id": "nano-tb6612-qtr8a",
+  "kind": "render",
+  "photos": [
+    {
+      "file": "top.png",
+      "view": "top"
+    },
+    {
+      "file": "bottom.png",
+      "view": "bottom"
+    },
+    {
+      "file": "side.png",
+      "view": "left"
+    }
+  ],
+  "components": [
+    {
+      "componentId": "wheel.pololu-32x7",
+      "count": 2
+    },
+    {
+      "componentId": "motor.pololu-hp-6v-30-1",
+      "count": 2
+    },
+    {
+      "componentId": "caster.nylon-skid",
+      "count": 1
+    },
+    {
+      "componentId": "sensor.pololu-qtr-8a",
+      "count": 1
+    },
+    {
+      "componentId": "battery.lipo-2s-300mah",
+      "count": 1
+    },
+    {
+      "componentId": "driver.tb6612fng",
+      "count": 1
+    },
+    {
+      "componentId": "mcu.arduino-nano",
+      "count": 1
+    },
+    {
+      "componentId": "regulator.pololu-d24v10f5",
+      "count": 1
+    }
+  ]
+}

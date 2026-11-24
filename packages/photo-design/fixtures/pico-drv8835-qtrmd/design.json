@@ -1,0 +1,435 @@
+{
+  "id": "fixture-pico-drv8835-qtrmd",
+  "name": "pico-drv8835-qtrmd",
+  "version": 1,
+  "chassis": {
+    "kind": "template",
+    "chassisId": "chassis.starter-2wd"
+  },
+  "placements": [
+    {
+      "instanceId": "wheel1",
+      "componentId": "wheel.tt-65mm",
+      "position": {
+        "x": 0,
+        "y": 66,
+        "z": 0
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+      },
+      "deck": 0,
+      "mount": "top",
+      "standoffMm": 0
+    },
+    {
+      "instanceId": "wheel2",
+      "componentId": "wheel.tt-65mm",
+      "position": {
+        "x": 0,
+        "y": -66,
+        "z": 0
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+      },
+      "deck": 0,
+      "mount": "top",
+      "standoffMm": 0
+    },
+    {
+      "instanceId": "motor1",
+      "componentId": "motor.tt-1-120",
+      "position": {
+        "x": -21,
+        "y": 41.5,
+        "z": 21.25
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+      },
+      "deck": 0,
+      "mount": "bottom",
+      "standoffMm": 0
+    },
+    {
+      "instanceId": "motor2",
+      "componentId": "motor.tt-1-120",
+      "position": {
+        "x": -21,
+        "y": -41.5,
+        "z": 21.25
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+      },
+      "deck": 0,
+      "mount": "bottom",
+      "standoffMm": 0
+    },
+    {
+      "instanceId": "caster1",
+      "componentId": "caster.pololu-ball-3-4-metal",
+      "position": {
+        "x": -65,
+        "y": 0,
+        "z": 18.75
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+      },
+      "deck": 0,
+      "mount": "bottom",
+      "standoffMm": 0
+    },
+    {
+      "instanceId": "line-sensor1",
+      "componentId": "sensor.pololu-qtr-md-08a",
+      "position": {
+        "x": 59,
+        "y": 0,
+        "z": 41.25
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+      },
+      "deck": 0,
+      "mount": "bottom",
+      "standoffMm": 0
+    },
+    {
+      "instanceId": "battery1",
+      "componentId": "battery.lipo-2s-450mah",
+      "position": {
+        "x": -50,
+        "y": 0,
+        "z": 46.75
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+      },
+      "deck": 0,
+      "mount": "top",
+      "standoffMm": 0
+    },
+    {
+      "instanceId": "motor-driver1",
+      "componentId": "driver.drv8835-pololu",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 46.75
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+      },
+      "deck": 0,
+      "mount": "top",
+      "standoffMm": 0
+    },
+    {
+      "instanceId": "mcu1",
+      "componentId": "mcu.raspberry-pi-pico",
+      "position": {
+        "x": 32.5,
+        "y": 0,
+        "z": 46.75
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+      },
+      "deck": 0,
+      "mount": "top",
+      "standoffMm": 0
+    },
+    {
+      "instanceId": "regulator1",
+      "componentId": "regulator.pololu-d24v10f5",
+      "position": {
+        "x": 15,
+        "y": -17.5,
+        "z": 46.75
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0.7071067811865475,
+        "w": 0.7071067811865476
+      },
+      "deck": 0,
+      "mount": "top",
+      "standoffMm": 0
+    }
+  ],
+  "netlist": [
+    {
+      "id": "n1",
+      "name": "GND",
+      "connections": [
+        {
+          "instanceId": "mcu1",
+          "pinId": "AGND"
+        },
+        {
+          "instanceId": "mcu1",
+          "pinId": "GND"
+        },
+        {
+          "instanceId": "mcu1",
+          "pinId": "GND2"
+        },
+        {
+          "instanceId": "mcu1",
+          "pinId": "GND3"
+        },
+        {
+          "instanceId": "motor-driver1",
+          "pinId": "GND"
+        },
+        {
+          "instanceId": "line-sensor1",
+          "pinId": "GND"
+        },
+        {
+          "instanceId": "battery1",
+          "pinId": "BAT-"
+        },
+        {
+          "instanceId": "regulator1",
+          "pinId": "GND"
+        }
+      ]
+    },
+    {
+      "id": "n2",
+      "name": "VBAT",
+      "connections": [
+        {
+          "instanceId": "battery1",
+          "pinId": "BAT+"
+        },
+        {
+          "instanceId": "motor-driver1",
+          "pinId": "VIN"
+        },
+        {
+          "instanceId": "regulator1",
+          "pinId": "VIN"
+        }
+      ]
+    },
+    {
+      "id": "n3",
+      "name": "5V_REG",
+      "connections": [
+        {
+          "instanceId": "regulator1",
+          "pinId": "VOUT"
+        },
+        {
+          "instanceId": "mcu1",
+          "pinId": "VSYS"
+        }
+      ]
+    },
+    {
+      "id": "n4",
+      "name": "3.3V",
+      "connections": [
+        {
+          "instanceId": "mcu1",
+          "pinId": "3V3"
+        },
+        {
+          "instanceId": "motor-driver1",
+          "pinId": "VCC"
+        },
+        {
+          "instanceId": "line-sensor1",
+          "pinId": "VCC"
+        }
+      ]
+    },
+    {
+      "id": "n5",
+      "name": "AIN1",
+      "connections": [
+        {
+          "instanceId": "mcu1",
+          "pinId": "GP0"
+        },
+        {
+          "instanceId": "motor-driver1",
+          "pinId": "AIN1"
+        }
+      ]
+    },
+    {
+      "id": "n6",
+      "name": "AIN2",
+      "connections": [
+        {
+          "instanceId": "mcu1",
+          "pinId": "GP1"
+        },
+        {
+          "instanceId": "motor-driver1",
+          "pinId": "AIN2"
+        }
+      ]
+    },
+    {
+      "id": "n7",
+      "name": "BIN1",
+      "connections": [
+        {
+          "instanceId": "mcu1",
+          "pinId": "GP2"
+        },
+        {
+          "instanceId": "motor-driver1",
+          "pinId": "BIN1"
+        }
+      ]
+    },
+    {
+      "id": "n8",
+      "name": "BIN2",
+      "connections": [
+        {
+          "instanceId": "mcu1",
+          "pinId": "GP3"
+        },
+        {
+          "instanceId": "motor-driver1",
+          "pinId": "BIN2"
+        }
+      ]
+    },
+    {
+      "id": "n9",
+      "name": "motor1+",
+      "connections": [
+        {
+          "instanceId": "motor1",
+          "pinId": "M+"
+        },
+        {
+          "instanceId": "motor-driver1",
+          "pinId": "AOUT1"
+        }
+      ]
+    },
+    {
+      "id": "n10",
+      "name": "motor1-",
+      "connections": [
+        {
+          "instanceId": "motor1",
+          "pinId": "M-"
+        },
+        {
+          "instanceId": "motor-driver1",
+          "pinId": "AOUT2"
+        }
+      ]
+    },
+    {
+      "id": "n11",
+      "name": "motor2+",
+      "connections": [
+        {
+          "instanceId": "motor2",
+          "pinId": "M+"
+        },
+        {
+          "instanceId": "motor-driver1",
+          "pinId": "BOUT1"
+        }
+      ]
+    },
+    {
+      "id": "n12",
+      "name": "motor2-",
+      "connections": [
+        {
+          "instanceId": "motor2",
+          "pinId": "M-"
+        },
+        {
+          "instanceId": "motor-driver1",
+          "pinId": "BOUT2"
+        }
+      ]
+    },
+    {
+      "id": "n13",
+      "name": "line-sensor1.OUT1",
+      "connections": [
+        {
+          "instanceId": "mcu1",
+          "pinId": "GP26"
+        },
+        {
+          "instanceId": "line-sensor1",
+          "pinId": "OUT1"
+        }
+      ]
+    },
+    {
+      "id": "n14",
+      "name": "line-sensor1.OUT2",
+      "connections": [
+        {
+          "instanceId": "mcu1",
+          "pinId": "GP27"
+        },
+        {
+          "instanceId": "line-sensor1",
+          "pinId": "OUT2"
+        }
+      ]
+    },
+    {
+      "id": "n15",
+      "name": "line-sensor1.OUT3",
+      "connections": [
+        {
+          "instanceId": "mcu1",
+          "pinId": "GP28"
+        },
+        {
+          "instanceId": "line-sensor1",
+          "pinId": "OUT3"
+        }
+      ]
+    }
+  ]
+}

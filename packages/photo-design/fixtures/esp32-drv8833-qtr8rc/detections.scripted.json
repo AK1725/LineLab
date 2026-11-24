@@ -1,0 +1,71 @@
+{
+  "detector": "scripted",
+  "frontInTop": "up",
+  "notes": ["Scripted: hand-written descriptions of the parts, not a model's output."],
+  "detections": [
+    {
+      "id": "d1",
+      "category": "wheel",
+      "description": "two black rubber wheels about 34 mm for N20 D-shaft",
+      "markings": [],
+      "count": 2,
+      "confidence": 0.8
+    },
+    {
+      "id": "d2",
+      "category": "motor",
+      "description": "two N20 micro gear motors, metal gearbox, sticker 6V 500RPM",
+      "markings": ["N20", "500RPM"],
+      "count": 2,
+      "confidence": 0.8
+    },
+    {
+      "id": "d3",
+      "category": "caster",
+      "description": "white nylon skid pad under the front",
+      "markings": [],
+      "count": 1,
+      "confidence": 0.8
+    },
+    {
+      "id": "d4",
+      "category": "line_sensor",
+      "description": "8 sensor reflectance array, Pololu QTR RC version",
+      "markings": ["QTR-8RC"],
+      "count": 1,
+      "confidence": 0.8
+    },
+    {
+      "id": "d5",
+      "category": "battery",
+      "description": "2S lipo battery 450mAh, 7.4 V",
+      "markings": ["450mAh", "2S"],
+      "count": 1,
+      "confidence": 0.8
+    },
+    {
+      "id": "d6",
+      "category": "motor_driver",
+      "description": "tiny purple Pololu motor driver carrier",
+      "markings": ["DRV8833"],
+      "count": 1,
+      "confidence": 0.8
+    },
+    {
+      "id": "d7",
+      "category": "mcu",
+      "description": "ESP32 dev board with a silver WROOM-32 module and micro-USB, 38 pins",
+      "markings": ["ESP32-WROOM-32", "ESP32"],
+      "count": 1,
+      "confidence": 0.8
+    },
+    {
+      "id": "d8",
+      "category": "regulator",
+      "description": "tiny green Pololu 5V step-down regulator board",
+      "markings": ["D24V10F5"],
+      "count": 1,
+      "confidence": 0.8
+    }
+  ]
+}
