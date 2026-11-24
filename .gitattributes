@@ -1,2 +1,10 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# LF everywhere, also on Windows checkouts: shell scripts, Dockerfiles and configs run inside
+# Linux containers, where CRLF line endings break them.
+* text=auto eol=lf
+
+# Binary assets
+*.png binary
+*.jpg binary
+*.gif binary
+*.ico binary
+*.onnx binary
