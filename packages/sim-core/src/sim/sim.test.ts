@@ -165,3 +165,48 @@ describe("run trace export", () => {
 // Re-pinned in Phase 7: two trace columns added (lineSeen, distanceMm); physics unchanged (same lap time).
 const GOLDEN_OVAL_HASH = "07f2e015a2df24";
 const GOLDEN_OVAL_LAP_MS = 4676;
+
+describe("twin parameters", () => {
+  const sensorsAt = (calibration: Parameters<typeof robotFor>[0]["calibration"]) => {
+    const d = { ...referenceDesign(), ...(calibration ? { calibration } : {}) };
+    const sim = new Simulation(robotFor(d), builtInTrack("oval"), new ReferencePid(), {
+      durationMs: 400,
+      variation: { ...NOMINAL, sensorNoiseStd: 0 },
+    });
+    const r = sim.run();
+    const n = r.trace.sensorCount;
+    const row = r.trace.count - 1;
+    return Array.from(
+      { length: n },
+      (_, i) => r.trace.data[row * r.trace.stride + r.trace.stride - n + i] ?? 0,
+    );
+  };
+
+  it("leaves the nominal robot unchanged when no sensor parameters are fitted", () => {
+    expect(robotFor(referenceDesign()).sensorTwin).toBeUndefined();
+    expect(sensorsAt({ frictionMu: 0.9 })).toEqual(sensorsAt({ frictionMu: 0.9 }));
+  });
+
+  it("applies sensor gain and offset: less contrast and a darker floor", () => {
+    const nominal = sensorsAt(undefined);
+    const fitted = sensorsAt({ sensorGain: 0.7, sensorOffset: 0.05 });
+    const range = (xs: number[]) => Math.max(...xs) - Math.min(...xs);
+    expect(range(fitted)).toBeLessThan(range(nominal) * 0.85);
+    expect(Math.min(...fitted)).toBeGreaterThan(Math.min(...nominal));
+  });
+
+  it("adds the twin's latency to the run's", () => {
+    const run = (latencyMs?: number) =>
+      new Simulation(
+        robotFor({
+          ...referenceDesign(),
+          calibration: latencyMs === undefined ? {} : { latencyMs },
+        }),
+        builtInTrack("oval"),
+        new ReferencePid(),
+        { durationMs: 1500 },
+      ).run().hash;
+    expect(run(8)).not.toBe(run());
+    expect(run(0)).toBe(run());
+  });
+});

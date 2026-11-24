@@ -157,6 +157,8 @@ export class Simulation {
   private readonly closed: boolean;
   private readonly adcMax: number;
   private readonly offsetsMm: number[];
+  /** Sensor-to-controller latency: the run's plus the twin's (ms). */
+  private readonly latencyMs: number;
   private readonly arrayCentre: { x: number; y: number };
   private readonly sensorRadius: number[];
   private readonly sensorPoints: (readonly [number, number, number])[][];
@@ -205,7 +207,14 @@ export class Simulation {
       this.config.durationMs ??
       Math.min(180_000, 5000 + Math.round(((this.closed ? this.config.laps : 1) * L) / 0.2));
     this.rng = new Prng(this.config.seed);
-    this.env = { ambient: v.ambient, noiseStd: v.sensorNoiseStd, gain: 1, offset: 0 };
+    const st = robot.sensorTwin;
+    this.env = {
+      ambient: v.ambient,
+      noiseStd: st?.noiseStd ?? v.sensorNoiseStd,
+      gain: st?.gain ?? 1,
+      offset: st?.offset ?? 0,
+    };
+    this.latencyMs = this.config.latencyMs + (st?.latencyMs ?? 0);
     this.battery = new Battery(robot.battery.spec, v.soc);
     this.adcMax = 2 ** robot.logic.adcBits - 1;
 
@@ -323,7 +332,7 @@ export class Simulation {
     // 1. Sensors (with latency) and controller.
     const fresh = this.readSensors();
     this.delayed.push(fresh);
-    const lagTicks = Math.round(this.config.latencyMs / dtMs);
+    const lagTicks = Math.round(this.latencyMs / dtMs);
     while (this.delayed.length > lagTicks + 1) this.delayed.shift();
     const readings = this.delayed[0] ?? fresh;
     this.lastReadings = readings;

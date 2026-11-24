@@ -1,0 +1,10 @@
+{
+  "frictionMu": 0.75,
+  "motorKtScaleLeft": 0.88,
+  "motorKtScaleRight": 1.05,
+  "driverDropV": 1.6,
+  "sensorGain": 0.78,
+  "sensorOffset": 0.06,
+  "sensorNoiseStd": 0.014,
+  "latencyMs": 4
+}

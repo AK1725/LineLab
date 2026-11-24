@@ -1,0 +1,33 @@
+{
+  "name": "@linelab/calibrate",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Digital-twin calibration from real-robot telemetry (CMA-ES) and the PID auto-tuner (Bayesian optimisation).",
+  "license": "Apache-2.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --max-warnings 0",
+    "test": "vitest run",
+    "fixture:generate": "tsx scripts/make-fixture.ts"
+  },
+  "dependencies": {
+    "@linelab/schema": "workspace:*",
+    "@linelab/sim-core": "workspace:*",
+    "@linelab/telemetry-lib": "workspace:*"
+  },
+  "devDependencies": {
+    "@linelab/component-db": "workspace:*",
+    "@linelab/design-core": "workspace:*"
+  }
+}

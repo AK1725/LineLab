@@ -211,6 +211,25 @@ importers:
         specifier: 4.23.15
         version: 4.23.15
 
+  packages/calibrate:
+    dependencies:
+      '@linelab/schema':
+        specifier: workspace:*
+        version: link:../schema
+      '@linelab/sim-core':
+        specifier: workspace:*
+        version: link:../sim-core
+      '@linelab/telemetry-lib':
+        specifier: workspace:*
+        version: link:../telemetry-lib
+    devDependencies:
+      '@linelab/component-db':
+        specifier: workspace:*
+        version: link:../component-db
+      '@linelab/design-core':
+        specifier: workspace:*
+        version: link:../design-core
+
   packages/component-db:
     dependencies:
       '@linelab/schema':

@@ -62,8 +62,38 @@ export interface RobotModel {
     currentA: number;
   };
   sensors: SensorChannel[];
+  /** Fitted sensor-path twin parameters (Phase 9); absent = the nominal sensor. */
+  sensorTwin?: SensorTwin;
   /** Notes about approximations used for this design (shown with the run). */
   notes: string[];
+}
+
+export interface SensorTwin {
+  /** Multiplies the reflected signal. */
+  gain: number;
+  /** Added to the normalised (dark = 1) reading. */
+  offset: number;
+  /** Replaces the run's sensor noise when set (fraction of full scale). */
+  noiseStd: number | undefined;
+  /** Extra sensor-to-controller latency (ms). */
+  latencyMs: number;
+}
+
+/** The sensor part of fitted twin parameters, or undefined when none are set. */
+export function sensorTwinOf(twin: TwinParams): SensorTwin | undefined {
+  if (
+    twin.sensorGain === undefined &&
+    twin.sensorOffset === undefined &&
+    twin.sensorNoiseStd === undefined &&
+    twin.latencyMs === undefined
+  )
+    return undefined;
+  return {
+    gain: twin.sensorGain ?? 1,
+    offset: twin.sensorOffset ?? 0,
+    noiseStd: twin.sensorNoiseStd,
+    latencyMs: twin.latencyMs ?? 0,
+  };
 }
 
 export class SimSetupError extends Error {
@@ -252,6 +282,7 @@ export function buildRobotModel(
     0,
   );
 
+  const sensorTwin = sensorTwinOf(twin);
   return {
     massKg,
     cogM: cog,
@@ -275,6 +306,7 @@ export function buildRobotModel(
       currentA: LOGIC_CURRENT_A + sensorCurrentA,
     },
     sensors,
+    ...(sensorTwin ? { sensorTwin } : {}),
     notes,
   };
 }
