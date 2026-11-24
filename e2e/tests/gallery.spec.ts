@@ -67,18 +67,24 @@ test("BOM → sign in by email → publish → gallery → fork", async ({ page 
   await page.goto(itemUrl);
   await page.getByRole("button", { name: "Fork this robot" }).click();
   await expect(page).toHaveURL(/\/build\/edit\?id=d-/);
-  const forked = await page.evaluate(
-    () =>
-      (
-        window as unknown as {
-          __linelabEditor: {
-            getState(): {
-              history: { present: { id: string; name: string; placements: unknown[] } };
+  // The editor mounts after the URL changes (slow runners): wait for the loaded fork.
+  await expect(page.getByTestId("scene")).toBeVisible();
+  const present = () =>
+    page.evaluate(
+      () =>
+        (
+          window as unknown as {
+            __linelabEditor?: {
+              getState(): {
+                history: { present: { id: string; name: string; placements: unknown[] } };
+              };
             };
-          };
-        }
-      ).__linelabEditor.getState().history.present,
-  );
+          }
+        ).__linelabEditor?.getState().history.present ?? null,
+    );
+  await expect.poll(async () => (await present())?.name).toBe(`${title} (fork)`);
+  const forked = await present();
+  if (!forked) throw new Error("editor not loaded");
   expect(forked.name).toBe(`${title} (fork)`);
   expect(forked.id).not.toBe(id);
   expect(forked.placements).toHaveLength((reference.placements as unknown[]).length);
