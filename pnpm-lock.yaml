@@ -336,7 +336,24 @@ importers:
         specifier: 4.11.0
         version: 4.11.0
 
-  packages/telemetry-lib: {}
+  packages/telemetry-lib:
+    dependencies:
+      '@linelab/schema':
+        specifier: workspace:*
+        version: link:../schema
+    devDependencies:
+      '@linelab/component-db':
+        specifier: workspace:*
+        version: link:../component-db
+      '@linelab/design-core':
+        specifier: workspace:*
+        version: link:../design-core
+      '@linelab/firmware-runtime':
+        specifier: workspace:*
+        version: link:../firmware-runtime
+      '@linelab/sim-core':
+        specifier: workspace:*
+        version: link:../sim-core
 
   packages/three-models:
     dependencies:

@@ -24,7 +24,8 @@ RUN arduino-cli core update-index \
 WORKDIR /app
 COPY --from=build /out .
 COPY packages/lfr-hal /app/lfr-hal
-ENV NODE_ENV=production LFR_HAL_DIR=/app/lfr-hal CLANG=clang++ COMPILER_WORK_DIR=/tmp PORT=8100
+COPY packages/telemetry-lib/arduino/LineLabTelemetry /app/libraries/LineLabTelemetry
+ENV NODE_ENV=production LFR_HAL_DIR=/app/lfr-hal LINELAB_ARDUINO_LIBRARIES=/app/libraries/LineLabTelemetry CLANG=clang++ COMPILER_WORK_DIR=/tmp PORT=8100
 USER node
 EXPOSE 8100
 CMD ["node", "dist/server.js"]

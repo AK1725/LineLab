@@ -13,6 +13,7 @@ const BOARDS: Record<string, Board[]> = {
   good_pid: ["arduino:avr:nano"],
   blink: ["arduino:avr:nano"],
   esp32_pid: ["esp32:esp32:esp32"],
+  telemetry_pid: ["arduino:avr:nano"],
 };
 const NANO: Board = "arduino:avr:nano";
 const cfg = configFromEnv();

@@ -164,7 +164,9 @@ export class HalRunner {
       },
       hal_serial_write: (ptr: number, len: number) => {
         if (!mem.memory || this.serial.length > 64 * 1024) return;
-        this.serial += new TextDecoder().decode(new Uint8Array(mem.memory.buffer, ptr, len));
+        // One char per byte (like the emulated UART), so binary telemetry frames survive.
+        const bytes = new Uint8Array(mem.memory.buffer, ptr, len);
+        for (const b of bytes) this.serial += String.fromCharCode(b);
       },
       hal_random: () => this.rng.nextU32(),
       sin: Math.sin,

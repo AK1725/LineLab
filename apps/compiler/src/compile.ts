@@ -29,6 +29,8 @@ export interface CompilerConfig {
   clang: string;
   /** packages/lfr-hal (include/, src/, imports.txt). */
   halDir: string;
+  /** Arduino libraries available to every sketch (e.g. LineLabTelemetry), as library folders. */
+  libraries: string[];
   /** Where per-job temporary directories are created. */
   workRoot: string;
   limits: JobLimits;
@@ -149,6 +151,7 @@ async function compileAvr(
       "--warnings",
       "default",
       "--no-color",
+      ...cfg.libraries.flatMap((lib) => ["--library", lib]),
       sketchDir,
     ],
     { cwd: dir, env, limits: cfg.limits },
@@ -225,6 +228,13 @@ async function compileHal(
   const halSrc = join(cfg.halDir, "src");
   for (const f of (await readdir(halSrc)).filter((n) => n.endsWith(".cpp")))
     sources.push(join(halSrc, f));
+  // Bundled Arduino libraries: their headers on the include path, their sources compiled in.
+  const libIncludes: string[] = [];
+  for (const lib of cfg.libraries) {
+    const src = join(lib, "src");
+    libIncludes.push(`-I${src}`);
+    for (const f of (await readdir(src)).filter((n) => n.endsWith(".cpp"))) sources.push(join(src, f));
+  }
   const defines = (HAL_DEFINES[req.board] ?? []).map((d) => `-D${d}`);
   const wasm = join(dir, "sketch.wasm");
   const args = [
@@ -240,6 +250,7 @@ async function compileHal(
     "-Wno-unused-function",
     `-I${join(cfg.halDir, "include")}`,
     `-I${dir}`,
+    ...libIncludes,
     "-DARDUINO=10819",
     "-DLINELAB_HAL=1",
     ...defines,

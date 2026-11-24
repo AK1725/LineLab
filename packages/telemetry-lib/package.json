@@ -2,6 +2,32 @@
   "name": "@linelab/telemetry-lib",
   "version": "0.0.0",
   "private": true,
-  "description": "Arduino library LineLabTelemetry: streams sensor/PWM data from a real robot to LineLab over Serial or BLE.",
-  "license": "Apache-2.0"
+  "description": "LineLabTelemetry: an Arduino library that streams sensor/PWM data from a real robot, and the TypeScript codec that reads it.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "arduino"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --max-warnings 0",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@linelab/component-db": "workspace:*",
+    "@linelab/design-core": "workspace:*",
+    "@linelab/firmware-runtime": "workspace:*",
+    "@linelab/sim-core": "workspace:*"
+  },
+  "dependencies": {
+    "@linelab/schema": "workspace:*"
+  }
 }

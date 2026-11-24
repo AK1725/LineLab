@@ -8,7 +8,19 @@
 #define OCT 8
 #define BIN 2
 
-class HardwareSerial {
+/** Byte sink, as in the Arduino core (libraries such as LineLabTelemetry write to a Print&). */
+class Print {
+ public:
+  virtual ~Print() {}
+  virtual size_t write(uint8_t c) = 0;
+  virtual size_t write(const uint8_t* buf, size_t n) {
+    size_t k = 0;
+    while (n--) k += write(*buf++);
+    return k;
+  }
+};
+
+class HardwareSerial : public Print {
  public:
   void begin(unsigned long baud) { (void)baud; }
   void begin(unsigned long baud, uint32_t config) { (void)baud; (void)config; }
@@ -17,9 +29,9 @@ class HardwareSerial {
   int read() { return -1; }
   int peek() { return -1; }
   void flush() {}
-  size_t write(uint8_t c);
+  size_t write(uint8_t c) override;
   size_t write(const char* s);
-  size_t write(const uint8_t* buf, size_t n);
+  size_t write(const uint8_t* buf, size_t n) override;
   size_t print(const char* s);
   size_t print(const String& s);
   size_t print(char c);
