@@ -218,3 +218,17 @@ export const useFirmware = create<FirmwareState>()((setState, getState) => {
     },
   };
 });
+
+/** Store a sketch for a design before its editor opens (learn-mode lessons). */
+export async function saveSketchFor(
+  designId: string,
+  board: Board,
+  source: string,
+  artifact: FirmwareArtifact | undefined,
+): Promise<void> {
+  await set(
+    designId,
+    { board, source, ...(artifact ? { artifact } : {}), updatedAt: Date.now() },
+    db(),
+  );
+}

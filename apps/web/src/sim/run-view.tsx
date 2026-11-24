@@ -3,6 +3,7 @@
 import { TRACKS } from "@linelab/component-db";
 import type { Track } from "@linelab/schema";
 import dynamic from "next/dynamic";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { useDesign } from "../editor/store";
 import { TierBadge } from "../firmware/code-view";
@@ -266,7 +267,10 @@ export default function RunView() {
   const run = useRun((s) => s.current);
   const artifact = useFirmware((s) => s.artifact);
   const fwDesign = useFirmware((s) => s.designId);
-  const [controller, setController] = useState<"reference" | "firmware">("reference");
+  // Deep links (learn mode) can ask to run the sketch: /build/edit?id=…&view=run&controller=firmware
+  const [controller, setController] = useState<"reference" | "firmware">(
+    useSearchParams().get("controller") === "firmware" ? "firmware" : "reference",
+  );
   const board = boardOf(design);
   const firmwareReady =
     artifact !== null && fwDesign === design.id && artifact.board === board?.board;

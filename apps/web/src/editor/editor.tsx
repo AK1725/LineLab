@@ -119,7 +119,9 @@ function LeftTabs() {
 }
 
 export default function Editor() {
-  const id = useSearchParams().get("id");
+  const params = useSearchParams();
+  const id = params.get("id");
+  const initialView = params.get("view");
   // Which id finished loading, and whether it existed. Status is derived, never set in an effect.
   const [loaded, setLoaded] = useState<{ id: string; found: boolean } | null>(null);
   const status: "loading" | "ready" | "missing" =
@@ -137,13 +139,18 @@ export default function Editor() {
     let cancelled = false;
     void loadDesign(id).then((found) => {
       if (cancelled) return;
-      if (found) useEditor.getState().load(found.design);
+      if (found) {
+        useEditor.getState().load(found.design);
+        // Deep links (learn mode, gallery) can open a specific view.
+        if (initialView === "run" || initialView === "code" || initialView === "robot")
+          useEditor.getState().setView(initialView);
+      }
       setLoaded({ id, found: found !== undefined });
     });
     return () => {
       cancelled = true;
     };
-  }, [id]);
+  }, [id, initialView]);
 
   // Autosave (debounced) whenever the design changes.
   useEffect(() => {

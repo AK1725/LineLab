@@ -8,6 +8,8 @@ export const Example = z.object({
   board: Board,
   source: z.string(),
   artifact: FirmwareArtifact.nullable(),
+  /** Learn-mode lesson sketch (buggy on purpose); not listed as an example. */
+  lesson: z.boolean().optional(),
 });
 export type Example = z.infer<typeof Example>;
 

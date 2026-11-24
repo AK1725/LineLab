@@ -100,8 +100,9 @@ export default function CodeView() {
   }
   const examples = EXAMPLES.filter(
     (e) =>
-      e.board === b.board ||
-      (b.tier === "hal" && e.board.startsWith("esp32") && b.board.startsWith("esp32")),
+      !e.lesson &&
+      (e.board === b.board ||
+        (b.tier === "hal" && e.board.startsWith("esp32") && b.board.startsWith("esp32"))),
   );
   const errors = fw.diagnostics.filter((d) => d.severity === "error");
   return (
