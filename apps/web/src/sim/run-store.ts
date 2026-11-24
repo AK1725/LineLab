@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  DEFAULT_PID,
   TRACE_CHANNELS,
   type MonteCarloRun,
   type PackedTrace,
@@ -35,6 +36,9 @@ interface RunState {
   playing: boolean;
   speed: number;
   camera: "top" | "follow";
+  /** Reference controller settings (the PID panel; the auto-tuner can set them). */
+  pid: Pick<ReferencePidOptions, "baseDuty" | "kp" | "kd"> & Partial<ReferencePidOptions>;
+  setPid: (p: RunState["pid"]) => void;
   start: (
     design: Design,
     track: Track,
@@ -68,6 +72,10 @@ export const useRun = create<RunState>()((set, get) => ({
   playing: false,
   speed: 1,
   camera: "top",
+  pid: { baseDuty: DEFAULT_PID.baseDuty, kp: DEFAULT_PID.kp, kd: DEFAULT_PID.kd },
+  setPid: (pid) => {
+    set({ pid });
+  },
   start: (design, track, seeds, pid, label, firmware, firmwareSource) => {
     worker ??= new Worker(new URL("./sim.worker.ts", import.meta.url), { type: "module" });
     const id = ++nextId;

@@ -399,4 +399,66 @@ Screenshot: [AI debugger with a verified fix](screenshots/phase-8-ai-debugger.pn
 - `simulate` runs on the user's track only (not other tracks).
 - The scripted transcript is hand-written. Record real ones with `pnpm eval:agent -- --record`.
 
-## Next: Phase 9 — Real-world loop
+## Phase 9 — Real-world loop ✅ with the real-robot fixture still to collect (branch `phase-9-real-world`)
+
+**Done** ([ADR 0010](adr/0010-real-world-loop.md))
+
+- **`packages/telemetry-lib`**:
+  - the `LineLabTelemetry` Arduino library: sample, hello and text frames, CRC-16, any `Print` (Serial, Serial1, BLE UART);
+  - the TypeScript codec: streaming `FrameDecoder` that handles any chunking, skips `Serial.print` noise and counts bad frames; `encodeFrame`;
+  - `RecordingBuilder`, which unwraps the micros() wrap;
+  - `examples/firmware/telemetry_pid` (good_pid plus telemetry).
+- **Compiler**: bundled Arduino libraries (`LINELAB_ARDUINO_LIBRARIES`, `--library`; HAL tier compiles the library sources). The Docker image ships the library.
+- **Schema**: `TelemetryRecording` and `TelemetrySampleRecord`; a `set-calibration` design command (undoable).
+- **sim-core**: twin sensor gain, offset, noise and latency (`RobotModel.sensorTwin`). Uncalibrated designs are unchanged, and the golden hash is the same.
+- **`packages/calibrate`**:
+  - CMA-ES and GP + expected-improvement Bayesian optimisation, plus Jacobi eigen and Cholesky helpers;
+  - `calibrateTwin`: a closed-loop replay of the recorded controller. It compares low-passed sensors and PWM, searches the clock offset, and adds a noise-level term. It reports error before and after on the fit window and on a held-out window;
+  - `autotunePid`: kp, kd, base duty and corner slowdown over Monte Carlo seeds, with a robustness penalty and a held-out re-check;
+  - `syntheticRecording`.
+- **Web, new Robot tab**:
+  - **Connect**: USB serial (Web Serial, any baud) or Bluetooth (Nordic UART, HM-10).
+  - **Live telemetry**: sensor bars, motor-command plot, variable plot, battery, text log, frame statistics.
+  - **Record and recordings**: record, download, and load recordings, plus a clearly labelled synthetic demo.
+  - **Flash**: Uno, Nano (115200 / 57600) and Pro Mini over STK500, with verify. The port is reopened at the bootloader's baud and back again.
+  - **Calibrate twin**: in a worker, against the reference PID or the compiled AVR sketch. "Apply to design" sets the calibration, and it can be removed.
+  - **Auto-tune PID**: in a worker. "Use in simulator" sets the Run tab's PID.
+
+**Verified locally**
+
+- **Emulated round trip**: the arduino-cli build of `telemetry_pid`, running on the emulated ATmega328P, gives a hello frame and about 195 CRC-valid samples in 2 s (mean period 10 ms, 0 bad frames). Their PWM matches what the simulator read from the timers (< 0.01). Their sensors match the emulated ADC (mean 6.7 counts apart, 1 ms later).
+- **Calibration acceptance**, on the **synthetic** hidden-twin fixture (not hardware data; see below): trace error is **64 % lower** on the fit window (0–3 s) and **56 % lower** on the held-out window (3–5 s). Sensor gain is recovered as 0.74 (true 0.78) and offset as 0.047 (true 0.06). The run takes 160 simulations, about 15 s. The test requires at least 40 % on both windows.
+- **Auto-tuner acceptance**: reference robot on `random-curvy`. Held-out lap time goes from **4.11 s to 3.17 s** (−23 %). Robustness stays at 100 % on the 4 tuning seeds and the 6 held-out seeds. The run takes 30 evaluations, about 9 s.
+- **Flasher**: unit tests against a software Optiboot cover these cases:
+  - page writes with 0x20 inside the data;
+  - verify catches a stuck bit;
+  - a wrong signature is refused;
+  - a bootloader that never answers produces a hint that names 57600;
+  - a bootloader-overlap guard;
+  - hex extent.
+- **e2e** (`robot.spec.ts`), with a mocked `navigator.serial` that has a fake Nano behind it:
+  - connect, hello, live plots;
+  - record, then download the recording;
+  - flash the compiled `telemetry_pid`: DTR reset, STK500 at 115200, verify, and the fake's flash holds the image;
+  - telemetry resumes after flashing;
+  - no console errors.
+
+  A second test loads the synthetic demo, calibrates it in the browser worker (≥ 40 %), applies it to the design, auto-tunes, and sends the tuned gains to the Run tab.
+
+- Found and fixed: `parseIntelHex` pads unwritten flash with 0x00, not 0xFF, so flashing now sizes the image from the hex records.
+
+Screenshot: [Robot tab](screenshots/phase-9-robot-tab.png). It shows the fake serial device and a calibration of the synthetic demo in the browser: 64 % lower, 55 % lower held out. The fitted values differ slightly from the Node run because Chrome's and Node's V8 can round `Math.exp`/`sin` differently, so CMA-ES takes a different path.
+
+**Not verified: a real-robot recording.** The build plan asks for a _recorded real-robot_ fixture. None exists in this environment, which has no hardware. The calibration test uses a synthetic recording: the simulator with hidden parameters and a different noise seed. It is labelled `synthetic` everywhere. This shows that the optimiser, objective and pipeline work. It says nothing about how well the twin model matches real robots. To close this item: record a run with `telemetry_pid`, download it from the Robot tab, add it under `packages/calibrate/fixtures/`, and add it to `calibrate.test.ts`.
+
+**Deferred / known issues**
+
+- Coming soon (shown in the UI):
+  - flashing for ESP32 (esptool-js), RP2040 (UF2) and STM32;
+  - tuning the gains inside the user's own sketch (the tuner tunes the reference PID).
+- Browser flashing has been exercised only against the fake bootloader, not a physical board.
+- The Web Bluetooth path is untested beyond type-checking. Playwright can't fake GATT easily, and there is no device here.
+- Motor strength and driver drop trade off against each other in calibration. Encoder counts are in the protocol but not yet in the objective.
+- Calibration runs in a browser worker; the BullMQ worker version (BLUEPRINT §3) is not wired up.
+
+## Next: Phase 10 — Photo → design

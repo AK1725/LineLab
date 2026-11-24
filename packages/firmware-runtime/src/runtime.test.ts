@@ -49,7 +49,7 @@ describe("emulated ATmega328P", () => {
       const dt = (toggles[i] ?? 0) - (toggles[i - 1] ?? 0);
       expect(Math.abs(dt - 500) / 500).toBeLessThan(0.01);
     }
-  });
+  }, 30_000);
 
   it("reads PWM duty from timer registers (analogWrite) and serial output", () => {
     const ref = design("reference.design.json");

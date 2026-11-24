@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { DesignChassis, Net, NetEndpoint, Placement } from "./design.js";
+import { DesignChassis, Net, NetEndpoint, Placement, TwinParams } from "./design.js";
 import { Quat, Vec3, Ident, NonNegativeNumber } from "./primitives.js";
 
 /** Fields of a placement that a command may change. */
@@ -36,5 +36,7 @@ export const DesignCommand = z.discriminatedUnion("type", [
   z.object({ type: z.literal("rename-net"), id: Ident, name: z.string().min(1) }).strict(),
   /** Replaces the whole netlist (auto-wiring, imports). */
   z.object({ type: z.literal("set-netlist"), netlist: z.array(Net) }).strict(),
+  /** Sets (or, with undefined, clears) the fitted digital-twin parameters. */
+  z.object({ type: z.literal("set-calibration"), calibration: TwinParams.optional() }).strict(),
 ]);
 export type DesignCommand = z.infer<typeof DesignCommand>;

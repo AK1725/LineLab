@@ -2,7 +2,6 @@
 
 import { TRACKS } from "@linelab/component-db";
 import type { Track } from "@linelab/schema";
-import { DEFAULT_PID } from "@linelab/sim-core";
 import dynamic from "next/dynamic";
 import { useEffect, useMemo, useState } from "react";
 import { useDesign } from "../editor/store";
@@ -259,11 +258,8 @@ export default function RunView() {
   const [trackId, setTrackId] = useState("track.oval");
   const [seed, setSeed] = useState(0);
   const [mc, setMc] = useState(0);
-  const [pid, setPid] = useState({
-    baseDuty: DEFAULT_PID.baseDuty,
-    kp: DEFAULT_PID.kp,
-    kd: DEFAULT_PID.kd,
-  });
+  const pid = useRun((s) => s.pid);
+  const setPid = useRun((s) => s.setPid);
   const status = useRun((s) => s.status);
   const progress = useRun((s) => s.progress);
   const error = useRun((s) => s.error);

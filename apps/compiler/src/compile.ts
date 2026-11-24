@@ -233,7 +233,8 @@ async function compileHal(
   for (const lib of cfg.libraries) {
     const src = join(lib, "src");
     libIncludes.push(`-I${src}`);
-    for (const f of (await readdir(src)).filter((n) => n.endsWith(".cpp"))) sources.push(join(src, f));
+    for (const f of (await readdir(src)).filter((n) => n.endsWith(".cpp")))
+      sources.push(join(src, f));
   }
   const defines = (HAL_DEFINES[req.board] ?? []).map((d) => `-D${d}`);
   const wasm = join(dir, "sketch.wasm");

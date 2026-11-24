@@ -120,6 +120,10 @@ export function applyCommand(design: Design, cmd: Command): Design {
       };
     case "set-netlist":
       return { ...design, netlist: prune(cmd.netlist) };
+    case "set-calibration": {
+      const { calibration: _old, ...rest } = design;
+      return cmd.calibration ? { ...rest, calibration: cmd.calibration } : rest;
+    }
   }
 }
 

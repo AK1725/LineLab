@@ -27,7 +27,10 @@ export function configFromEnv(
     cppcheck: env.CPPCHECK ?? "cppcheck",
     clangTidy: env.CLANG_TIDY ?? "clang-tidy",
     halDir: resolve(env.LFR_HAL_DIR ?? join(here, "..", "..", "..", "packages", "lfr-hal")),
-    libraries: (env.LINELAB_ARDUINO_LIBRARIES ?? join(here, "..", "..", "..", "packages", "telemetry-lib", "arduino", "LineLabTelemetry"))
+    libraries: (
+      env.LINELAB_ARDUINO_LIBRARIES ??
+      join(here, "..", "..", "..", "packages", "telemetry-lib", "arduino", "LineLabTelemetry")
+    )
       .split(",")
       .map((p) => resolve(p.trim()))
       .filter((p) => p !== "" && existsSync(p)),

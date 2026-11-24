@@ -111,6 +111,7 @@ export default function Toolbar({
           ["schematic", "Schematic"],
           ["code", "Code"],
           ["run", "Run"],
+          ["robot", "Robot"],
         ] as [View, string][]
       ).map(([v, l]) => (
         <Tool

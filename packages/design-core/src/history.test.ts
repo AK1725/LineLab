@@ -217,4 +217,10 @@ describe("netlist commands", () => {
     });
     expect(d.netlist).toEqual([]);
   });
+
+  it("set-calibration sets and clears the twin parameters", () => {
+    const d = applyCommand(d0, { type: "set-calibration", calibration: { sensorGain: 0.8 } });
+    expect(d.calibration).toEqual({ sensorGain: 0.8 });
+    expect("calibration" in applyCommand(d, { type: "set-calibration" })).toBe(false);
+  });
 });

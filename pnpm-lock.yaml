@@ -82,6 +82,9 @@ importers:
       '@linelab/agent':
         specifier: workspace:*
         version: link:../../packages/agent
+      '@linelab/calibrate':
+        specifier: workspace:*
+        version: link:../../packages/calibrate
       '@linelab/component-db':
         specifier: workspace:*
         version: link:../../packages/component-db
@@ -106,6 +109,9 @@ importers:
       '@linelab/sim-core':
         specifier: workspace:*
         version: link:../../packages/sim-core
+      '@linelab/telemetry-lib':
+        specifier: workspace:*
+        version: link:../../packages/telemetry-lib
       '@linelab/three-models':
         specifier: workspace:*
         version: link:../../packages/three-models
