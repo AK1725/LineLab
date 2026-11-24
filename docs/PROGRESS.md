@@ -445,6 +445,7 @@ Screenshot: [AI debugger with a verified fix](screenshots/phase-8-ai-debugger.pn
 
   A second test loads the synthetic demo, calibrates it in the browser worker (≥ 40 %), applies it to the design, auto-tunes, and sends the tuned gains to the Run tab.
 
+- **Compiler container**: the rebuilt `apps/compiler` image compiles `telemetry_pid` with the bundled library for the Nano (5436 bytes, same as the local toolchain) and on the HAL tier (RP2040). The selfcheck passes 6/6.
 - Found and fixed: `parseIntelHex` pads unwritten flash with 0x00, not 0xFF, so flashing now sizes the image from the hex records.
 
 Screenshot: [Robot tab](screenshots/phase-9-robot-tab.png). It shows the fake serial device and a calibration of the synthetic demo in the browser: 64 % lower, 55 % lower held out. The fitted values differ slightly from the Node run because Chrome's and Node's V8 can round `Math.exp`/`sin` differently, so CMA-ES takes a different path.
