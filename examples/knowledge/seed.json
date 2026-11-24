@@ -1,0 +1,177 @@
+[
+  {
+    "symptoms": "On the oval track: 100 % of runs finished, mean completion 100 %; error: wrong direction.",
+    "diagnosis": "Kp = 0.24 is too high for this robot: the steering overcorrects and the robot oscillates around the line, worse at speed.",
+    "diff": "--- a/good_pid.ino\n+++ b/good_pid.ino\n@@ -12,7 +12,7 @@\n const uint8_t PWMB = 5, BIN1 = 7, BIN2 = 8;\n \n // Error is -3500..3500 (line under sensor 8 .. sensor 1); positive = line to the left.\n-float Kp = 0.24;          // PWM counts per error unit\n+float Kp = 0.08;          // PWM counts per error unit\n float Kd = 2.5;           // PWM counts per (error unit per ms)\n int baseSpeed = 115;      // of 255\n \n",
+    "source": "synthetic",
+    "parts": ["mcu.arduino-nano", "driver.tb6612fng", "sensor.pololu-qtr-8a"]
+  },
+  {
+    "symptoms": "On the oval track: 100 % of runs finished, mean completion 100 %; error: wrong direction; warning: oscillation; warning: pwm saturation.",
+    "diagnosis": "Kp = 0.4 is too high for this robot: the steering overcorrects and the robot oscillates around the line, worse at speed.",
+    "diff": "--- a/good_pid.ino\n+++ b/good_pid.ino\n@@ -12,7 +12,7 @@\n const uint8_t PWMB = 5, BIN1 = 7, BIN2 = 8;\n \n // Error is -3500..3500 (line under sensor 8 .. sensor 1); positive = line to the left.\n-float Kp = 0.4;          // PWM counts per error unit\n+float Kp = 0.08;          // PWM counts per error unit\n float Kd = 2.5;           // PWM counts per (error unit per ms)\n int baseSpeed = 115;      // of 255\n \n",
+    "source": "synthetic",
+    "parts": ["mcu.arduino-nano", "driver.tb6612fng", "sensor.pololu-qtr-8a"]
+  },
+  {
+    "symptoms": "On the oval track: 100 % of runs finished, mean completion 100 %; error: blocking delay; error: wrong direction; warning: oscillation.",
+    "diagnosis": "delay(30) at the end of loop() blocks the controller: sensors are read and motors updated only every ~30 ms, so the robot reacts late and overshoots.",
+    "diff": "--- a/good_pid.ino\n+++ b/good_pid.ino\n@@ -65,7 +65,6 @@\n   setMotor(PWMA, AIN1, AIN2, base - (int)turn);\n   setMotor(PWMB, BIN1, BIN2, base + (int)turn);\n \n-  delay(30);\n   if (millis() - lastPrint >= 250) {\n     lastPrint = millis();\n     Serial.print(F(\"err \"));\n",
+    "source": "synthetic",
+    "parts": ["mcu.arduino-nano", "driver.tb6612fng", "sensor.pololu-qtr-8a"]
+  },
+  {
+    "symptoms": "On the oval track: 0 % of runs finished, mean completion 100 %; error: wrong direction; error: line lost; error: off track; warning: pwm saturation.",
+    "diagnosis": "The left motor's direction pins are written the wrong way round (AIN1/AIN2 swapped), so it drives backwards when told to go forwards.",
+    "diff": "--- a/good_pid.ino\n+++ b/good_pid.ino\n@@ -62,7 +62,7 @@\n   lastError = error;\n \n   int base = lost ? 38 : baseSpeed - (int)(baseSpeed / 2 * min(abs(error), 3500L) / 3500);\n-  setMotor(PWMA, AIN2, AIN1, base - (int)turn);\n+  setMotor(PWMA, AIN1, AIN2, base - (int)turn);\n   setMotor(PWMB, BIN1, BIN2, base + (int)turn);\n \n   if (millis() - lastPrint >= 250) {\n",
+    "source": "synthetic",
+    "parts": ["mcu.arduino-nano", "driver.tb6612fng", "sensor.pololu-qtr-8a"]
+  },
+  {
+    "symptoms": "On the oval track: 33 % of runs finished, mean completion 42 %; error: steering inverted; error: line lost; error: off track; warning: pwm saturation; warning: line lost.",
+    "diagnosis": "The steering correction has the wrong sign: the robot turns away from the line instead of towards it.",
+    "diff": "--- a/good_pid.ino\n+++ b/good_pid.ino\n@@ -62,8 +62,8 @@\n   lastError = error;\n \n   int base = lost ? 38 : baseSpeed - (int)(baseSpeed / 2 * min(abs(error), 3500L) / 3500);\n-  setMotor(PWMA, AIN1, AIN2, base + (int)turn);\n-  setMotor(PWMB, BIN1, BIN2, base - (int)turn);\n+  setMotor(PWMA, AIN1, AIN2, base - (int)turn);\n+  setMotor(PWMB, BIN1, BIN2, base + (int)turn);\n \n   if (millis() - lastPrint >= 250) {\n     lastPrint = millis();\n",
+    "source": "synthetic",
+    "parts": ["mcu.arduino-nano", "driver.tb6612fng", "sensor.pololu-qtr-8a"]
+  },
+  {
+    "symptoms": "On the oval track: 33 % of runs finished, mean completion 42 %; error: steering inverted; error: line lost; error: off track; warning: pwm saturation; warning: line lost.",
+    "diagnosis": "The sensor array is read in reverse order (A7..A0) relative to the weights, so the error sign is flipped and the robot steers away from the line.",
+    "diff": "--- a/good_pid.ino\n+++ b/good_pid.ino\n@@ -7,7 +7,7 @@\n //          PWMB D5, BIN1 D7, BIN2 D8   (right motor)\n //          STBY tied to 5 V\n \n-const uint8_t SENSORS[8] = {A7, A6, A5, A4, A3, A2, A1, A0};\n+const uint8_t SENSORS[8] = {A0, A1, A2, A3, A4, A5, A6, A7};\n const uint8_t PWMA = 3, AIN1 = 2, AIN2 = 4;\n const uint8_t PWMB = 5, BIN1 = 7, BIN2 = 8;\n \n",
+    "source": "synthetic",
+    "parts": ["mcu.arduino-nano", "driver.tb6612fng", "sensor.pololu-qtr-8a"]
+  },
+  {
+    "symptoms": "On the oval track: 0 % of runs finished, mean completion 40 %; error: line lost; error: off track; warning: pwm saturation.",
+    "diagnosis": "baseSpeed = 230 is too fast for these gains and this track: the robot can't make the corners and runs off.",
+    "diff": "--- a/good_pid.ino\n+++ b/good_pid.ino\n@@ -14,7 +14,7 @@\n // Error is -3500..3500 (line under sensor 8 .. sensor 1); positive = line to the left.\n float Kp = 0.08;          // PWM counts per error unit\n float Kd = 2.5;           // PWM counts per (error unit per ms)\n-int baseSpeed = 230;      // of 255\n+int baseSpeed = 115;      // of 255\n \n int lo = 1023, hi = 0;    // running calibration\n long lastError = 0;\n",
+    "source": "synthetic",
+    "parts": ["mcu.arduino-nano", "driver.tb6612fng", "sensor.pololu-qtr-8a"]
+  },
+  {
+    "symptoms": "On the oval track: 0 % of runs finished, mean completion 2 %; error: stuck.",
+    "diagnosis": "PWMA is defined as pin 6 but the driver's PWMA is wired to D3, so the left motor never gets a speed signal.",
+    "diff": "--- a/good_pid.ino\n+++ b/good_pid.ino\n@@ -8,7 +8,7 @@\n //          STBY tied to 5 V\n \n const uint8_t SENSORS[8] = {A0, A1, A2, A3, A4, A5, A6, A7};\n-const uint8_t PWMA = 6, AIN1 = 2, AIN2 = 4;\n+const uint8_t PWMA = 3, AIN1 = 2, AIN2 = 4;\n const uint8_t PWMB = 5, BIN1 = 7, BIN2 = 8;\n \n // Error is -3500..3500 (line under sensor 8 .. sensor 1); positive = line to the left.\n",
+    "source": "synthetic",
+    "parts": ["mcu.arduino-nano", "driver.tb6612fng", "sensor.pololu-qtr-8a"]
+  },
+  {
+    "symptoms": "On the s-curves track: 100 % of runs finished, mean completion 100 %; error: wrong direction.",
+    "diagnosis": "Kp = 0.24 is too high for this robot: the steering overcorrects and the robot oscillates around the line, worse at speed.",
+    "diff": "--- a/good_pid.ino\n+++ b/good_pid.ino\n@@ -12,7 +12,7 @@\n const uint8_t PWMB = 5, BIN1 = 7, BIN2 = 8;\n \n // Error is -3500..3500 (line under sensor 8 .. sensor 1); positive = line to the left.\n-float Kp = 0.24;          // PWM counts per error unit\n+float Kp = 0.08;          // PWM counts per error unit\n float Kd = 2.5;           // PWM counts per (error unit per ms)\n int baseSpeed = 115;      // of 255\n \n",
+    "source": "synthetic",
+    "parts": ["mcu.arduino-nano", "driver.tb6612fng", "sensor.pololu-qtr-8a"]
+  },
+  {
+    "symptoms": "On the s-curves track: 33 % of runs finished, mean completion 98 %; error: stuck; error: wrong direction; warning: oscillation; warning: pwm saturation; warning: line lost.",
+    "diagnosis": "Kp = 0.4 is too high for this robot: the steering overcorrects and the robot oscillates around the line, worse at speed.",
+    "diff": "--- a/good_pid.ino\n+++ b/good_pid.ino\n@@ -12,7 +12,7 @@\n const uint8_t PWMB = 5, BIN1 = 7, BIN2 = 8;\n \n // Error is -3500..3500 (line under sensor 8 .. sensor 1); positive = line to the left.\n-float Kp = 0.4;          // PWM counts per error unit\n+float Kp = 0.08;          // PWM counts per error unit\n float Kd = 2.5;           // PWM counts per (error unit per ms)\n int baseSpeed = 115;      // of 255\n \n",
+    "source": "synthetic",
+    "parts": ["mcu.arduino-nano", "driver.tb6612fng", "sensor.pololu-qtr-8a"]
+  },
+  {
+    "symptoms": "On the s-curves track: 100 % of runs finished, mean completion 100 %; error: blocking delay; error: wrong direction; warning: oscillation; warning: pwm saturation; warning: line lost.",
+    "diagnosis": "delay(30) at the end of loop() blocks the controller: sensors are read and motors updated only every ~30 ms, so the robot reacts late and overshoots.",
+    "diff": "--- a/good_pid.ino\n+++ b/good_pid.ino\n@@ -65,7 +65,6 @@\n   setMotor(PWMA, AIN1, AIN2, base - (int)turn);\n   setMotor(PWMB, BIN1, BIN2, base + (int)turn);\n \n-  delay(30);\n   if (millis() - lastPrint >= 250) {\n     lastPrint = millis();\n     Serial.print(F(\"err \"));\n",
+    "source": "synthetic",
+    "parts": ["mcu.arduino-nano", "driver.tb6612fng", "sensor.pololu-qtr-8a"]
+  },
+  {
+    "symptoms": "On the s-curves track: 0 % of runs finished, mean completion 2 %; error: wrong direction; error: line lost; error: off track; error: steering inverted; warning: pwm saturation.",
+    "diagnosis": "The left motor's direction pins are written the wrong way round (AIN1/AIN2 swapped), so it drives backwards when told to go forwards.",
+    "diff": "--- a/good_pid.ino\n+++ b/good_pid.ino\n@@ -62,7 +62,7 @@\n   lastError = error;\n \n   int base = lost ? 38 : baseSpeed - (int)(baseSpeed / 2 * min(abs(error), 3500L) / 3500);\n-  setMotor(PWMA, AIN2, AIN1, base - (int)turn);\n+  setMotor(PWMA, AIN1, AIN2, base - (int)turn);\n   setMotor(PWMB, BIN1, BIN2, base + (int)turn);\n \n   if (millis() - lastPrint >= 250) {\n",
+    "source": "synthetic",
+    "parts": ["mcu.arduino-nano", "driver.tb6612fng", "sensor.pololu-qtr-8a"]
+  },
+  {
+    "symptoms": "On the s-curves track: 0 % of runs finished, mean completion 12 %; error: steering inverted; error: line lost; error: off track; error: wrong direction; warning: pwm saturation; warning: line lost.",
+    "diagnosis": "The steering correction has the wrong sign: the robot turns away from the line instead of towards it.",
+    "diff": "--- a/good_pid.ino\n+++ b/good_pid.ino\n@@ -62,8 +62,8 @@\n   lastError = error;\n \n   int base = lost ? 38 : baseSpeed - (int)(baseSpeed / 2 * min(abs(error), 3500L) / 3500);\n-  setMotor(PWMA, AIN1, AIN2, base + (int)turn);\n-  setMotor(PWMB, BIN1, BIN2, base - (int)turn);\n+  setMotor(PWMA, AIN1, AIN2, base - (int)turn);\n+  setMotor(PWMB, BIN1, BIN2, base + (int)turn);\n \n   if (millis() - lastPrint >= 250) {\n     lastPrint = millis();\n",
+    "source": "synthetic",
+    "parts": ["mcu.arduino-nano", "driver.tb6612fng", "sensor.pololu-qtr-8a"]
+  },
+  {
+    "symptoms": "On the s-curves track: 0 % of runs finished, mean completion 12 %; error: steering inverted; error: line lost; error: off track; error: wrong direction; warning: pwm saturation; warning: line lost.",
+    "diagnosis": "The sensor array is read in reverse order (A7..A0) relative to the weights, so the error sign is flipped and the robot steers away from the line.",
+    "diff": "--- a/good_pid.ino\n+++ b/good_pid.ino\n@@ -7,7 +7,7 @@\n //          PWMB D5, BIN1 D7, BIN2 D8   (right motor)\n //          STBY tied to 5 V\n \n-const uint8_t SENSORS[8] = {A7, A6, A5, A4, A3, A2, A1, A0};\n+const uint8_t SENSORS[8] = {A0, A1, A2, A3, A4, A5, A6, A7};\n const uint8_t PWMA = 3, AIN1 = 2, AIN2 = 4;\n const uint8_t PWMB = 5, BIN1 = 7, BIN2 = 8;\n \n",
+    "source": "synthetic",
+    "parts": ["mcu.arduino-nano", "driver.tb6612fng", "sensor.pololu-qtr-8a"]
+  },
+  {
+    "symptoms": "On the s-curves track: 0 % of runs finished, mean completion 60 %; error: line lost; error: off track; warning: pwm saturation; warning: line lost.",
+    "diagnosis": "baseSpeed = 230 is too fast for these gains and this track: the robot can't make the corners and runs off.",
+    "diff": "--- a/good_pid.ino\n+++ b/good_pid.ino\n@@ -14,7 +14,7 @@\n // Error is -3500..3500 (line under sensor 8 .. sensor 1); positive = line to the left.\n float Kp = 0.08;          // PWM counts per error unit\n float Kd = 2.5;           // PWM counts per (error unit per ms)\n-int baseSpeed = 230;      // of 255\n+int baseSpeed = 115;      // of 255\n \n int lo = 1023, hi = 0;    // running calibration\n long lastError = 0;\n",
+    "source": "synthetic",
+    "parts": ["mcu.arduino-nano", "driver.tb6612fng", "sensor.pololu-qtr-8a"]
+  },
+  {
+    "symptoms": "On the s-curves track: 0 % of runs finished, mean completion 2 %; error: stuck.",
+    "diagnosis": "PWMA is defined as pin 6 but the driver's PWMA is wired to D3, so the left motor never gets a speed signal.",
+    "diff": "--- a/good_pid.ino\n+++ b/good_pid.ino\n@@ -8,7 +8,7 @@\n //          STBY tied to 5 V\n \n const uint8_t SENSORS[8] = {A0, A1, A2, A3, A4, A5, A6, A7};\n-const uint8_t PWMA = 6, AIN1 = 2, AIN2 = 4;\n+const uint8_t PWMA = 3, AIN1 = 2, AIN2 = 4;\n const uint8_t PWMB = 5, BIN1 = 7, BIN2 = 8;\n \n // Error is -3500..3500 (line under sensor 8 .. sensor 1); positive = line to the left.\n",
+    "source": "synthetic",
+    "parts": ["mcu.arduino-nano", "driver.tb6612fng", "sensor.pololu-qtr-8a"]
+  },
+  {
+    "symptoms": "On the right-angles track: 100 % of runs finished, mean completion 100 %; error: wrong direction; warning: oscillation; warning: pwm saturation; warning: line lost.",
+    "diagnosis": "Kp = 0.24 is too high for this robot: the steering overcorrects and the robot oscillates around the line, worse at speed.",
+    "diff": "--- a/good_pid.ino\n+++ b/good_pid.ino\n@@ -12,7 +12,7 @@\n const uint8_t PWMB = 5, BIN1 = 7, BIN2 = 8;\n \n // Error is -3500..3500 (line under sensor 8 .. sensor 1); positive = line to the left.\n-float Kp = 0.24;          // PWM counts per error unit\n+float Kp = 0.08;          // PWM counts per error unit\n float Kd = 2.5;           // PWM counts per (error unit per ms)\n int baseSpeed = 115;      // of 255\n \n",
+    "source": "synthetic",
+    "parts": ["mcu.arduino-nano", "driver.tb6612fng", "sensor.pololu-qtr-8a"]
+  },
+  {
+    "symptoms": "On the right-angles track: 100 % of runs finished, mean completion 100 %; error: wrong direction; warning: oscillation; warning: pwm saturation; warning: line lost.",
+    "diagnosis": "Kp = 0.4 is too high for this robot: the steering overcorrects and the robot oscillates around the line, worse at speed.",
+    "diff": "--- a/good_pid.ino\n+++ b/good_pid.ino\n@@ -12,7 +12,7 @@\n const uint8_t PWMB = 5, BIN1 = 7, BIN2 = 8;\n \n // Error is -3500..3500 (line under sensor 8 .. sensor 1); positive = line to the left.\n-float Kp = 0.4;          // PWM counts per error unit\n+float Kp = 0.08;          // PWM counts per error unit\n float Kd = 2.5;           // PWM counts per (error unit per ms)\n int baseSpeed = 115;      // of 255\n \n",
+    "source": "synthetic",
+    "parts": ["mcu.arduino-nano", "driver.tb6612fng", "sensor.pololu-qtr-8a"]
+  },
+  {
+    "symptoms": "On the right-angles track: 100 % of runs finished, mean completion 100 %; error: blocking delay; error: wrong direction; warning: oscillation; warning: pwm saturation; warning: line lost.",
+    "diagnosis": "delay(30) at the end of loop() blocks the controller: sensors are read and motors updated only every ~30 ms, so the robot reacts late and overshoots.",
+    "diff": "--- a/good_pid.ino\n+++ b/good_pid.ino\n@@ -65,7 +65,6 @@\n   setMotor(PWMA, AIN1, AIN2, base - (int)turn);\n   setMotor(PWMB, BIN1, BIN2, base + (int)turn);\n \n-  delay(30);\n   if (millis() - lastPrint >= 250) {\n     lastPrint = millis();\n     Serial.print(F(\"err \"));\n",
+    "source": "synthetic",
+    "parts": ["mcu.arduino-nano", "driver.tb6612fng", "sensor.pololu-qtr-8a"]
+  },
+  {
+    "symptoms": "On the right-angles track: 0 % of runs finished, mean completion 100 %; error: wrong direction; error: line lost; error: missed turn; error: off track; warning: pwm saturation.",
+    "diagnosis": "The left motor's direction pins are written the wrong way round (AIN1/AIN2 swapped), so it drives backwards when told to go forwards.",
+    "diff": "--- a/good_pid.ino\n+++ b/good_pid.ino\n@@ -62,7 +62,7 @@\n   lastError = error;\n \n   int base = lost ? 38 : baseSpeed - (int)(baseSpeed / 2 * min(abs(error), 3500L) / 3500);\n-  setMotor(PWMA, AIN2, AIN1, base - (int)turn);\n+  setMotor(PWMA, AIN1, AIN2, base - (int)turn);\n   setMotor(PWMB, BIN1, BIN2, base + (int)turn);\n \n   if (millis() - lastPrint >= 250) {\n",
+    "source": "synthetic",
+    "parts": ["mcu.arduino-nano", "driver.tb6612fng", "sensor.pololu-qtr-8a"]
+  },
+  {
+    "symptoms": "On the right-angles track: 33 % of runs finished, mean completion 45 %; error: steering inverted; error: line lost; error: off track; warning: pwm saturation; warning: line lost.",
+    "diagnosis": "The steering correction has the wrong sign: the robot turns away from the line instead of towards it.",
+    "diff": "--- a/good_pid.ino\n+++ b/good_pid.ino\n@@ -62,8 +62,8 @@\n   lastError = error;\n \n   int base = lost ? 38 : baseSpeed - (int)(baseSpeed / 2 * min(abs(error), 3500L) / 3500);\n-  setMotor(PWMA, AIN1, AIN2, base + (int)turn);\n-  setMotor(PWMB, BIN1, BIN2, base - (int)turn);\n+  setMotor(PWMA, AIN1, AIN2, base - (int)turn);\n+  setMotor(PWMB, BIN1, BIN2, base + (int)turn);\n \n   if (millis() - lastPrint >= 250) {\n     lastPrint = millis();\n",
+    "source": "synthetic",
+    "parts": ["mcu.arduino-nano", "driver.tb6612fng", "sensor.pololu-qtr-8a"]
+  },
+  {
+    "symptoms": "On the right-angles track: 33 % of runs finished, mean completion 44 %; error: steering inverted; error: line lost; error: off track; warning: pwm saturation; warning: line lost.",
+    "diagnosis": "The sensor array is read in reverse order (A7..A0) relative to the weights, so the error sign is flipped and the robot steers away from the line.",
+    "diff": "--- a/good_pid.ino\n+++ b/good_pid.ino\n@@ -7,7 +7,7 @@\n //          PWMB D5, BIN1 D7, BIN2 D8   (right motor)\n //          STBY tied to 5 V\n \n-const uint8_t SENSORS[8] = {A7, A6, A5, A4, A3, A2, A1, A0};\n+const uint8_t SENSORS[8] = {A0, A1, A2, A3, A4, A5, A6, A7};\n const uint8_t PWMA = 3, AIN1 = 2, AIN2 = 4;\n const uint8_t PWMB = 5, BIN1 = 7, BIN2 = 8;\n \n",
+    "source": "synthetic",
+    "parts": ["mcu.arduino-nano", "driver.tb6612fng", "sensor.pololu-qtr-8a"]
+  },
+  {
+    "symptoms": "On the right-angles track: 0 % of runs finished, mean completion 42 %; error: line lost; error: missed turn; error: off track; warning: pwm saturation.",
+    "diagnosis": "baseSpeed = 230 is too fast for these gains and this track: the robot can't make the corners and runs off.",
+    "diff": "--- a/good_pid.ino\n+++ b/good_pid.ino\n@@ -14,7 +14,7 @@\n // Error is -3500..3500 (line under sensor 8 .. sensor 1); positive = line to the left.\n float Kp = 0.08;          // PWM counts per error unit\n float Kd = 2.5;           // PWM counts per (error unit per ms)\n-int baseSpeed = 230;      // of 255\n+int baseSpeed = 115;      // of 255\n \n int lo = 1023, hi = 0;    // running calibration\n long lastError = 0;\n",
+    "source": "synthetic",
+    "parts": ["mcu.arduino-nano", "driver.tb6612fng", "sensor.pololu-qtr-8a"]
+  },
+  {
+    "symptoms": "On the right-angles track: 0 % of runs finished, mean completion 33 %; error: line lost; error: off track.",
+    "diagnosis": "When the line is lost the error is set to 0, so the robot drives straight off instead of turning back towards where the line was.",
+    "diff": "--- a/good_pid.ino\n+++ b/good_pid.ino\n@@ -51,7 +51,7 @@\n   }\n   long error;\n   bool lost = sum < 300;\n-  if (lost) error = 0;  // turn towards where the line was\n+  if (lost) error = lastError >= 0 ? 3500 : -3500;  // turn towards where the line was\n   else error = weighted / sum;\n \n   unsigned long now = micros();\n",
+    "source": "synthetic",
+    "parts": ["mcu.arduino-nano", "driver.tb6612fng", "sensor.pololu-qtr-8a"]
+  },
+  {
+    "symptoms": "On the right-angles track: 0 % of runs finished, mean completion 3 %; error: stuck.",
+    "diagnosis": "PWMA is defined as pin 6 but the driver's PWMA is wired to D3, so the left motor never gets a speed signal.",
+    "diff": "--- a/good_pid.ino\n+++ b/good_pid.ino\n@@ -8,7 +8,7 @@\n //          STBY tied to 5 V\n \n const uint8_t SENSORS[8] = {A0, A1, A2, A3, A4, A5, A6, A7};\n-const uint8_t PWMA = 6, AIN1 = 2, AIN2 = 4;\n+const uint8_t PWMA = 3, AIN1 = 2, AIN2 = 4;\n const uint8_t PWMB = 5, BIN1 = 7, BIN2 = 8;\n \n // Error is -3500..3500 (line under sensor 8 .. sensor 1); positive = line to the left.\n",
+    "source": "synthetic",
+    "parts": ["mcu.arduino-nano", "driver.tb6612fng", "sensor.pololu-qtr-8a"]
+  }
+]

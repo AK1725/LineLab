@@ -47,6 +47,11 @@ const Feedback = z
       .max(9)
       .default([]),
     notes: z.string().max(4000).optional(),
+    /**
+     * Opt-in: share this confirmed fix with the knowledge base (the diff, the diagnosis and the
+     * part names; never the whole sketch or who sent it). Off unless the user ticks it.
+     */
+    share: z.boolean().default(false),
   })
   .strict();
 type Feedback = z.infer<typeof Feedback>;
@@ -72,6 +77,13 @@ interface Session {
   /** The session this one continues (after failed real-world feedback). */
   parent: string | undefined;
 }
+
+/** The design's board, drivers and line sensors (shared with a fix, for context). */
+const partsOf = (d: Design) => [
+  ...new Set(
+    d.placements.map((p) => p.componentId).filter((id) => /^(mcu|driver|sensor)\./.test(id)),
+  ),
+];
 
 const SYMPTOM_TEXT: Record<string, string> = {
   oscillates: "the robot oscillates/wobbles",
@@ -280,13 +292,16 @@ export function registerAgentRoutes(app: FastifyInstance, deps: AgentDeps): void
       return reply.code(400).send({ error: f.error.issues.map((i) => i.message).join("; ") });
     const v = s.result.verified;
     if (f.data.worked) {
-      if (v)
+      const share = f.data.share && v !== undefined;
+      if (share)
         await deps.knowledge.add({
           symptoms: s.result.diagnosis.slice(0, 600),
           diagnosis: v.rationale,
           diff: v.diff,
+          source: "user",
+          parts: partsOf(s.input.design),
         });
-      return { stored: v !== undefined };
+      return { stored: share };
     }
     const model = deps.modelFor(byoKey(req.headers["x-anthropic-api-key"]));
     if (!model)

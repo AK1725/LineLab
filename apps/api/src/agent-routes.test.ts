@@ -122,7 +122,7 @@ describe("/agent/sessions", () => {
     expect(third.statusCode).toBe(429);
   }, 120_000);
 
-  it("feedback: success confirms the fix; failure restarts from the fixed sketch with the evidence", async () => {
+  it("feedback: success confirms the fix (only when shared); failure restarts from the fixed sketch with the evidence", async () => {
     const d = deps();
     const base = await listen(d);
     const { id } = (await (
@@ -133,13 +133,24 @@ describe("/agent/sessions", () => {
       })
     ).json()) as { id: string };
     await events(base, id);
-    const ok = await fetch(`${base}/agent/sessions/${id}/feedback`, {
+    // Not shared unless the user opts in.
+    const quiet = await fetch(`${base}/agent/sessions/${id}/feedback`, {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ worked: true, symptoms: [] }),
     });
+    expect(await quiet.json()).toEqual({ stored: false });
+    expect(await d.knowledge.search("blocking delay loop")).toEqual([]);
+    const ok = await fetch(`${base}/agent/sessions/${id}/feedback`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ worked: true, symptoms: [], share: true }),
+    });
     expect(await ok.json()).toEqual({ stored: true });
-    expect((await d.knowledge.search("blocking delay loop")).length).toBe(1);
+    const found = await d.knowledge.search("blocking delay loop");
+    expect(found).toHaveLength(1);
+    expect(found[0]).toMatchObject({ source: "user", confirmations: 1 });
+    expect(found[0]?.parts).toContain("mcu.arduino-nano");
 
     const failed = await fetch(`${base}/agent/sessions/${id}/feedback`, {
       method: "POST",

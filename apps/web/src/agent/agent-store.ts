@@ -38,7 +38,9 @@ interface AgentState {
     where?: string;
     symptoms: string[];
     notes?: string;
-  }) => Promise<"stored" | "restarted" | "error">;
+    /** Opt-in: share the confirmed fix with the knowledge base. */
+    share?: boolean;
+  }) => Promise<"stored" | "kept" | "restarted" | "error">;
   reset: () => void;
 }
 
@@ -155,7 +157,7 @@ export const useAgent = create<AgentState>()((set, get) => {
           listen(json.id);
           return "restarted";
         }
-        return "stored";
+        return json.stored ? "stored" : "kept";
       } catch {
         set({ error: "Couldn't reach the LineLab API." });
         return "error";

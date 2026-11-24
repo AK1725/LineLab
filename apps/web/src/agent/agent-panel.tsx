@@ -111,6 +111,7 @@ function FeedbackForm() {
   const [where, setWhere] = useState("");
   const [symptoms, setSymptoms] = useState<string[]>([]);
   const [notes, setNotes] = useState("");
+  const [share, setShare] = useState(false);
   const [sent, setSent] = useState<string | null>(null);
   return (
     <form
@@ -122,15 +123,18 @@ function FeedbackForm() {
         void feedback({
           worked,
           symptoms,
+          share: worked && share,
           ...(where ? { where } : {}),
           ...(notes ? { notes } : {}),
         }).then((r) => {
           setSent(
             r === "stored"
               ? "Thanks! This fix is now a confirmed case the debugger can learn from."
-              : r === "restarted"
-                ? "Starting another round with your observations…"
-                : null,
+              : r === "kept"
+                ? "Great, glad it works. Nothing was shared."
+                : r === "restarted"
+                  ? "Starting another round with your observations…"
+                  : null,
           );
         });
       }}
@@ -164,6 +168,25 @@ function FeedbackForm() {
           It didn&apos;t work
         </label>
       </div>
+      {worked === true && (
+        <label className="flex items-start gap-2 text-sm">
+          <input
+            type="checkbox"
+            className="mt-1"
+            checked={share}
+            onChange={(e) => {
+              setShare(e.target.checked);
+            }}
+          />
+          <span>
+            Share this fix to help others{" "}
+            <span className="text-muted">
+              (the diff, the diagnosis and your board/driver/sensor names; not your sketch, not who
+              you are)
+            </span>
+          </span>
+        </label>
+      )}
       {worked === false && (
         <>
           <label className="block text-sm">

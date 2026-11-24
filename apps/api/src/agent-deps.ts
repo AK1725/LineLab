@@ -9,6 +9,7 @@ import {
   HttpCompiler,
   MemoryKnowledge,
   ScriptedModel,
+  type FixKnowledge,
   type ScriptedTurn,
 } from "@linelab/agent";
 import type { AgentDeps } from "./agent-routes.js";
@@ -24,7 +25,10 @@ const repoRoot = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "..")
  *   Results then report the model as "scripted".
  * - COMPILER_URL: the compiler service; LINELAB_COMPILE_CACHE: where compile results are cached.
  */
-export function agentDepsFromEnv(env: NodeJS.ProcessEnv = process.env): AgentDeps {
+export function agentDepsFromEnv(
+  env: NodeJS.ProcessEnv = process.env,
+  knowledge: FixKnowledge = new MemoryKnowledge(),
+): AgentDeps {
   const config = agentConfigFromEnv(env);
   const script = env.LINELAB_AGENT_SCRIPT;
   const turns = script ? (JSON.parse(readFileSync(script, "utf8")) as ScriptedTurn[]) : undefined;
@@ -35,7 +39,7 @@ export function agentDepsFromEnv(env: NodeJS.ProcessEnv = process.env): AgentDep
       env.LINELAB_COMPILE_CACHE ?? join(repoRoot, "examples", "firmware", ".compile-cache"),
       env.COMPILER_URL ? new HttpCompiler(env.COMPILER_URL) : undefined,
     ),
-    knowledge: new MemoryKnowledge(),
+    knowledge,
     modelFor: (byoKey) => {
       if (turns) return new ScriptedModel(turns);
       if (byoKey) return new AnthropicModel(new Anthropic({ apiKey: byoKey }), config);

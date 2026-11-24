@@ -1,10 +1,15 @@
 import { agentDepsFromEnv } from "./agent-deps.js";
 import { buildApp } from "./app.js";
+import { openKnowledge } from "./knowledge.js";
 import { photoDepsFromEnv } from "./photo-routes.js";
 import { loadConfig } from "./config.js";
 
 const config = loadConfig();
-const app = buildApp(config, { agent: agentDepsFromEnv(), photo: photoDepsFromEnv() });
+const knowledge = await openKnowledge(process.env);
+const app = buildApp(config, {
+  agent: agentDepsFromEnv(process.env, knowledge),
+  photo: photoDepsFromEnv(),
+});
 
 const shutdown = (signal: string) => {
   app.log.info({ signal }, "shutting down");

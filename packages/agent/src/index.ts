@@ -11,6 +11,7 @@ export * from "./patch.js";
 export * from "./workbench.js";
 export * from "./gate.js";
 export * from "./knowledge.js";
+export * from "./embed.js";
 export * from "./prompt.js";
 export * from "./tools.js";
 export * from "./session.js";

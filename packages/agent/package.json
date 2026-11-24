@@ -19,7 +19,8 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --max-warnings 0",
     "test": "vitest run",
-    "eval": "tsx scripts/eval.ts"
+    "eval": "tsx scripts/eval.ts",
+    "inject-bugs": "tsx scripts/inject-bugs.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "1.7.0",

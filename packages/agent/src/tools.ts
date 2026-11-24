@@ -339,7 +339,7 @@ export async function runTool(
             ? cases
                 .map(
                   (c) =>
-                    `Case ${c.id} (confirmed ${String(c.confirmations)}×)\nSymptoms: ${c.symptoms}\nDiagnosis: ${c.diagnosis}\nDiff:\n${c.diff}`,
+                    `Case ${c.id} (${c.source === "user" ? `confirmed on ${String(c.confirmations)} real robot(s)` : "synthetic: injected bug, fix verified in simulation only"}${c.parts.length ? `; parts: ${c.parts.join(", ")}` : ""})\nSymptoms: ${c.symptoms}\nDiagnosis: ${c.diagnosis}\nDiff:\n${c.diff}`,
                 )
                 .join("\n\n")
             : "No confirmed cases match.",
